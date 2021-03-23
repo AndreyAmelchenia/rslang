@@ -1,0 +1,23 @@
+.example-card {
+  box-sizing: border-box;
+  max-width: 60vw;
+  margin: 20px auto;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+.mat-progress-bar{
+  max-width: 70vw;
+  margin: 20px auto;
+}
+
+img{
+  width: 50vw;
+}
+
+.example-form-field {
+  width: 200px;
+}

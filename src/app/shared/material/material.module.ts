@@ -32,6 +32,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 @NgModule({
   exports: [
     CdkTreeModule,
@@ -67,6 +69,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatDatepickerModule,
     MatTooltipModule,
     MatSlideToggleModule,
+    MatProgressBarModule,
   ],
 })
 export class AngularMaterialModule {}
