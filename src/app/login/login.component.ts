@@ -7,12 +7,11 @@ import { Component } from '@angular/core';
 })
 export class LoginComponent {
   registerUserData = {
-    name: '',
     email: '',
     password: '',
   };
 
-  Register() {
+  Login() {
     console.log(this.registerUserData);
   }
 }
