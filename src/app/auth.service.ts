@@ -6,10 +6,15 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AuthService {
   registerUrl = 'https://andey-rslang-back-end.herokuapp.com/users';
+  loginUrl = 'https://andey-rslang-back-end.herokuapp.com/signin';
 
   constructor(private http: HttpClient) {}
 
   registerUser(user) {
     return this.http.post<any>(this.registerUrl, user);
+  }
+
+  loginUser(user) {
+    return this.http.post<any>(this.loginUrl, user);
   }
 }
