@@ -10,6 +10,6 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   registerUser(user) {
-    this.http.post<any>(this.registerUrl, user);
+    return this.http.post<any>(this.registerUrl, user);
   }
 }
