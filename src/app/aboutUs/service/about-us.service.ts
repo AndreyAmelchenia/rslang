@@ -7,6 +7,7 @@ import { AboutUs } from "../about-us.model";
   providedIn: "root",
 })
 export class AboutUsService {
+  // eslint-disable-next-line prettier/prettier
   private aboutUs: AboutUs[] = [
     new AboutUs(
       1,
@@ -81,8 +82,6 @@ export class AboutUsService {
       "https://github.com/dobrovskayaelena",
     ),
   ];
-
-  constructor() {}
 
   getTeam(): Observable<AboutUs[]> {
     return of(this.aboutUs);

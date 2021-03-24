@@ -1,10 +1,16 @@
 export class AboutUs {
   id: number;
+
   imagePath: string;
+
   name: string;
+
   surname: string;
+
   role: string;
+
   contribution: string;
+
   url: string;
 
   constructor(

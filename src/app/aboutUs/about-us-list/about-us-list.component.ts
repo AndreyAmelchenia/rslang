@@ -12,7 +12,8 @@ import { AboutUsService } from "../service/about-us.service";
 })
 export class AboutUsListComponent implements OnInit {
   aboutUs: Observable<AboutUs[]>;
-  cols: number = 2;
+
+  cols = 2;
 
   constructor(
     private aboutUsService: AboutUsService,
