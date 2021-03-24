@@ -12,9 +12,11 @@ import { NavigationModule } from './navigation/navigation.module';
 
 import { AboutUsModule } from './aboutUs/module/about-us/about-us.module';
 import { AboutUsService } from './aboutUs/service/about-us.service';
+import { CardsModule } from './cards/cards.module';
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    CardsModule,
     NavigationModule,
     AboutUsModule,
     BrowserModule,
