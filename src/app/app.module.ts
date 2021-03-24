@@ -12,7 +12,6 @@ import { NavigationModule } from './navigation/navigation.module';
 
 import { AboutUsModule } from './aboutUs/module/about-us/about-us.module';
 import { AboutUsService } from './aboutUs/service/about-us.service';
-
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -24,8 +23,8 @@ import { AboutUsService } from './aboutUs/service/about-us.service';
     StoreModule.forRoot({}),
     StateModule,
     StoreDevtoolsModule.instrument({
-      maxAge: 25, // Retains last 25 states
-      logOnly: environment.production, // Restrict extension to log-only mode
+      maxAge: 25,
+      logOnly: environment.production,
     }),
     HttpClientModule,
   ],
