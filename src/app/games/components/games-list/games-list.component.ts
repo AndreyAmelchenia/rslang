@@ -13,12 +13,12 @@ import { GamesService } from '../../services/games.service';
 })
 export class GamesListComponent implements OnInit {
   cols = 2;
-  
+
   rowHeight = '200px';
-  
+
   games: Observable<GameModel[]>;
 
-  constructor(private gamesService: GamesService, public breakpointObserver: BreakpointObserver,) { }
+  constructor(private gamesService: GamesService, public breakpointObserver: BreakpointObserver) {}
 
   ngOnInit(): void {
     this.games = this.gamesService.getGames();
@@ -26,7 +26,7 @@ export class GamesListComponent implements OnInit {
   }
 
   colsChange() {
-    this.breakpointObserver.observe(["(max-width: 600px)"]).subscribe((state: BreakpointState) => {
+    this.breakpointObserver.observe(['(max-width: 600px)']).subscribe((state: BreakpointState) => {
       if (state.matches) {
         this.cols = 1;
         this.rowHeight = '200px';
@@ -36,5 +36,4 @@ export class GamesListComponent implements OnInit {
       }
     });
   }
-
 }

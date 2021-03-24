@@ -12,9 +12,7 @@ import { GamesService } from '../../services/games.service';
 export class GamesItemComponent implements OnInit {
   @Input() game: GameModel;
 
-  constructor(private gamesService: GamesService) { }
+  constructor(private gamesService: GamesService) {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

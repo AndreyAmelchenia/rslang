@@ -6,11 +6,10 @@ import { GameModel } from '../models/games.model';
 const url = 'assets/data/games-data.json';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GamesService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getGames() {
     return this.http.get<GameModel[]>(url);
