@@ -1,7 +1,7 @@
 <div class="content">
   <h1>Наша команда:</h1>
   <mat-grid-list [cols]="cols" rowHeight="200px">
-    <mat-grid-tile *ngFor="let item of aboutUs | async; let i = index" [item]="item" [index]="i">
+    <mat-grid-tile *ngFor="let item of aboutUs | async">
       <mat-card>
         <mat-card-header>
           <div mat-card-avatar>
