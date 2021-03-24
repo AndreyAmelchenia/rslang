@@ -1,0 +1,18 @@
+.content {
+    margin-left: 200px;
+    margin-bottom: 20px;
+    text-align: center;
+    
+    @media (max-width: 600px) {
+      margin-left: 0px;
+    }
+
+    h1 {
+      margin: 16px;
+    }    
+}
+
+mat-grid-tile {
+  margin: 10px;
+  text-align: center;
+}
