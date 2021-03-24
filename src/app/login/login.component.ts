@@ -7,7 +7,7 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  constructor(private auth: AuthService) {}
+  constructor(public auth: AuthService) {}
 
   userData = {
     email: '',
@@ -15,9 +15,17 @@ export class LoginComponent {
   };
 
   Login() {
+    console.log('click');
     this.auth.loginUser(this.userData).subscribe(
-      (res) => console.log('res', res),
+      (res) => {
+        console.log('res', res);
+        localStorage.setItem('token', res.token);
+      },
       (error) => console.log('error', error),
     );
+  }
+
+  Logout() {
+    this.auth.logout();
   }
 }
