@@ -8,10 +8,16 @@ import { AppComponent } from './app.component';
 import { StateModule } from './state/state.module';
 import { SharedModule } from './shared/shared.module';
 import { environment } from '../environments/environment';
+import { NavigationModule } from './navigation/navigation.module';
+
+import { AboutUsModule } from './aboutUs/module/about-us/about-us.module';
+import { AboutUsService } from './aboutUs/service/about-us.service';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    NavigationModule,
+    AboutUsModule,
     BrowserModule,
     BrowserAnimationsModule,
     SharedModule,
@@ -23,7 +29,7 @@ import { environment } from '../environments/environment';
     }),
     HttpClientModule,
   ],
-  providers: [],
+  providers: [AboutUsService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
