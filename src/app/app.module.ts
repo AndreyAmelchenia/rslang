@@ -8,8 +8,6 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AppComponent } from './app.component';
 import { StateModule } from './state/state.module';
 import { SharedModule } from './shared/shared.module';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
 import { TokenInterceptorService } from './token-interceptor.service';
 import { environment } from '../environments/environment';
 import { NavigationModule } from './navigation/navigation.module';
@@ -19,7 +17,7 @@ import { AboutUsService } from './aboutUs/service/about-us.service';
 import { GamesModule } from './games/games.module';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, RegisterComponent],
+  declarations: [AppComponent],
   imports: [
     NavigationModule,
     AboutUsModule,

@@ -3,4 +3,6 @@ export enum Path {
   AboutUs = 'about-us',
   Games = 'games',
   StartPage = 'start-page',
+  Registration = 'registration',
+  Login = 'login',
 }
