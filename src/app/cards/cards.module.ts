@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SwiperModule } from 'swiper/angular';
 import { CardsListComponent } from './cards-list/cards-list.component';
 import { SharedModule } from '../shared/shared.module';
+import { CardsTabComponent } from './cards-tab/cards-tab.component';
 
 @NgModule({
-  declarations: [CardsListComponent],
-  imports: [CommonModule, SharedModule, SwiperModule],
+  declarations: [CardsListComponent, CardsTabComponent],
+  imports: [CommonModule, SharedModule],
   exports: [CardsListComponent, SharedModule],
 })
 export class CardsModule {}

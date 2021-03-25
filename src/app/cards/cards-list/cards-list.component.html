@@ -1,54 +1,8 @@
-<swiper
-  #swiper
-  [centeredSlides]="true"
-  [allowTouchMove]="false"
-  [navigation]="{ prevEl: '.swiper-navigation-prev', nextEl: '.swiper-navigation-next' }"
-  [pagination]="pagination"
->
-  <ng-template swiperSlide *ngFor="let word of words; index as i">
-    <mat-card class="example-card">
-      <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>{{word.word}}</mat-card-title>
-        <mat-card-subtitle>{{word.wordTranslate}}</mat-card-subtitle>
-      </mat-card-header>
-      <mat-form-field class="example-form-field">
-        <mat-label>Clearable input</mat-label>
-        <input matInput type="text" [(ngModel)]="value" (swiper)="setThumbsSwiper(swiper)" />
-        <button
-          mat-button
-          *ngIf="value"
-          matSuffix
-          mat-icon-button
-          aria-label="Clear"
-          (click)="value=''"
-        >
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-form-field>
-      <img
-        mat-card-image
-        [src]="'https://andey-rslang-back-end.herokuapp.com/'+word.image"
-        alt="Photo of a Shiba Inu"
-      />
-      <mat-card-content>
-        <p>
-          The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from
-          Japan. A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was
-          originally bred for hunting.
-        </p>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-button>LIKE</button>
-        <button mat-button>SHARE</button>
-      </mat-card-actions>
-    </mat-card>
-  </ng-template>
-</swiper>
+<ng-container *ngIf="(asyncTabs | async) === null"><mat-spinner></mat-spinner></ng-container>
 
-<!-- <button type="button" class="swiper-navigation-prev">&lt;</button>
-<button type="button" class="swiper-navigation-next">&gt;</button> -->
-<mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
-<!-- <hr />
-<button (click)="replaceSlides()">replace slides</button>
-<button (click)="togglePagination()">Toggle pagination</button> -->
+<mat-tab-group #matTab>
+  <mat-tab *ngFor="let tab of asyncTabs | async">
+    <ng-template mat-tab-label>{{tab.label}}</ng-template>
+    <app-cards-tab></app-cards-tab>
+  </mat-tab>
+</mat-tab-group>
