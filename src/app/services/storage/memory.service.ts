@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
+import { MemoryStorage } from './utils/memory.storage';
 
-import { MemoryStorage } from '../interfaces/memory-storage.interface';
-
-@Injectable()
-export class BaseMemoryStorage implements MemoryStorage {
-  /**
-   * Storage data
-   */
+@Injectable({
+  providedIn: 'root',
+})
+export class MemoryService implements MemoryStorage {
   private data: { [key: string]: string } = {};
 
   get length(): number {
@@ -23,7 +21,6 @@ export class BaseMemoryStorage implements MemoryStorage {
 
   key(index: number): string | null {
     const keys = Object.keys(this.data);
-
     return index >= 0 && keys.length < index ? keys[index] : null;
   }
 

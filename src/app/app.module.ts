@@ -12,7 +12,6 @@ import { NavigationModule } from './navigation/navigation.module';
 
 import { AboutUsModule } from './aboutUs/module/about-us/about-us.module';
 import { AboutUsService } from './aboutUs/service/about-us.service';
-import { StorageModule } from './services/storage/storage.module';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -28,7 +27,6 @@ import { StorageModule } from './services/storage/storage.module';
       logOnly: environment.production,
     }),
     HttpClientModule,
-    StorageModule,
   ],
   providers: [AboutUsService],
   bootstrap: [AppComponent],

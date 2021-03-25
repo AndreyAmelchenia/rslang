@@ -1,25 +1,22 @@
+import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 
-import { MemoryStorage } from '../interfaces/memory-storage.interface';
-import { SessionStorage } from '../interfaces/session-storage.interface';
-import { storageAvailable } from '../utils/storage.util';
+import { LocalStorage } from './utils/local.storage';
+import { MemoryService } from './memory.service';
+import { storageAvailable } from './utils/storage.util';
 
-/**
- * Browser session storage
- */
-@Injectable()
-export class BaseSessionStorage implements SessionStorage {
-  /**
-   * Storage
-   */
+@Injectable({
+  providedIn: 'root',
+})
+export class LocalStorageService implements LocalStorage {
   private readonly storage: Storage;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    private memoryStorage: MemoryStorage,
+    private memoryStorage: MemoryService,
   ) {
-    if (storageAvailable('sessionStorage')) {
-      this.storage = window.sessionStorage;
+    if (isPlatformBrowser(this.platformId) && storageAvailable('localStorage')) {
+      this.storage = window.localStorage;
     } else {
       this.storage = this.memoryStorage;
     }
