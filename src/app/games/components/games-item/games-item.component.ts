@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { GameModel } from '../../models/games.model';
 import { GamesService } from '../../services/games.service';
@@ -8,11 +8,10 @@ import { GamesService } from '../../services/games.service';
   templateUrl: './games-item.component.html',
   styleUrls: ['./games-item.component.scss'],
   providers: [GamesService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GamesItemComponent implements OnInit {
+export class GamesItemComponent {
   @Input() game: GameModel;
 
   constructor(private gamesService: GamesService) {}
-
-  ngOnInit(): void {}
 }

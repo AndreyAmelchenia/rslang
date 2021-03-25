@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { UrlConstants } from 'src/app/shared/constants/url-constants';
 import { GameModel } from '../models/games.model';
 
-const url = 'assets/data/games-data.json';
+const url = UrlConstants.urlGamesData;
 
 @Injectable({
   providedIn: 'root',

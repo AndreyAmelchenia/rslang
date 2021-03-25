@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
+import { CssConstants } from 'src/app/shared/constants/css-constants';
 import { GameModel } from '../../models/games.model';
 import { GamesService } from '../../services/games.service';
 
@@ -12,28 +13,30 @@ import { GamesService } from '../../services/games.service';
   providers: [GamesService],
 })
 export class GamesListComponent implements OnInit {
-  cols = 2;
+  cols = CssConstants.materialColumnsNumberMiddle;
 
-  rowHeight = '200px';
+  rowHeight = CssConstants.materialRowHeightSmall;
 
-  games: Observable<GameModel[]>;
+  games$: Observable<GameModel[]>;
 
   constructor(private gamesService: GamesService, public breakpointObserver: BreakpointObserver) {}
 
   ngOnInit(): void {
-    this.games = this.gamesService.getGames();
-    this.colsChange();
+    this.games$ = this.gamesService.getGames();
+    this.cssChange();
   }
 
-  colsChange() {
-    this.breakpointObserver.observe(['(max-width: 600px)']).subscribe((state: BreakpointState) => {
-      if (state.matches) {
-        this.cols = 1;
-        this.rowHeight = '200px';
-      } else {
-        this.cols = 2;
-        this.rowHeight = '300px';
-      }
-    });
+  cssChange() {
+    this.breakpointObserver
+      .observe([`(max-width: CssConstants.screenMaxWidthAdaptive)`])
+      .subscribe((state: BreakpointState) => {
+        if (state.matches) {
+          this.cols = CssConstants.materialColumnsNumberSmall;
+          this.rowHeight = CssConstants.materialRowHeightSmall;
+        } else {
+          this.cols = CssConstants.materialColumnsNumberMiddle;
+          this.rowHeight = CssConstants.materialRowHeightMiddle;
+        }
+      });
   }
 }

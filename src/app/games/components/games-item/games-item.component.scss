@@ -1,25 +1,12 @@
-mat-grid-tile {
-    margin: 10px;
+mat-card {
+  width: 60%;
+  margin: 0 auto;
+  text-align: center
+
+  &-title {
+    color: #3b3b36;
   }
-  
-  mat-card {
-    width: 60%;
-    margin: 0 auto;
 
-    &-header {
-      width: auto;
-      background-color: #f9f9ff;
-    }
-
-    &-content {
-      background-color: #ebeae5;
-    }
-
-    &-title {
-      color: #3b3b36;
-    }
-  }
-  
   img {
     width: 50%;
   
@@ -27,4 +14,7 @@ mat-grid-tile {
       width: 40%;
     }
   }
+}
+  
+  
   
