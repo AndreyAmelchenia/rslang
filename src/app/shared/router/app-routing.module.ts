@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AboutUsListComponent } from '../../aboutUs/about-us-list/about-us-list.component';
+import { AboutUsListComponent } from '../../aboutUs/components/about-us-list/about-us-list.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
