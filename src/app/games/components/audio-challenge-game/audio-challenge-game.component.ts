@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import {Store} from "@ngrx/store";
 
-import { StartNewGame } from './state';
-import {AppState} from "../../../app.state";
+import { AppState } from 'src/app/state/app.state';
 
 @Component({
   selector: 'app-audio-challenge-game',
@@ -11,10 +10,9 @@ import {AppState} from "../../../app.state";
 })
 export class AudioChallengeGameComponent {
 
-  // eslint-disable-next-line prettier/prettier
   constructor(private store: Store<AppState>) {}
 
   newGame() {
-    this.store.dispatch(new StartNewGame(null));
+
   }
 }
