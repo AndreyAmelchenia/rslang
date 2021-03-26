@@ -1,8 +1,28 @@
 footer {
-  font: 500 20px/32px Roboto, "Helvetica Neue", sans-serif;
   height: 64px;
+  padding: 0 2%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  
+  font: 500 20px/32px Roboto, "Helvetica Neue", sans-serif;
   background-color: #3f51b5;
   color: #fff;
   border-top: 1px solid #bbb;
-  text-align: center;
+
+  img, .rs-logo {
+    margin: 0;
+    height: 50px;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: #fff;
+  }
 }
