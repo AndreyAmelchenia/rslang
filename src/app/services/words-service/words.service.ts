@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AggregatedWords } from '../models/aggregatedWords.model';
-import { Word } from '../models/word.model';
+import { AggregatedWords } from '../../models/aggregatedWords.model';
+import { Word } from '../../models/word.model';
 
 const token =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNTRhYWM2N2I3MWM0NTIyNDFiNWRiZiIsImlhdCI6MTYxNjk0NTE4NCwiZXhwIjoxNjE2OTU5NTg0fQ.4gEoB8NfIym1p0IXNfnWHi7uzJUR5j51s1BJda3PYsE';

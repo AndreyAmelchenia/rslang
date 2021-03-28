@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
-import { AboutUs } from '../about-us.model';
-import { AboutUsService } from '../service/about-us.service';
+import { AboutUs } from '../../models/about-us.model';
+import { AboutUsService } from '../../services/about-us.service';
 
 @Component({
   selector: 'app-about-us-list',

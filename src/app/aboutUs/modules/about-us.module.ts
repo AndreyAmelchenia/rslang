@@ -5,8 +5,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 
-import { AboutUsComponent } from '../../about-us/about-us.component';
-import { AboutUsListComponent } from '../../about-us-list/about-us-list.component';
+import { AboutUsComponent } from '../components/about-us/about-us.component';
+import { AboutUsListComponent } from '../components/about-us-list/about-us-list.component';
 
 const aboutUsRoutes: Routes = [
   { path: '', redirectTo: 'about-us', pathMatch: 'full' },

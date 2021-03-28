@@ -1,18 +1,22 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CardsListComponent } from 'src/app/cards/cards-list/cards-list.component';
+import { ProfileComponent } from 'src/app/profile/profile/profile.component';
 
-import { GamesListComponent } from 'src/app/games/components/games-list/games-list.component';
-import { AboutUsListComponent } from '../../aboutUs/about-us-list/about-us-list.component';
+import { AboutUsListComponent } from '../../aboutUs/components/about-us-list/about-us-list.component';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/', pathMatch: 'full' },
+  { path: '', redirectTo: '', pathMatch: 'full' },
   { path: 'about-us', component: AboutUsListComponent },
   { path: 'cards', component: CardsListComponent },
-  { path: 'games', component: GamesListComponent },
+  { path: 'profile', component: ProfileComponent },
+  {
+    path: 'games',
+    loadChildren: () =>
+      import('../../games/games-routing.module').then((m) => m.GamesRoutingModule),
+  },
 ];
-// CardsListComponent
-// const appRoutes: Routes = [{ path: '', redirectTo: '/', pathMatch: 'full' }, { path: '' }];
+
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes)],
   exports: [RouterModule],
