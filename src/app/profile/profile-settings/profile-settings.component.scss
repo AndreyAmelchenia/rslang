@@ -1,0 +1,12 @@
+.settings-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  mat-slide-toggle, button {
+    margin: 8px 0;
+    display: block;
+  }
+
+}
