@@ -1,0 +1,47 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="'over'"
+    [opened]="false"
+  >
+    <div class="menu_header">
+      <mat-toolbar>Menu</mat-toolbar>
+      <button type="button" aria-label="Close sidenav" mat-icon-button (click)="drawer.toggle()">
+        <mat-icon aria-label="Side nav close icon">close</mat-icon>
+      </button>
+    </div>
+    <mat-nav-list (click)="drawer.toggle()">
+      <a mat-list-item routerLink="/">Start Page</a>
+      <a mat-list-item routerLink="/cards">Cards</a>
+      <a mat-list-item routerLink="/games">Games List</a>
+      <a mat-list-item href="#">Dictionary</a>
+      <a mat-list-item routerLink="/profile" href="#">Profile</a>
+      <a mat-list-item routerLink="/about-us">About Us</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="sidenav-content">
+    <mat-toolbar color="primary">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>rslang</span>
+      <div class="space"></div>
+      <ng-template [ngIf]="isAuth$|async" [ngIfThen]="loginBlock" [ngIfElse]="log"> </ng-template>
+      <ng-template #log>
+        <a [routerLink]="[path.Registration]" class="link">Register</a>
+        <a [routerLink]="[path.Login]" class="link">Sign In</a></ng-template
+      >
+      <ng-template #loginBlock>
+        <div>
+          <span class="greet">Hello, {{(user$|async).name}}</span
+          ><button mat-button (click)="onLogout()">LogOut</button>
+        </div>
+      </ng-template>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>

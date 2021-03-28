@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { GamesListComponent } from 'src/app/games/components/games-list/games-list.component';
+import { AboutUsListComponent } from '../../aboutUs/about-us-list/about-us-list.component';
 import { LoginComponent } from '../../navigation/components/login/login.component';
 import { RegistrationComponent } from '../../navigation/components/registration/registration.component';
 import { Path } from './roter.modele';
-import { AboutUsListComponent } from '../../aboutUs/about-us-list/about-us-list.component';
 
 const appRoutes: Routes = [
   { path: Path.Empty, redirectTo: '/', pathMatch: 'full' },

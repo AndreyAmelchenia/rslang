@@ -1,17 +1,21 @@
 [
   {
+    "id": 1,
     "name": "Savanna",
     "img": "./assets/images/savanna.png"
   },
   {
+    "id": 2,
     "name": "Sprint",
     "img": "./assets/images/sprint.png"
-  },
+  },  
   {
+    "id": 3,
     "name": "Audio",
     "img": "./assets/images/audio.png"
   },
   {
+    "id": 4,
     "name": "My game", 
     "img": "./assets/images/game.png" 
   }
