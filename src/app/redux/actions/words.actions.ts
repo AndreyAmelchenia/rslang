@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Word } from '../../models/word.model';
+import { Word } from '../../common/models/word.model';
 
 export enum ArticlesActions {
   LoadWords = '[Words Page] Load Words',

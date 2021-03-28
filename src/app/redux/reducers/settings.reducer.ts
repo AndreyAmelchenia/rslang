@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { setSettings } from '../actions/settings.actions';
-import { Settings } from '../../models/settings.model';
+import { Settings } from '../../common/models/settings.model';
 
 export const settingsFeatureKey = 'settings';
 

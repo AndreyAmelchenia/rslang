@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { retrievedWordsList } from '../actions/words.actions';
-import { Word } from '../../models/word.model';
+import { Word } from '../../common/models/word.model';
 
 export const wordsFeatureKey = 'words';
 
@@ -8,9 +8,5 @@ export const initialState: ReadonlyArray<Word> = [];
 
 export const booksReducer = createReducer(
   initialState,
-  on(retrievedWordsList, (state, { Words }) => {
-    console.log(Words);
-
-    return [...Words];
-  }),
+  on(retrievedWordsList, (state, { Words }) => [...Words]),
 );
