@@ -1,11 +1,15 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { Observable } from 'rxjs';
+import { Observable, of as observableOf, merge } from 'rxjs';
 import { Word } from 'src/app/models/word.model';
-import { WordsDataSource } from './cards-datasource';
+import { delay, map } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/redux/app.state';
+import { selectWords } from 'src/app/redux/selectors/words.seletor';
+import { expectationRequest } from 'src/app/redux/actions/request.actions';
+import { selectExpectation } from 'src/app/redux/selectors/request.selector';
 // import { WORDS } from '../data/words';
-
 @Component({
   selector: 'app-cards-tab',
   templateUrl: './cards-tab.component.html',
@@ -14,14 +18,18 @@ import { WordsDataSource } from './cards-datasource';
 export class CardsTabComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  public words: Observable<Word[]>;
+  words: Observable<Word[]>;
+
+  data: Word[];
 
   cols = 2;
 
-  dataSource: WordsDataSource;
+  expectation: boolean;
 
-  constructor(public breakpointObserver: BreakpointObserver) {
-    // this.words = WORDS;
+  constructor(public breakpointObserver: BreakpointObserver, private store: Store<AppState>) {
+    this.store.select(selectExpectation).subscribe((expectation) => {
+      this.expectation = expectation;
+    });
     this.breakpointObserver.observe(['(max-width: 600px)']).subscribe((state: BreakpointState) => {
       if (state.matches) {
         this.cols = 1;
@@ -31,14 +39,32 @@ export class CardsTabComponent implements OnInit, AfterViewInit {
     });
   }
 
+  connect(): Observable<Word[]> {
+    const dataMutations = [observableOf(this.data), this.paginator.page];
+    return merge(...dataMutations).pipe(
+      delay(0),
+      map(() => {
+        return this.getPagedData([...this.data]);
+      }),
+    );
+  }
+
+  private getPagedData(data: Word[]) {
+    const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
+    return data.splice(startIndex, this.paginator.pageSize);
+  }
+
   ngOnInit(): void {
-    this.dataSource = new WordsDataSource();
-    console.log(this.dataSource);
+    this.store.select(selectWords).subscribe((words) => {
+      this.data = words;
+    });
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.words = this.dataSource.connect();
-    console.log(this.paginator);
+    this.words = this.connect();
+  }
+
+  clickres() {
+    this.store.dispatch(expectationRequest({ expectation: !this.expectation }));
   }
 }

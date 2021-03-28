@@ -7,6 +7,7 @@
         <mat-card-subtitle>{{word.wordTranslate}}</mat-card-subtitle>
       </mat-card-header>
       <img
+        (click)="clickres()"
         mat-card-image
         [src]="'https://andey-rslang-back-end.herokuapp.com/' + word.image"
         alt="Photo of a Shiba Inu"
@@ -15,4 +16,9 @@
     </mat-card>
   </mat-grid-tile>
 </mat-grid-list>
-<mat-paginator #paginator [length]="100" [pageSize]="10"></mat-paginator>
+<mat-paginator
+  #paginator
+  [length]="data.length"
+  [pageSize]="15"
+  [pageSizeOptions]="[5, 10, 25, 100]"
+></mat-paginator>

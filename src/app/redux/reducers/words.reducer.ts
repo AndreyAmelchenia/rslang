@@ -8,5 +8,9 @@ export const initialState: ReadonlyArray<Word> = [];
 
 export const booksReducer = createReducer(
   initialState,
-  on(retrievedWordsList, (state, { Words }) => [...Words]),
+  on(retrievedWordsList, (state, { Words }) => {
+    console.log(Words);
+
+    return [...Words];
+  }),
 );
