@@ -4,7 +4,9 @@ import { StoreModule } from '@ngrx/store';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpClientModule } from '@angular/common/http';
+
 import { AppComponent } from './app.component';
+import { ProfileModule } from './profile/profile.module';
 import { StateModule } from './state/state.module';
 import { SharedModule } from './shared/shared.module';
 import { environment } from '../environments/environment';
@@ -15,10 +17,11 @@ import { AboutUsService } from './aboutUs/service/about-us.service';
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    NavigationModule,
     AboutUsModule,
     BrowserModule,
     BrowserAnimationsModule,
+    NavigationModule,
+    ProfileModule,
     SharedModule,
     StoreModule.forRoot({}),
     StateModule,
