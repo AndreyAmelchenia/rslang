@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 
 import { AppComponent } from './app.component';
 import { Word } from './models/word.model';
-import { WordsService } from './services/words.service';
+import { WordsService } from './services/words-service/words.service';
 
 const testWords: Word[] = [
   {
