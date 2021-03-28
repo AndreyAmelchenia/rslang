@@ -4,7 +4,11 @@ import { Settings } from '../../models/settings.model';
 
 export const settingsFeatureKey = 'settings';
 
-export const initialState: Settings = { displayTranslation: true, displayHandlingButtons: false };
+export const initialState: Settings = {
+  wordsPerDay: 10,
+  displayTranslation: true,
+  displayHandlingButtons: true,
+};
 
 export const settingsReducer = createReducer(
   initialState,

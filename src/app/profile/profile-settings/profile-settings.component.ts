@@ -16,12 +16,17 @@ export class ProfileSettingsComponent {
 
   formGroup: FormGroup;
 
+  value: number;
+
   constructor(private store: Store<AppState>, formBuilder: FormBuilder) {
     this.store.select(selectSettings).subscribe((settings) => {
       this.settings = settings;
     });
 
+    this.value = this.settings.wordsPerDay;
+
     this.formGroup = formBuilder.group({
+      wordsPerDay: this.settings.wordsPerDay,
       displayTranslation: this.settings.displayTranslation,
       displayHandlingButtons: this.settings.displayHandlingButtons,
     });
