@@ -14,10 +14,13 @@ import { NavigationModule } from './navigation/navigation.module';
 
 import { AboutUsModule } from './aboutUs/module/about-us/about-us.module';
 import { AboutUsService } from './aboutUs/service/about-us.service';
+import { GamesModule } from './games/games.module';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
     AboutUsModule,
+    GamesModule,
     BrowserModule,
     BrowserAnimationsModule,
     NavigationModule,
