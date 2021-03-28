@@ -14,6 +14,8 @@ import { AboutUsModule } from './aboutUs/module/about-us/about-us.module';
 import { AboutUsService } from './aboutUs/service/about-us.service';
 import { CardsModule } from './cards/cards.module';
 import { WordsEffects } from './redux/effects/words.effects';
+import { GamesModule } from './games/games.module';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -21,6 +23,7 @@ import { WordsEffects } from './redux/effects/words.effects';
     CardsModule,
     NavigationModule,
     AboutUsModule,
+    GamesModule,
     BrowserModule,
     BrowserAnimationsModule,
     SharedModule,
