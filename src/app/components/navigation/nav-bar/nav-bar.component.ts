@@ -3,10 +3,10 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { Path } from '../../shared/router/roter.modele';
-import { logout } from '../store/actions/auth.actions';
-import { IUser } from '../store/models/user.modele';
-import { isLogin, user } from '../store/selectors';
+import { Path } from '../../../shared/router/roter.modele';
+import { logout } from '../../../redux/actions/auth.actions';
+import { IUser } from '../../../redux/models/user.modele';
+import { isLogin, user } from '../../../redux/selectors/auth.selectors';
 
 @Component({
   selector: 'app-nav-bar',

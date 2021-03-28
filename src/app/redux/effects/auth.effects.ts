@@ -7,7 +7,7 @@ import { catchError, exhaustMap, map, switchMap, tap } from 'rxjs/operators';
 import * as authActions from '../actions/auth.actions';
 import { ActionType } from '../models/action.models';
 
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../components/navigation/services/auth.service';
 import { IUser } from '../models/user.modele';
 
 @Injectable()

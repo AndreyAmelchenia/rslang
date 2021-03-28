@@ -2,8 +2,8 @@ import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../state/app.state';
-import { AuthService } from '../../services/auth.service';
-import { login } from '../../store/actions/auth.actions';
+import { AuthService } from '../services/auth.service';
+import { login } from '../../../redux/actions/auth.actions';
 
 @Component({
   selector: 'app-login',

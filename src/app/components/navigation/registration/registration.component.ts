@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Location } from '@angular/common';
-import { AuthService } from '../../services/auth.service';
-import { signUp } from '../../store/actions/auth.actions';
+import { AuthService } from '../services/auth.service';
+import { signUp } from '../../../redux/actions/auth.actions';
 
 @Component({
   selector: 'app-registration',

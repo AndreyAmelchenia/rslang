@@ -3,21 +3,20 @@ import { BrowserModule } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { HttpClientModule } from '@angular/common/http';
-import { AppComponent } from './app.component';
-import { StateModule } from './state/state.module';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { EffectsModule } from '@ngrx/effects';
+import { AppComponent } from './components/app/app.component';
+import { ReduxModule } from './redux/redux.module';
 import { SharedModule } from './shared/shared.module';
 import { environment } from '../environments/environment';
-import { NavigationModule } from './navigation/navigation.module';
+import { NavigationModule } from './components/navigation/navigation.module';
 
-import { AboutUsModule } from './aboutUs/module/about-us/about-us.module';
-import { AboutUsService } from './aboutUs/service/about-us.service';
-import { GamesModule } from './games/games.module';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { EffectsModule } from '@ngrx/effects';
-import { AuthEffects } from './navigation/store/effects/auth.effects';
-import { TokenInterceptorService } from './navigation/services/token-interceptor.service';
+import { AboutUsModule } from './components/aboutUs/modules/about-us.module';
+import { AboutUsService } from './components/aboutUs/services/about-us.service';
+import { GamesModule } from './components/games/games.module';
+import { AuthEffects } from './redux/effects/auth.effects';
+import { TokenInterceptorService } from './components/navigation/services/token-interceptor.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,14 +28,19 @@ import { TokenInterceptorService } from './navigation/services/token-interceptor
     BrowserAnimationsModule,
     SharedModule,
     StoreModule.forRoot({}),
-    StateModule,
+    ReduxModule,
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
     }),
     HttpClientModule,
+    FormsModule,
+    EffectsModule.forRoot([AuthEffects]),
   ],
-  providers: [AboutUsService],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },
+    AboutUsService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

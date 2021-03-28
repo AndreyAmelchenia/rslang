@@ -39,7 +39,6 @@ import { FormsModule } from '@angular/forms';
   exports: [
     FormsModule,
     CdkTreeModule,
-
     MatAutocompleteModule,
     MatButtonModule,
     MatCardModule,
