@@ -3,7 +3,8 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 // import { of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-import { WordsService } from 'src/app/services/words.service';
+import { WordsService } from 'src/app/services/words-service/words.service';
+
 import { LoadWords, retrievedWordsList } from '../actions/words.actions';
 
 @Injectable()

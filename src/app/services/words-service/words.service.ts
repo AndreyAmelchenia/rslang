@@ -7,7 +7,7 @@ import { AggregatedWords } from '../../models/aggregatedWords.model';
 import { Word } from '../../models/word.model';
 
 const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNTRhYWM2N2I3MWM0NTIyNDFiNWRiZiIsImlhdCI6MTYxNjk0NTE4NCwiZXhwIjoxNjE2OTU5NTg0fQ.4gEoB8NfIym1p0IXNfnWHi7uzJUR5j51s1BJda3PYsE';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNTRmM2NkNzU4NGFjMDAxNWQ4YjdjYSIsImlhdCI6MTYxNjk2MTkzNiwiZXhwIjoxNjE2OTc2MzM2fQ.E3U1w6FRpykIo6fzgV5dPFFkROmzIeU5nK-LwSrdfc4';
 @Injectable({
   providedIn: 'root',
 })
@@ -34,7 +34,7 @@ export class WordsService {
   ): Observable<AggregatedWords[]> {
     return this.http
       .get<AggregatedWords[]>(
-        `https://andey-rslang-back-end.herokuapp.com/users/6054aac67b71c452241b5dbf/aggregatedWords?group=${group}&page=${page}&wordsPerPage=${wordsPerPage}&filter={"userWord":null}`,
+        `https://andey-rslang-back-end.herokuapp.com/users/6054f3cd7584ac0015d8b7ca/aggregatedWords?group=${group}&page=${page}&wordsPerPage=${wordsPerPage}&filter={"userWord":null}`,
         this.httpOptions,
       )
       .pipe(map((words) => words));
