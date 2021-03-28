@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { retrievedWordsList } from './state/actions/words.actions';
-import { WordsService } from './services/words.service';
+import { WordsService } from './services/words-service/words.service';
 
 @Component({
   selector: 'app-root',
