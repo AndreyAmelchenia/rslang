@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Word } from '../models/word.model';
+import { Word } from '../../models/word.model';
 
 @Injectable({
   providedIn: 'root',

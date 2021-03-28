@@ -11,7 +11,14 @@ import { GamesRoutingModule } from './games-routing.module';
 
 @NgModule({
   declarations: [GamesListComponent, GamesItemComponent],
-  imports: [CommonModule, HttpClientModule, MatCardModule, MatListModule, MatGridListModule, GamesRoutingModule,],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    MatCardModule,
+    MatListModule,
+    MatGridListModule,
+    GamesRoutingModule,
+  ],
   exports: [GamesListComponent, GamesItemComponent],
 })
 export class GamesModule {}

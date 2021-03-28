@@ -4,24 +4,27 @@ import { StoreModule } from '@ngrx/store';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpClientModule } from '@angular/common/http';
+
 import { AppComponent } from './app.component';
+import { ProfileModule } from './profile/profile.module';
 import { StateModule } from './state/state.module';
 import { SharedModule } from './shared/shared.module';
 import { environment } from '../environments/environment';
 import { NavigationModule } from './navigation/navigation.module';
 
-import { AboutUsModule } from './aboutUs/module/about-us/about-us.module';
-import { AboutUsService } from './aboutUs/service/about-us.service';
+import { AboutUsModule } from './aboutUs/modules/about-us.module';
+import { AboutUsService } from './aboutUs/services/about-us.service';
 import { GamesModule } from './games/games.module';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    NavigationModule,
     AboutUsModule,
     GamesModule,
     BrowserModule,
     BrowserAnimationsModule,
+    NavigationModule,
+    ProfileModule,
     SharedModule,
     StoreModule.forRoot({}),
     StateModule,

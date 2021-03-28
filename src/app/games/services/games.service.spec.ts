@@ -1,20 +1,19 @@
-import { HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from  '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { GamesService } from './games.service';
 
 const testGames = [
   {
-    "id": 11,
-    "name": "Name1",
-    "img": "img1.png"
-  }, 
+    id: 11,
+    name: 'Name1',
+    img: 'img1.png',
+  },
   {
-    "id": 12,
-    "name": "Name2",
-    "img": "img2.png"
-  }
+    id: 12,
+    name: 'Name2',
+    img: 'img2.png',
+  },
 ];
 
 describe('GamesService', () => {
@@ -24,7 +23,7 @@ describe('GamesService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [ GamesService ]
+      providers: [GamesService],
     });
     service = TestBed.inject(GamesService);
     httpMock = TestBed.inject(HttpTestingController);
@@ -35,14 +34,14 @@ describe('GamesService', () => {
   });
 
   it('should return games', () => {
-     service.getGames().subscribe((res) => {
+    service.getGames().subscribe((res) => {
       expect(res).toEqual(testGames);
     });
 
     const req = httpMock.expectOne('assets/data/games-data.json');
-    expect(req.request.method).toEqual("GET");
+    expect(req.request.method).toEqual('GET');
     req.flush(testGames);
 
     httpMock.verify();
-  })
+  });
 });
