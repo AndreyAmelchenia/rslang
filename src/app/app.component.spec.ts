@@ -1,32 +1,74 @@
 import { HttpClientModule } from '@angular/common/http';
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Store, StoreModule } from '@ngrx/store';
+import { of } from 'rxjs';
 
 import { AppComponent } from './app.component';
+import { Word } from './models/word.model';
+import { WordsService } from './services/words.service';
+import { AppState } from './state/app.state';
+
+const testWords: Word[] = [
+  {
+    "id": "id1",
+    "word": "word1",
+    "image": "img1",
+    "audio": "audio1",
+    "audioMeaning": "audioMeaning1",
+    "audioExample": "audioExaple1",
+    "textMeaning": "textMeaning1",
+    "textExample": "textExample1",
+    "transcription": "transcription1",
+    "wordTranslate": "wordTranslate1",
+    "textMeaningTranslate": "textMeaningTranslate1",
+    "textExampleTranslate": "textExampleTranslate1",
+  },
+  {
+    "id": "id2",
+    "word": "word2",
+    "image": "img2",
+    "audio": "audio2",
+    "audioMeaning": "audioMeaning2",
+    "audioExample": "audioExaple2",
+    "textMeaning": "textMeaning2",
+    "textExample": "textExample2",
+    "transcription": "transcription2",
+    "wordTranslate": "wordTranslate2",
+    "textMeaningTranslate": "textMeaningTranslate2",
+    "textExampleTranslate": "textExampleTranslate2",
+  },
+];
 
 describe('AppComponent', () => {
+  let store: Store;
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AppComponent],
-      imports: [HttpClientModule],
+      providers: [ { provide: WordsService, useValue: { getWords: () => of(testWords) } } ],
+      imports: [HttpClientModule, StoreModule.forRoot({})],
     }).compileComponents();
   });
 
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 
   it(`should have as title 'rslang'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('rslang');
+    expect(component.title).toEqual('rslang');
   });
 
   it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('rslang app is running!');
+    expect(component).toBeTruthy();
+  //  expect(compiled.querySelector('.content span').textContent).toContain('rslang app is running!');
   });
 });
