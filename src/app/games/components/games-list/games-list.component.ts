@@ -28,7 +28,7 @@ export class GamesListComponent implements OnInit {
 
   cssChange() {
     this.breakpointObserver
-      .observe([`(max-width: CssConstants.screenMaxWidthAdaptive)`])
+      .observe([`(max-width: ${CssConstants.screenMaxWidthAdaptive})`])
       .subscribe((state: BreakpointState) => {
         if (state.matches) {
           this.cols = CssConstants.materialColumnsNumberSmall;

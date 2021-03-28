@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { GamesItemComponent } from './games-item.component';
 import { GameModel } from '../../models/games.model';
@@ -18,7 +19,7 @@ describe('GamesItemComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [GamesItemComponent],
-      imports: [HttpClientModule],
+      imports: [HttpClientModule, RouterTestingModule],
     }).compileComponents();
   });
 

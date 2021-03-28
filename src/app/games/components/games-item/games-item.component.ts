@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { GameModel } from '../../models/games.model';
 import { GamesService } from '../../services/games.service';
@@ -13,5 +14,5 @@ import { GamesService } from '../../services/games.service';
 export class GamesItemComponent {
   @Input() game: GameModel;
 
-  constructor(private gamesService: GamesService) {}
+  constructor(private gamesService: GamesService, private router: Router) {}
 }
