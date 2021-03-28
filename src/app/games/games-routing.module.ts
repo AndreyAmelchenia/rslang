@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { GamesListComponent } from './components/games-list/games-list.component';
 import { AboutUsListComponent } from '../aboutUs/components/about-us-list/about-us-list.component';
 import { GamesSprintComponent } from './components/games-sprint/games-sprint.component';
+import { AudioChallengeGameComponent } from './components/audio-challenge-game/audio-challenge-game.component';
 
 const routes: Routes = [
   {
@@ -19,7 +20,7 @@ const routes: Routes = [
       },
       {
         path: 'Audio',
-        component: AboutUsListComponent,
+        component: AudioChallengeGameComponent,
       },
       {
         path: 'Savanna',

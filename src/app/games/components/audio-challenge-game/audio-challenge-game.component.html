@@ -1,8 +1,8 @@
-<ng-container *ngFor="let word of currentWord">
+<div *ngFor="let word of currentWord">
   <p>{{word.id}}</p>
-</ng-container>
+</div>
 
-<app-audio-challenge-item></app-audio-challenge-item>
+<!-- <app-audio-challenge-item></app-audio-challenge-item> -->
 
 <div>button block</div>
 <button (click)="newGame()">Start new Game</button>
