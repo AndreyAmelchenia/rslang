@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ProfileComponent } from 'src/app/profile/profile/profile.component';
 
 import { GamesListComponent } from 'src/app/games/components/games-list/games-list.component';
-import { AboutUsListComponent } from '../../aboutUs/about-us-list/about-us-list.component';
+import { AboutUsListComponent } from '../../aboutUs/components/about-us-list/about-us-list.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
