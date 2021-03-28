@@ -1,12 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GameComponent } from './components/game/game.component';
-import { AudioChallengeGameComponent } from './components/audio-challenge-game/audio-challenge-game.component';
-import { AudioChallengeItemComponent } from './components/audio-challenge-item/audio-challenge-item.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { HttpClientModule } from '@angular/common/http';
+
+import { GamesListComponent } from './components/games-list/games-list.component';
+import { GamesItemComponent } from './components/games-item/games-item.component';
+import { GamesRoutingModule } from './games-routing.module';
 
 @NgModule({
-  declarations: [GameComponent, AudioChallengeGameComponent, AudioChallengeItemComponent],
-  imports: [CommonModule],
-  exports: [GameComponent],
+  declarations: [GamesListComponent, GamesItemComponent],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    MatCardModule,
+    MatListModule,
+    MatGridListModule,
+    GamesRoutingModule,
+  ],
+  exports: [GamesListComponent, GamesItemComponent],
 })
 export class GamesModule {}
