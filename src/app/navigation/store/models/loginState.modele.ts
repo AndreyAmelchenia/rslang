@@ -1,6 +1,6 @@
-import { IUser } from './user';
+import { IUser } from './user.modele';
 
-export interface IState {
+export interface ILoginState {
   isAuthenticated: boolean;
   user: IUser | null;
   errorMessage: string | null;

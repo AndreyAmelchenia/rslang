@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Location } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { signUp } from '../../store/actions/auth.actions';
 
 @Component({
   selector: 'app-registration',
@@ -7,7 +10,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./registration.component.scss'],
 })
 export class RegistrationComponent {
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private store: Store, private location: Location) {}
 
   path = null;
 
@@ -18,9 +21,10 @@ export class RegistrationComponent {
   };
 
   Register() {
-    this.auth.registerUser(this.userData).subscribe(
-      (res) => console.log('res', res),
-      (error) => console.log('error', error),
-    );
+    this.store.dispatch(signUp({ user: this.userData }));
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

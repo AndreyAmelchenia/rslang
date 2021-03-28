@@ -1,3 +1,4 @@
+import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -9,6 +10,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { SharedModule } from '../shared/shared.module';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { LoginComponent } from './components/login/login.component';
+import { AuthEffects } from './store/effects/auth.effects';
 import * as authReducer from './store/reducers/auth.reducers';
 
 @NgModule({
@@ -20,6 +22,7 @@ import * as authReducer from './store/reducers/auth.reducers';
     SharedModule,
     FormsModule,
     StoreModule.forFeature(authReducer.authFeatureKey, authReducer.authReducer),
+    EffectsModule.forFeature([AuthEffects]),
   ],
 })
 export class NavigationModule {}

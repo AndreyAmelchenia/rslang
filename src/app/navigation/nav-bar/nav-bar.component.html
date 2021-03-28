@@ -31,8 +31,17 @@
       </button>
       <span>rslang</span>
       <div class="space"></div>
-      <a [routerLink]="[path.Registration]" class="link">Register</a>
-      <a [routerLink]="[path.Login]" class="link">Login</a>
+      <ng-template [ngIf]="isAuth$|async" [ngIfThen]="loginBlock" [ngIfElse]="log"> </ng-template>
+      <ng-template #log>
+        <a [routerLink]="[path.Registration]" class="link">Register</a>
+        <a [routerLink]="[path.Login]" class="link">Sign In</a></ng-template
+      >
+      <ng-template #loginBlock>
+        <div>
+          <span class="greet">Hello, {{(user$|async).name}}</span
+          ><button mat-button (click)="onLogout()">LogOut</button>
+        </div>
+      </ng-template>
     </mat-toolbar>
     <router-outlet></router-outlet>
     <app-footer></app-footer>

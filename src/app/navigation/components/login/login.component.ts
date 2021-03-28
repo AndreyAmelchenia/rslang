@@ -1,5 +1,9 @@
+import { Location } from '@angular/common';
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../state/app.state';
 import { AuthService } from '../../services/auth.service';
+import { login } from '../../store/actions/auth.actions';
 
 @Component({
   selector: 'app-login',
@@ -7,7 +11,11 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  constructor(public auth: AuthService) {}
+  constructor(
+    public auth: AuthService,
+    private store: Store<AppState>,
+    private location: Location,
+  ) {}
 
   userData = {
     email: '',
@@ -15,17 +23,10 @@ export class LoginComponent {
   };
 
   Login() {
-    console.log('click');
-    this.auth.loginUser(this.userData).subscribe(
-      (res) => {
-        console.log('res', res);
-        localStorage.setItem('token', res.token);
-      },
-      (error) => console.log('error', error),
-    );
+    this.store.dispatch(login({ user: this.userData }));
   }
 
-  Logout() {
-    this.auth.logout();
+  goBack() {
+    this.location.back();
   }
 }

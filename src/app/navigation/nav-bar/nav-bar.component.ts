@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Path } from '../../shared/router/roter.modele';
+import { logout } from '../store/actions/auth.actions';
+import { IUser } from '../store/models/user.modele';
+import { isLogin, user } from '../store/selectors';
 
 @Component({
   selector: 'app-nav-bar',
@@ -15,11 +19,21 @@ export class NavBarComponent implements OnInit {
     shareReplay(),
   );
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  isAuth$: Observable<boolean>;
+
+  user$: Observable<IUser>;
+
+  constructor(private breakpointObserver: BreakpointObserver, private store: Store) {}
 
   path = null;
 
+  onLogout() {
+    this.store.dispatch(logout());
+  }
+
   ngOnInit() {
     this.path = Path;
+    this.isAuth$ = this.store.select(isLogin);
+    this.user$ = this.store.select(user);
   }
 }
