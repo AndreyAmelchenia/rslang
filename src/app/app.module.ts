@@ -25,6 +25,7 @@ import { GamesModule } from './games/games.module';
     SharedModule,
     StoreModule.forRoot({}),
     StateModule,
+    GamesModule,
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
