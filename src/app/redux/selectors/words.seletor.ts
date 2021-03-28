@@ -1,7 +1,7 @@
 import { createSelector } from '@ngrx/store';
-import { Word } from 'src/app/common/models/word.model';
+import { AggregatedWords } from 'src/app/common/models/aggregatedWords.model';
 import { AppState } from '../app.state';
 
 export const selectFeature = (state: AppState) => state.words;
 
-export const selectWords = createSelector(selectFeature, (state: Word[]) => state);
+export const selectWords = createSelector(selectFeature, (state: AggregatedWords[]) => state);

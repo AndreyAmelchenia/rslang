@@ -1,10 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
+import { AggregatedWords } from 'src/app/common/models/aggregatedWords.model';
 import { retrievedWordsList } from '../actions/words.actions';
-import { Word } from '../../common/models/word.model';
 
 export const wordsFeatureKey = 'words';
 
-export const initialState: ReadonlyArray<Word> = [];
+export const initialState: ReadonlyArray<AggregatedWords> = [];
 
 export const booksReducer = createReducer(
   initialState,

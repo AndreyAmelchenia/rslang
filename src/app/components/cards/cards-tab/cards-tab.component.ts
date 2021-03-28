@@ -9,6 +9,7 @@ import { AppState } from 'src/app/redux/app.state';
 import { selectWords } from 'src/app/redux/selectors/words.seletor';
 import { expectationRequest } from 'src/app/redux/actions/request.actions';
 import { selectExpectation } from 'src/app/redux/selectors/request.selector';
+import { AggregatedWords } from 'src/app/common/models/aggregatedWords.model';
 // import { WORDS } from '../data/words';
 @Component({
   selector: 'app-cards-tab',
@@ -25,6 +26,8 @@ export class CardsTabComponent implements OnInit, AfterViewInit {
   cols = 2;
 
   expectation: boolean;
+
+  length: number;
 
   constructor(public breakpointObserver: BreakpointObserver, private store: Store<AppState>) {
     this.store.select(selectExpectation).subscribe((expectation) => {
@@ -44,7 +47,7 @@ export class CardsTabComponent implements OnInit, AfterViewInit {
     return merge(...dataMutations).pipe(
       delay(0),
       map(() => {
-        return this.getPagedData([...this.data]);
+        return this.getPagedData([...(this.data || [])]);
       }),
     );
   }
@@ -55,8 +58,9 @@ export class CardsTabComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.store.select(selectWords).subscribe((words) => {
-      this.data = words;
+    this.store.select(selectWords).subscribe((words: AggregatedWords[]) => {
+      this.data = words[0]?.paginatedResults;
+      this.length = words[0]?.totalCount[0].count;
     });
   }
 

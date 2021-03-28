@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Word } from '../../common/models/word.model';
+import { AggregatedWords } from 'src/app/common/models/aggregatedWords.model';
 
 export enum ArticlesActions {
   LoadWords = '[Words Page] Load Words',
@@ -9,7 +9,7 @@ export enum ArticlesActions {
 
 export const retrievedWordsList = createAction(
   ArticlesActions.RetrievedWordSuccess,
-  props<{ Words: Word[] }>(),
+  props<{ Words: AggregatedWords[] }>(),
 );
 
 export const LoadWords = createAction(
