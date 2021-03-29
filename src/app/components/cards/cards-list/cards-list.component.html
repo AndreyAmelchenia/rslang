@@ -1,11 +1,9 @@
-<mat-tab-group #matTab>
+<mat-tab-group #matTab (selectedIndexChange)="addWordsGroup($event)">
   <mat-tab *ngFor="let tab of asyncTabs | async">
-    <ng-template mat-tab-label
-      ><mat-icon [ngStyle]="{'color': tab.color}" class="example-tab-icon"
-        >{{tab.icon}}</mat-icon
-      ></ng-template
-    >
-    <app-cards-tab *ngIf="expectation | async; else elseBlock"></app-cards-tab>
+    <ng-template mat-tab-label>
+      <mat-icon [ngStyle]="{'color': tab.color}" class="example-tab-icon"> {{tab.icon}} </mat-icon>
+    </ng-template>
+    <app-cards-tab *ngIf="expectation | async; else elseBlock" [group]="tab.group"></app-cards-tab>
     <ng-template #elseBlock><mat-spinner></mat-spinner></ng-template>
   </mat-tab>
 </mat-tab-group>

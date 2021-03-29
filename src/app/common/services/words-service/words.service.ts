@@ -7,7 +7,7 @@ import { AggregatedWords } from '../../models/aggregatedWords.model';
 import { Word } from '../../models/word.model';
 
 const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNTRmM2NkNzU4NGFjMDAxNWQ4YjdjYSIsImlhdCI6MTYxNjk2MTkzNiwiZXhwIjoxNjE2OTc2MzM2fQ.E3U1w6FRpykIo6fzgV5dPFFkROmzIeU5nK-LwSrdfc4';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNTRmM2NkNzU4NGFjMDAxNWQ4YjdjYSIsImlhdCI6MTYxNzAxNzA3OSwiZXhwIjoxNjE3MDMxNDc5fQ.T8h4TFIMhMPZiwQGsJ7vZ9Cn7d2cyNOf2U28XUBVINo';
 @Injectable({
   providedIn: 'root',
 })

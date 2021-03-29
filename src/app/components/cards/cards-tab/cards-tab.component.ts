@@ -1,38 +1,39 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { Observable, of as observableOf, merge } from 'rxjs';
+import { Observable, merge } from 'rxjs';
 import { Word } from 'src/app/common/models/word.model';
 import { delay, map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/redux/app.state';
-import { selectWords } from 'src/app/redux/selectors/words.seletor';
-import { expectationRequest } from 'src/app/redux/actions/request.actions';
-import { selectExpectation } from 'src/app/redux/selectors/request.selector';
-import { AggregatedWords } from 'src/app/common/models/aggregatedWords.model';
-// import { WORDS } from '../data/words';
+import { selectWordsByGroup } from 'src/app/redux/selectors/words.selector';
 @Component({
   selector: 'app-cards-tab',
   templateUrl: './cards-tab.component.html',
   styleUrls: ['./cards-tab.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardsTabComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  @Input() group: number;
+
   words: Observable<Word[]>;
 
-  data: Word[];
+  data: Observable<Word[]>;
 
   cols = 2;
-
-  expectation: boolean;
 
   length: number;
 
   constructor(public breakpointObserver: BreakpointObserver, private store: Store<AppState>) {
-    this.store.select(selectExpectation).subscribe((expectation) => {
-      this.expectation = expectation;
-    });
     this.breakpointObserver.observe(['(max-width: 600px)']).subscribe((state: BreakpointState) => {
       if (state.matches) {
         this.cols = 1;
@@ -43,11 +44,15 @@ export class CardsTabComponent implements OnInit, AfterViewInit {
   }
 
   connect(): Observable<Word[]> {
-    const dataMutations = [observableOf(this.data), this.paginator.page];
+    const dataMutations = [this.data, this.paginator.page];
     return merge(...dataMutations).pipe(
       delay(0),
       map(() => {
-        return this.getPagedData([...(this.data || [])]);
+        let words: Word[];
+        this.data.subscribe((data) => {
+          words = data;
+        });
+        return this.getPagedData([...(words || [])]);
       }),
     );
   }
@@ -58,17 +63,17 @@ export class CardsTabComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.store.select(selectWords).subscribe((words: AggregatedWords[]) => {
-      this.data = words[0]?.paginatedResults;
-      this.length = words[0]?.totalCount[0].count;
+    this.data = this.store.select(selectWordsByGroup(this.group)).pipe(
+      map((words) => {
+        return words[0].paginatedResults;
+      }),
+    );
+    this.store.select(selectWordsByGroup(this.group)).subscribe((words) => {
+      this.length = words[0].totalCount[0].count;
     });
   }
 
   ngAfterViewInit() {
     this.words = this.connect();
-  }
-
-  clickres() {
-    this.store.dispatch(expectationRequest({ expectation: !this.expectation }));
   }
 }

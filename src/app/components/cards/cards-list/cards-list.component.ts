@@ -1,21 +1,23 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Observer } from 'rxjs';
+import { LoadWords } from 'src/app/redux/actions/words.actions';
 import { AppState } from 'src/app/redux/app.state';
 import { selectExpectation } from 'src/app/redux/selectors/request.selector';
 
 export interface ExampleTab {
-  label: string;
+  group: number;
   icon: string;
   color: string;
 }
+
 @Component({
   selector: 'app-cards-list',
   templateUrl: './cards-list.component.html',
   styleUrls: ['./cards-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CardsListComponent implements OnInit {
+export class CardsListComponent {
   value: string;
 
   asyncTabs: Observable<ExampleTab[]>;
@@ -23,21 +25,23 @@ export class CardsListComponent implements OnInit {
   expectation: Observable<boolean>;
 
   constructor(private store: Store<AppState>) {
+    this.expectation = this.store.select(selectExpectation);
     this.asyncTabs = new Observable((observer: Observer<ExampleTab[]>) => {
       setTimeout(() => {
         observer.next([
-          { label: 'First', icon: 'filter_1', color: 'blue' },
-          { label: 'Second', icon: 'filter_2', color: 'green' },
-          { label: 'Third', icon: 'filter_3', color: 'brown' },
-          { label: 'Four', icon: 'filter_4', color: 'orange' },
-          { label: 'Five', icon: 'filter_5', color: 'red' },
-          { label: 'Six', icon: 'filter_6', color: 'gold' },
+          { group: 0, icon: 'filter_1', color: 'blue' },
+          { group: 1, icon: 'filter_2', color: 'green' },
+          { group: 2, icon: 'filter_3', color: 'brown' },
+          { group: 3, icon: 'filter_4', color: 'orange' },
+          { group: 4, icon: 'filter_5', color: 'red' },
+          { group: 5, icon: 'filter_6', color: 'gold' },
         ]);
       });
     });
   }
 
-  ngOnInit() {
-    this.expectation = this.store.select(selectExpectation);
+  addWordsGroup(group: number) {
+    this.store.dispatch(LoadWords({ page: 1, group, wordsPerPage: 60 }));
+    console.log(group);
   }
 }

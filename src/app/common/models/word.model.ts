@@ -1,5 +1,7 @@
 export interface Word {
   id: string;
+  page: number;
+  group: number;
   word: string;
   image: string;
   audio: string;

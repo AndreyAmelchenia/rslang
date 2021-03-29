@@ -4,9 +4,15 @@ import { retrievedWordsList } from '../actions/words.actions';
 
 export const wordsFeatureKey = 'words';
 
-export const initialState: ReadonlyArray<AggregatedWords> = [];
+export const initialState: ReadonlyArray<AggregatedWords> = [
+  { totalCount: [{ count: 0 }], paginatedResults: [] },
+];
 
 export const booksReducer = createReducer(
   initialState,
-  on(retrievedWordsList, (state, { Words }) => [...Words]),
+  on(retrievedWordsList, (state, { Words }) => {
+    console.log(state);
+
+    return [...Words];
+  }),
 );
