@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { WordsService } from 'src/app/common/services/words-service/words.service';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +7,4 @@ import { WordsService } from 'src/app/common/services/words-service/words.servic
 })
 export class AppComponent {
   title = 'rslang';
-
-  constructor(private wordsService: WordsService) {}
 }
