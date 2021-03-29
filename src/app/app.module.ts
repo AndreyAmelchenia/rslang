@@ -1,24 +1,23 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { StoreModule } from '@ngrx/store';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { HttpClientModule } from '@angular/common/http';
-
-import { AppComponent } from './app.component';
-import { ProfileModule } from './profile/profile.module';
-import { StateModule } from './state/state.module';
+import { ReduxModule } from './redux/redux.module';
+import { CardsModule } from './components/cards/cards.module';
+import { ProfileModule } from './components/profile/profile.module';
 import { SharedModule } from './shared/shared.module';
-import { environment } from '../environments/environment';
-import { NavigationModule } from './navigation/navigation.module';
-
-import { AboutUsModule } from './aboutUs/module/about-us/about-us.module';
-import { AboutUsService } from './aboutUs/service/about-us.service';
-import { GamesModule } from './games/games.module';
+import { NavigationModule } from './components/navigation/navigation.module';
+import { AboutUsModule } from './components/aboutUs/modules/about-us.module';
+import { GamesModule } from './components/games/games.module';
+import { AppComponent } from './components/app/app.component';
+import { LocalStorageService } from './common/services/storage/local.service';
+import { SessionService } from './common/services/storage/session.service';
+import { MemoryService } from './common/services/storage/memory.service';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    CardsModule,
+    NavigationModule,
     AboutUsModule,
     GamesModule,
     BrowserModule,
@@ -26,15 +25,9 @@ import { GamesModule } from './games/games.module';
     NavigationModule,
     ProfileModule,
     SharedModule,
-    StoreModule.forRoot({}),
-    StateModule,
-    StoreDevtoolsModule.instrument({
-      maxAge: 25,
-      logOnly: environment.production,
-    }),
-    HttpClientModule,
+    ReduxModule,
   ],
-  providers: [AboutUsService],
+  providers: [LocalStorageService, SessionService, MemoryService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

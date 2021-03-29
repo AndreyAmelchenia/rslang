@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
+// delete this test component
+import { StorageTestComponent } from '../common/services/storage/storage-test.component';
 import { AngularMaterialModule } from './material/material.module';
-import { AppRoutingModule } from './router/app-routing.module';
 
 @NgModule({
-  exports: [AngularMaterialModule, AppRoutingModule],
+  declarations: [StorageTestComponent],
+  exports: [AngularMaterialModule, StorageTestComponent],
 })
 export class SharedModule {}

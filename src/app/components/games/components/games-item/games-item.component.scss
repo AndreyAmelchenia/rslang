@@ -1,0 +1,24 @@
+a {
+  text-decoration: none;
+}
+
+mat-card {
+  width: 60%;
+  margin: 0 auto;
+  text-align: center
+
+  &-title {
+    color: #3b3b36;
+  }
+
+  img {
+    width: 50%;
+  
+    @media (max-width: 600px) {
+      width: 40%;
+    }
+  }
+}
+  
+  
+  

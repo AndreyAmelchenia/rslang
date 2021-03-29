@@ -1,0 +1,20 @@
+.example-card {
+  box-sizing: border-box;
+  width: calc(100% - 40px);
+  height: 180px;
+  margin: 20px auto;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+img{
+  width: 150px;
+
+}
+
+.example-form-field {
+  width: 200px;
+}
