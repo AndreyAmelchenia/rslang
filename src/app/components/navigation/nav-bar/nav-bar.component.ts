@@ -3,7 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { Path } from '../../../shared/router/roter.modele';
+import { Path } from '../../../shared/models/roter.modele';
 import { logout } from '../../../redux/actions/auth.actions';
 import { IUser } from '../../../redux/models/user.modele';
 import { isLogin, user } from '../../../redux/selectors/auth.selectors';

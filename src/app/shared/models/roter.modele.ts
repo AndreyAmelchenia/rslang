@@ -5,4 +5,6 @@ export enum Path {
   StartPage = 'start-page',
   Registration = 'registration',
   Login = 'login',
+  Cards = 'cards',
+  Profile = 'profile',
 }
