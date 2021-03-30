@@ -1,33 +1,43 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AppComponent } from './components/app/app.component';
+import { TokenInterceptorService } from './components/navigation/services/token-interceptor.service';
 import { ReduxModule } from './redux/redux.module';
-import { CardsModule } from './components/cards/cards.module';
-import { ProfileModule } from './components/profile/profile.module';
 import { SharedModule } from './shared/shared.module';
 import { NavigationModule } from './components/navigation/navigation.module';
 import { AboutUsModule } from './components/aboutUs/modules/about-us.module';
+import { AboutUsService } from './components/aboutUs/services/about-us.service';
 import { GamesModule } from './components/games/games.module';
-import { AppComponent } from './components/app/app.component';
-import { LocalStorageService } from './common/services/storage/local.service';
-import { SessionService } from './common/services/storage/session.service';
-import { MemoryService } from './common/services/storage/memory.service';
+import { ProfileModule } from './components/profile/profile.module';
+import { CardsModule } from './components/cards/cards.module';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
+<<<<<<< HEAD
     BrowserModule,
     CardsModule,
     NavigationModule,
     AboutUsModule,
     GamesModule,
-    BrowserAnimationsModule,
+=======
     NavigationModule,
-    ProfileModule,
+    AboutUsModule,
+    GamesModule,
+    CardsModule,
+    BrowserModule,
+>>>>>>> d01204844fc66bda64c62b1ae936c572838b6969
+    BrowserAnimationsModule,
     SharedModule,
     ReduxModule,
+    ProfileModule,
   ],
-  providers: [LocalStorageService, SessionService, MemoryService],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },
+    AboutUsService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
