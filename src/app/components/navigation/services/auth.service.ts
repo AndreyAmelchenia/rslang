@@ -29,17 +29,17 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('token');
+    this.sessionService.removeItem('token');
   }
 
   isAuth() {
-    const user: IUser | null = this.getToken();
+    const user: IUser | null = this.getUser();
     if (user) {
       this.store.dispatch(loginSuccess({ user }));
     }
   }
 
-  getToken(): IUser {
-    return this.sessionService.getItem('user');
+  getUser(): IUser {
+    return this.sessionService.getItem('user') || '';
   }
 }
