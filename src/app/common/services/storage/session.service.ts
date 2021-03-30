@@ -29,8 +29,8 @@ export class SessionService implements SessionStorage {
     this.storage.clear();
   }
 
-  getItem(key: string): string | null {
-    return this.storage.getItem(key);
+  getItem(key: string): any | null {
+    return JSON.parse(this.storage.getItem(key));
   }
 
   key(index: number): string | null {
@@ -41,7 +41,7 @@ export class SessionService implements SessionStorage {
     this.storage.removeItem(key);
   }
 
-  setItem(key: string, value: string): void {
-    this.storage.setItem(key, value);
+  setItem(key: string, value: any): void {
+    this.storage.setItem(key, JSON.stringify(value));
   }
 }
