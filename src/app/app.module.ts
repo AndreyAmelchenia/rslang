@@ -16,11 +16,11 @@ import { MemoryService } from './common/services/storage/memory.service';
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    BrowserModule,
     CardsModule,
     NavigationModule,
     AboutUsModule,
     GamesModule,
-    BrowserModule,
     BrowserAnimationsModule,
     NavigationModule,
     ProfileModule,

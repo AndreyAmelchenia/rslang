@@ -1,5 +1,5 @@
 export interface Word {
-  id: string;
+  _id: string;
   word: string;
   image: string;
   audio: string;
