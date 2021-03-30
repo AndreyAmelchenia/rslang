@@ -28,14 +28,14 @@ export class WordsEffects {
           }
         });
         this.store.select(selectWordsByGroup(group));
-        this.store.dispatch(expectationRequest({ expectation: false }));
+        if (!page) this.store.dispatch(expectationRequest({ expectation: false }));
         if (bool) {
           this.store.dispatch(expectationRequest({ expectation: true }));
           return of({ type: ArticlesActions.BackWord });
         }
         return this.wordsService.aggregatedWords(group, page, wordsPerPage).pipe(
           map((word) => {
-            this.store.dispatch(expectationRequest({ expectation: true }));
+            if (!page) this.store.dispatch(expectationRequest({ expectation: true }));
             return retrievedWordsList({ Words: word });
           }),
         );

@@ -42,6 +42,5 @@ export class CardsListComponent {
 
   addWordsGroup(group: number) {
     this.store.dispatch(LoadWords({ page: 0, group, wordsPerPage: 60 }));
-    console.log(group);
   }
 }
