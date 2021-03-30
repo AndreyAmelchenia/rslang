@@ -1,4 +1,4 @@
-import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { Observable, merge } from 'rxjs';
+import { Observable, merge, of } from 'rxjs';
 import { Word } from 'src/app/common/models/word.model';
 import { delay, map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
@@ -26,24 +26,22 @@ export class CardsTabComponent implements OnInit, AfterViewInit {
 
   @Input() group: number;
 
+  @Input() color: number[];
+
   words: Observable<Word[]>;
 
   data: Observable<Word[]>;
 
-  cols = 2;
+  cols = of(2);
 
   length: number;
 
   lengthBase: number;
 
   constructor(public breakpointObserver: BreakpointObserver, private store: Store<AppState>) {
-    this.breakpointObserver.observe(['(max-width: 600px)']).subscribe((state: BreakpointState) => {
-      if (state.matches) {
-        this.cols = 1;
-      } else {
-        this.cols = 2;
-      }
-    });
+    this.cols = this.breakpointObserver
+      .observe([Breakpoints.Tablet])
+      .pipe(map(({ matches }) => (matches ? 2 : 1)));
   }
 
   connect(): Observable<Word[]> {

@@ -1,0 +1,29 @@
+:host {
+  // width: calc(100% - 40px);
+}
+
+mat-card {
+  // padding: 10px;
+  // display: flex;
+  // justify-content: space-around;
+}
+mat-card-content {
+  margin: 10px;
+}
+
+mat-card-header {
+  display: flex;
+justify-content: space-around;
+}
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+img{
+  width: 150px;
+}
+
+.example-form-field {
+  width: 200px;
+}
