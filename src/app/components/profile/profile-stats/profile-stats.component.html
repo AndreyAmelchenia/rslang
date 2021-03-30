@@ -2,8 +2,8 @@
   <mat-card class="stats-card">
     <mat-card-content>
       <h2>Daily statistics</h2>
-      <p>Learned words number: {{stats.totalLearned}}</p>
-      <p>Right answers percent: {{stats.totalRightPercent}} %</p>
+      <p>Learned words: {{stats.totalLearned}}</p>
+      <p>Right answers: {{stats.totalRightPercent}} %</p>
       <div>
         <p>Longest series</p>
         <p>Savanna: {{stats.longestSeries.savanna}}</p>
@@ -13,17 +13,25 @@
       </div>
       <div>
         <p>Daily status</p>
-        <p>Number of learned words: {{stats.dailyStatus.learned}}</p>
-        <p>Right answers percent: {{stats.dailyStatus.rightPercent}} %</p>
+        <p>Learned words: {{stats.dailyStatus.learned}}</p>
+        <p>Right answers: {{stats.dailyStatus.rightPercent}} %</p>
       </div>
     </mat-card-content>
   </mat-card>
-  <mat-card class="stats-card">
+  <mat-card class="graph-card">
     <mat-card-content>
-      <h2>Global statistics</h2>
-      <!-- <p>graph 1: ever day words</p>
-      <p>graph 2: grows rate</p> -->
+      <h2>Global statistics: {{checkedStyle}}</h2>
+
       <app-profile-chart></app-profile-chart>
+
+      <mat-radio-group
+        aria-labelledby="radio-group-label"
+        class="radio-group"
+        [(ngModel)]="checkedStyle"
+      >
+        <mat-radio-button class="radio-button" [value]="daily">{{daily}}</mat-radio-button>
+        <mat-radio-button class="radio-button" [value]="total">{{total}}</mat-radio-button>
+      </mat-radio-group>
     </mat-card-content>
   </mat-card>
 </div>

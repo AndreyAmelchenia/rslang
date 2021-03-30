@@ -13,9 +13,17 @@ import { Stats } from 'src/app/common/models/stats.model';
 export class ProfileStatsComponent {
   stats: Stats;
 
+  checkedStyle: string;
+
+  daily = 'every day';
+
+  total = 'total growing';
+
   constructor(private store: Store<AppState>) {
     this.store.select(selectStats).subscribe((stats) => {
       this.stats = stats;
     });
+
+    this.checkedStyle = this.daily;
   }
 }

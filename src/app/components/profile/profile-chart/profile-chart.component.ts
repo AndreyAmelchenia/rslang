@@ -12,7 +12,32 @@ export class ProfileChartComponent {
     responsive: true,
   };
 
-  barChartLabels: Label[] = ['Apple', 'Banana', 'Kiwifruit', 'Blueberry', 'Orange', 'Grapes'];
+  barChartLabels: Label[] = [
+    '01.02.21',
+    '01.02.21',
+    '01.02.21',
+    '01.02.21',
+    '01.02.21',
+    '01.02.21',
+    '01.02.21',
+    '01.02.21',
+    '01.02.21',
+    '01.02.21',
+    '01.02.21',
+    '01.02.21',
+    '01.02.21',
+    '01.02.21',
+    '01.02.21',
+    '01.02.21',
+    '01.02.21',
+    '01.02.21',
+    '01.02.21',
+    '01.02.21',
+    '01.02.21',
+    '01.02.21',
+    '01.02.21',
+    '01.02.21',
+  ];
 
   barChartType: ChartType = 'bar';
 
@@ -20,5 +45,35 @@ export class ProfileChartComponent {
 
   barChartPlugins = [];
 
-  barChartData: ChartDataSets[] = [{ data: [45, 37, 60, 70, 46, 33], label: 'Best Fruits' }];
+  barChartData: ChartDataSets[] = [
+    {
+      data: [
+        10,
+        15,
+        25,
+        18,
+        30,
+        1,
+        10,
+        15,
+        25,
+        18,
+        30,
+        1,
+        10,
+        15,
+        25,
+        18,
+        30,
+        1,
+        10,
+        15,
+        25,
+        18,
+        30,
+        1,
+      ],
+      label: 'Learned Words',
+    },
+  ];
 }

@@ -1,22 +1,22 @@
 module.exports = {
-  trailingComma: "all",
+  trailingComma: 'all',
   semi: true,
-  singleQuote: false,
+  singleQuote: true,
   bracketSpacing: true,
   printWidth: 100,
-  arrowParens: "always",
+  arrowParens: 'always',
   overrides: [
     {
-        files: "*.component.html",
-        options: {
-            parser: "angular"
-        }
+      files: '*.component.html',
+      options: {
+        parser: 'angular',
+      },
     },
     {
-        files: "*.html",
-        options: {
-            parser: "html"
-        }
-    }
-]
+      files: '*.html',
+      options: {
+        parser: 'html',
+      },
+    },
+  ],
 };

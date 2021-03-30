@@ -1,4 +1,25 @@
+.stats-wrapper {
+  margin: 0 auto;
+  width: 90%;
+  display: flex;
+}
+
 .stats-card {
   margin: 8px auto;
-  width: 90%;
+  width: 20%;
+}
+
+.graph-card {
+  margin: 8px auto;
+  width: 70%;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.radio-button {
+  margin: 5px;
 }
