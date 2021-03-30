@@ -28,6 +28,18 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>rslang</span>
+      <div class="space"></div>
+      <ng-template [ngIf]="isAuth$|async" [ngIfThen]="loginBlock" [ngIfElse]="log"> </ng-template>
+      <ng-template #log>
+        <a [routerLink]="[path.Registration]" class="link">Register</a>
+        <a routerLink="/login" class="link">Sign In</a>
+      </ng-template>
+      <ng-template #loginBlock>
+        <div>
+          <span class="greet">Hello, {{(user$|async).name}}</span
+          ><button mat-button (click)="onLogout()">LogOut</button>
+        </div>
+      </ng-template>
     </mat-toolbar>
     <router-outlet></router-outlet>
     <app-footer></app-footer>
