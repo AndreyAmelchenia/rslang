@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { Path } from '../../../shared/models/roter.modele';
-import { logout } from '../../../redux/actions/auth.actions';
+import { isAuth, logout } from '../../../redux/actions/auth.actions';
 import { IUser } from '../../../redux/models/user.modele';
 import { isLogin, user } from '../../../redux/selectors/auth.selectors';
 
@@ -33,6 +33,7 @@ export class NavBarComponent implements OnInit {
 
   ngOnInit() {
     this.path = Path;
+    this.store.dispatch(isAuth());
     this.isAuth$ = this.store.select(isLogin);
     this.user$ = this.store.select(user);
   }

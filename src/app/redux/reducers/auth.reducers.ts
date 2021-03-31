@@ -12,9 +12,9 @@ export const initialUserState: ILoginState = {
 
 export const authReducer = createReducer(
   initialUserState,
-  on(authActions.loginSuccess, (state, user) => ({
+  on(authActions.loginSuccess, (state, action) => ({
     ...state,
-    user: { ...user },
+    user: { ...action.user },
     isAuthenticated: true,
   })),
   on(authActions.loginFailure, (state) => ({
