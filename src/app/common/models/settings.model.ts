@@ -1,5 +1,8 @@
 export interface Settings {
   wordsPerDay: number;
-  displayTranslation: boolean;
-  displayHandlingButtons: boolean;
+  optional: {
+    displayTranslation: boolean;
+    displayHandlingButtons: boolean;
+  };
+  id?: number;
 }

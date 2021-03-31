@@ -6,8 +6,10 @@ export const settingsFeatureKey = 'settings';
 
 export const initialState: Settings = {
   wordsPerDay: 10,
-  displayTranslation: true,
-  displayHandlingButtons: true,
+  optional: {
+    displayTranslation: true,
+    displayHandlingButtons: true,
+  },
 };
 
 export const settingsReducer = createReducer(
