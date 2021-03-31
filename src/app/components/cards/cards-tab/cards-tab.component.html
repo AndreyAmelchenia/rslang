@@ -1,4 +1,4 @@
-<mat-grid-list [cols]="cols | async" rowHeight="1.5:1">
+<mat-grid-list [cols]="cols | async" [rowHeight]="rowHeight |async">
   <mat-grid-tile *ngFor="let word of words |async">
     <app-card-item [word]="word" [color]="color"></app-card-item>
   </mat-grid-tile>
