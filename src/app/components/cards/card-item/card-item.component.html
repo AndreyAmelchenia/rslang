@@ -24,6 +24,7 @@
         color="accent"
         aria-label="Example icon button with a home icon"
         title="add card to hard"
+        (click)="addDifficultyWord(word._id, 'hard', !word.userWord)"
       >
         <mat-icon> add_circle_outline</mat-icon>
       </button>

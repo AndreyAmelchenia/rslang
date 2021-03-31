@@ -29,6 +29,7 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(ActionType.LogInSuccess),
         tap((user: any) => {
+          localStorage.setItem('userId', user.userId);
           localStorage.setItem('token', user.token);
           this.router.navigateByUrl('/');
         }),

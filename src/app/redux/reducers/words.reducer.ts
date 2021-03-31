@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { AggregatedWords, AggregatedWordsRedux } from 'src/app/common/models/aggregatedWords.model';
-import { BackWord, retrievedWordsList } from '../actions/words.actions';
+import { AddDifficultyWords, BackWord, retrievedWordsList } from '../actions/words.actions';
 
 export const wordsFeatureKey = 'words';
 
@@ -36,4 +36,21 @@ export const booksReducer = createReducer(
   initialState,
   on(retrievedWordsList, (state, { Words }) => addNewWords(state, Words)),
   on(BackWord, (state) => [...state]),
+  on(AddDifficultyWords, (state, { wordId, difficulty, newWord }) => {
+    const wordModify = state[0].paginatedResults.find((el) => el._id === wordId);
+    return [
+      {
+        ...state[0],
+        paginatedResults: [
+          ...state[0].paginatedResults.filter((el) => el.word !== wordId),
+          {
+            ...wordModify,
+            userWord: newWord
+              ? { difficulty, optional: { repeat: 0 } }
+              : { ...wordModify.userWord, difficulty },
+          },
+        ],
+      },
+    ];
+  }),
 );

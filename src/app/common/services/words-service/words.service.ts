@@ -29,4 +29,23 @@ export class WordsService {
       )
       .pipe(map((words) => words));
   }
+
+  addDifficultyWord(
+    wordId: string,
+    userId: string,
+    difficulty: 'easy' | 'hard' | 'deleted' = 'easy',
+    newWord: boolean = true,
+  ) {
+    if (newWord) {
+      this.http.post(
+        `https://andey-rslang-back-end.herokuapp.com/users/${userId}/words/${wordId}`,
+        JSON.stringify({ difficulty }),
+      );
+    } else {
+      this.http.put(
+        `https://andey-rslang-back-end.herokuapp.com/users/${userId}/words/${wordId}`,
+        JSON.stringify({ difficulty }),
+      );
+    }
+  }
 }

@@ -5,7 +5,7 @@ export enum ArticlesActions {
   LoadWords = '[Words Page] Load Words',
   RetrievedWordSuccess = '[Word List/API] Retrieve Words Success',
   BackWord = '[Back Word] Back Word',
-  ArticlesLoadedError = '[Articles Page] Articles Loaded Error',
+  AddDifficulty = '[Add difficulty] Add difficulty',
 }
 
 export const retrievedWordsList = createAction(
@@ -16,6 +16,15 @@ export const retrievedWordsList = createAction(
 export const LoadWords = createAction(
   ArticlesActions.LoadWords,
   props<{ group: number; page: number; wordsPerPage: number }>(),
+);
+
+export const AddDifficultyWords = createAction(
+  ArticlesActions.AddDifficulty,
+  props<{
+    wordId: string;
+    difficulty: 'easy' | 'hard' | 'deleted';
+    newWord: boolean;
+  }>(),
 );
 
 export const BackWord = createAction(ArticlesActions.BackWord);

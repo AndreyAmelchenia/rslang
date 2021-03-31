@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
-import { Observable, merge, of } from 'rxjs';
+import { Observable, merge } from 'rxjs';
 import { Word } from 'src/app/common/models/word.model';
 import { delay, map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
@@ -32,9 +32,9 @@ export class CardsTabComponent implements OnInit, AfterViewInit {
 
   data: Observable<Word[]>;
 
-  cols = of(3);
+  cols: Observable<number>;
 
-  rowHeight = of('1:1');
+  rowHeight: Observable<string>;
 
   length: number;
 
