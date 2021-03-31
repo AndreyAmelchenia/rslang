@@ -8,9 +8,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { GamesListComponent } from './components/games-list/games-list.component';
 import { GamesItemComponent } from './components/games-item/games-item.component';
 import { GamesRoutingModule } from './games-routing.module';
+import { GameSavannahComponent } from './pages/game-savannah/game-savannah.component';
 
 @NgModule({
-  declarations: [GamesListComponent, GamesItemComponent],
+  declarations: [GamesListComponent, GamesItemComponent, GameSavannahComponent],
   imports: [
     CommonModule,
     HttpClientModule,
