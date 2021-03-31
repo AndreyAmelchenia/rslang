@@ -37,19 +37,20 @@ export const booksReducer = createReducer(
   on(retrievedWordsList, (state, { Words }) => addNewWords(state, Words)),
   on(BackWord, (state) => [...state]),
   on(AddDifficultyWords, (state, { wordId, difficulty, newWord }) => {
-    const wordModify = state[0].paginatedResults.find((el) => el._id === wordId);
+    console.log('reducer', state, wordId, difficulty, newWord);
     return [
       {
         ...state[0],
-        paginatedResults: [
-          ...state[0].paginatedResults.filter((el) => el.word !== wordId),
-          {
-            ...wordModify,
-            userWord: newWord
-              ? { difficulty, optional: { repeat: 0 } }
-              : { ...wordModify.userWord, difficulty },
-          },
-        ],
+        paginatedResults: state[0].paginatedResults.map((el) =>
+          el._id === wordId
+            ? {
+                ...el,
+                userWord: newWord
+                  ? { difficulty, optional: { repeat: 0 } }
+                  : { ...el.userWord, difficulty },
+              }
+            : el,
+        ),
       },
     ];
   }),

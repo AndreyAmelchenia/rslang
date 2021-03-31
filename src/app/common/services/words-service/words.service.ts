@@ -35,17 +35,25 @@ export class WordsService {
     userId: string,
     difficulty: 'easy' | 'hard' | 'deleted' = 'easy',
     newWord: boolean = true,
-  ) {
+  ): Observable<AggregatedWords[]> {
     if (newWord) {
-      this.http.post(
-        `https://andey-rslang-back-end.herokuapp.com/users/${userId}/words/${wordId}`,
-        JSON.stringify({ difficulty }),
-      );
-    } else {
-      this.http.put(
-        `https://andey-rslang-back-end.herokuapp.com/users/${userId}/words/${wordId}`,
-        JSON.stringify({ difficulty }),
-      );
+      console.log(wordId, userId, difficulty, newWord);
+      return this.http
+        .get<AggregatedWords[]>('https://andey-rslang-back-end.herokuapp.com/words?group=5&page=10')
+        .pipe(
+          map((words) => {
+            console.log(words);
+            return words;
+          }),
+        );
+      // this.http.post<string>(
+      //   // `https://andey-rslang-back-end.herokuapp.com/users/${userId}/words/${wordId}`,
+      //   // { difficulty },
+      // );
     }
+    return this.http.put<any>(
+      `https://andey-rslang-back-end.herokuapp.com/users/${userId}/words/${wordId}`,
+      { difficulty },
+    );
   }
 }

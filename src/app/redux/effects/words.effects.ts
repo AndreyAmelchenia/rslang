@@ -50,14 +50,17 @@ export class WordsEffects {
     );
   });
 
-  addDifficultyWords$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(AddDifficultyWords),
-      tap(({ wordId, difficulty, newWord }) => {
-        of(this.userLocal.getItem('userId')).pipe(
-          map((userId) => this.wordsService.addDifficultyWord(wordId, userId, difficulty, newWord)),
-        );
-      }),
-    );
-  });
+  addDifficultyWords$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(AddDifficultyWords),
+        tap(({ wordId, difficulty, newWord }) => {
+          of(this.userLocal.getItem('userId')).subscribe((userId) =>
+            this.wordsService.addDifficultyWord(wordId, userId, difficulty, newWord),
+          );
+        }),
+      );
+    },
+    { dispatch: false },
+  );
 }
