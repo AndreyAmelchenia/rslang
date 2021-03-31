@@ -9,7 +9,7 @@ import { Path } from './shared/models/roter.modele';
 import { AboutUsListComponent } from './components/aboutUs/components/about-us-list/about-us-list.component';
 
 const appRoutes: Routes = [
-  { path: Path.Empty, redirectTo: Path.Empty, pathMatch: 'full' },
+  { path: Path.Empty, redirectTo: 'games/Savanna', pathMatch: 'full' },
   { path: Path.AboutUs, component: AboutUsListComponent },
   { path: Path.Cards, component: CardsListComponent },
   { path: Path.Profile, component: ProfileComponent },

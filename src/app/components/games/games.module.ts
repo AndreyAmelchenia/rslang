@@ -8,10 +8,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { GamesListComponent } from './components/games-list/games-list.component';
 import { GamesItemComponent } from './components/games-item/games-item.component';
 import { GamesRoutingModule } from './games-routing.module';
-import { GameSavannahComponent } from './pages/game-savannah/game-savannah.component';
+import { GameSavannahModule } from './modules/game-savannah/game-savannah.module';
 
 @NgModule({
-  declarations: [GamesListComponent, GamesItemComponent, GameSavannahComponent],
+  declarations: [GamesListComponent, GamesItemComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -19,6 +19,7 @@ import { GameSavannahComponent } from './pages/game-savannah/game-savannah.compo
     MatListModule,
     MatGridListModule,
     GamesRoutingModule,
+    GameSavannahModule,
   ],
   exports: [GamesListComponent, GamesItemComponent],
 })
