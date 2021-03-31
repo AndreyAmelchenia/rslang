@@ -1,4 +1,4 @@
-import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -32,16 +32,20 @@ export class CardsTabComponent implements OnInit, AfterViewInit {
 
   data: Observable<Word[]>;
 
-  cols = of(2);
+  cols = of(3);
 
   length: number;
 
   lengthBase: number;
 
   constructor(public breakpointObserver: BreakpointObserver, private store: Store<AppState>) {
-    this.cols = this.breakpointObserver
-      .observe([Breakpoints.Tablet])
-      .pipe(map(({ matches }) => (matches ? 2 : 1)));
+    this.cols = this.breakpointObserver.observe(['(min-width: 700px)', '(min-width: 1060px)']).pipe(
+      map(({ breakpoints }) => {
+        if (breakpoints['(min-width: 1060px)']) return 3;
+        if (breakpoints['(min-width: 700px)']) return 2;
+        return 1;
+      }),
+    );
   }
 
   connect(): Observable<Word[]> {

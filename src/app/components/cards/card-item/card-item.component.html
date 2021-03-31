@@ -2,20 +2,45 @@
   <mat-card-header>
     <mat-card-title-group>
       <mat-card-title>{{word.word}}</mat-card-title>
+      <mat-card-subtitle>{{word.transcription}}</mat-card-subtitle>
       <mat-card-subtitle>{{word.wordTranslate}}</mat-card-subtitle>
     </mat-card-title-group>
-    <button mat-mini-fab disabled aria-label="Example icon button with a home icon">
-      <mat-icon>home</mat-icon>
-    </button>
-    <button mat-mini-fab disabled aria-label="Example icon button with a home icon">
-      <mat-icon>home</mat-icon>
-    </button>
-  </mat-card-header>
-  <mat-card-content>
     <img
-      mat-card-image
+      mat-card-md-image
       [src]="'https://andey-rslang-back-end.herokuapp.com/' + word.image"
       alt="Photo of a Shiba Inu"
     />
+    <div class="group-button">
+      <button
+        mat-mini-fab
+        color="accent"
+        aria-label="Example icon button with a home icon"
+        title="play"
+      >
+        <mat-icon>play_circle</mat-icon>
+      </button>
+      <button
+        mat-mini-fab
+        color="accent"
+        aria-label="Example icon button with a home icon"
+        title="add card to hard"
+      >
+        <mat-icon> add_circle_outline</mat-icon>
+      </button>
+      <button
+        mat-mini-fab
+        color="accent"
+        aria-label="Example icon button with a home icon"
+        title="delete card"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+    <h2>{{word.textExample}}</h2>
+    <em>{{word.textExampleTranslate}}</em>
+    <h2 class="mat-h3">{{word.textMeaning}}</h2>
+    <em>{{word.textMeaningTranslate}}</em>
   </mat-card-content>
 </mat-card>
