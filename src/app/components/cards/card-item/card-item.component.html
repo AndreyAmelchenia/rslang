@@ -1,4 +1,7 @@
-<mat-card class="example-card" [ngStyle]="{'background': colorRGB(color)}">
+<mat-card
+  class="example-card"
+  [ngStyle]="{'background': word.userWord?.difficulty === 'hard' ? 'red' : colorRGB(color)}"
+>
   <mat-card-header>
     <mat-card-title-group>
       <mat-card-title>{{word.word}}</mat-card-title>
@@ -16,23 +19,29 @@
         color="accent"
         aria-label="Example icon button with a home icon"
         title="play"
+        (click)="play ? stopAudio() :playAudio()"
       >
-        <mat-icon>play_circle</mat-icon>
+        <mat-icon>{{play ? 'pause_circle_outline' : 'play_circle' }}</mat-icon>
       </button>
       <button
         mat-mini-fab
         color="accent"
         aria-label="Example icon button with a home icon"
-        title="add card to hard"
-        (click)="addDifficultyWord(word._id, 'hard', !word.userWord)"
+        [title]="word.userWord?.difficulty === 'hard' ? 'add card to easy' : 'add card to hard'"
+        (click)="word.userWord?.difficulty === 'hard' 
+        ? addDifficultyWord(word._id, 'easy', !word.userWord) 
+        : addDifficultyWord(word._id, 'hard', !word.userWord)"
       >
-        <mat-icon> add_circle_outline</mat-icon>
+        <mat-icon>
+          {{word.userWord?.difficulty === 'hard' ? 'remove_circle_outline' : 'add_circle_outline'}}
+        </mat-icon>
       </button>
       <button
         mat-mini-fab
         color="accent"
         aria-label="Example icon button with a home icon"
         title="delete card"
+        (click)="addDifficultyWord(word._id, 'deleted', !word.userWord)"
       >
         <mat-icon>delete</mat-icon>
       </button>

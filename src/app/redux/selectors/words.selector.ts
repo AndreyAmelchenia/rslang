@@ -12,6 +12,8 @@ export const selectWordsByGroup = (group: number) =>
   createSelector(selectFeature, (state: AggregatedWordsRedux[]) => [
     {
       ...state[0],
-      paginatedResults: state[0].paginatedResults.filter((el) => el.group === group),
+      paginatedResults: state[0].paginatedResults.filter(
+        (el) => el.group === group && el.userWord?.difficulty !== 'deleted',
+      ),
     },
   ]);

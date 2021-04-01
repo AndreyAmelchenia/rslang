@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Word } from 'src/app/common/models/word.model';
-import { AddDifficultyWords } from 'src/app/redux/actions/words.actions';
+import { LoadDifficultyWords } from 'src/app/redux/actions/words.actions';
 import { AppState } from 'src/app/redux/app.state';
 
 @Component({
@@ -14,6 +14,14 @@ export class CardItemComponent {
 
   @Input() color: number[];
 
+  audio: HTMLAudioElement;
+
+  audioExample: HTMLAudioElement;
+
+  audioMeaning: HTMLAudioElement;
+
+  play = false;
+
   constructor(private store: Store<AppState>) {}
 
   colorRGB(color: number[]): string {
@@ -21,6 +29,37 @@ export class CardItemComponent {
   }
 
   addDifficultyWord(wordId: string, difficulty: 'easy' | 'hard' | 'deleted', newWord: boolean) {
-    this.store.dispatch(AddDifficultyWords({ wordId, difficulty, newWord }));
+    this.store.dispatch(LoadDifficultyWords({ wordId, difficulty, newWord }));
+  }
+
+  playAudio() {
+    this.stopAndStart();
+    this.audio = new Audio(`https://andey-rslang-back-end.herokuapp.com/${this.word.audio}`);
+
+    this.audioExample = new Audio(
+      `https://andey-rslang-back-end.herokuapp.com/${this.word.audioExample}`,
+    );
+
+    this.audioMeaning = new Audio(
+      `https://andey-rslang-back-end.herokuapp.com/${this.word.audioMeaning}`,
+    );
+    this.audio.play();
+    [this.audio, this.audioExample, this.audioMeaning].forEach((el, index, arr) => {
+      el.addEventListener('ended', () => arr[index + 1] && arr[index + 1].play());
+    });
+    this.audioMeaning.onended = () => setTimeout(() => this.stopAndStart());
+  }
+
+  stopAudio() {
+    this.stopAndStart();
+    this.audio.pause();
+    this.audioExample.pause();
+    this.audioMeaning.pause();
+  }
+
+  stopAndStart() {
+    console.log('werty');
+
+    this.play = !this.play;
   }
 }

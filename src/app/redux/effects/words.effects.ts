@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { map, mergeMap, tap } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { LocalStorageService } from 'src/app/common/services/storage/local.service';
 import { WordsService } from 'src/app/common/services/words-service/words.service';
 import { expectationRequest } from '../actions/request.actions';
@@ -10,6 +10,7 @@ import { expectationRequest } from '../actions/request.actions';
 import {
   AddDifficultyWords,
   ArticlesActions,
+  LoadDifficultyWords,
   LoadWords,
   retrievedWordsList,
 } from '../actions/words.actions';
@@ -50,17 +51,18 @@ export class WordsEffects {
     );
   });
 
-  addDifficultyWords$ = createEffect(
-    () => {
-      return this.actions$.pipe(
-        ofType(AddDifficultyWords),
-        tap(({ wordId, difficulty, newWord }) => {
-          of(this.userLocal.getItem('userId')).subscribe((userId) =>
-            this.wordsService.addDifficultyWord(wordId, userId, difficulty, newWord),
-          );
-        }),
-      );
-    },
-    { dispatch: false },
-  );
+  addDifficultyWords$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LoadDifficultyWords),
+      mergeMap(({ wordId, difficulty, newWord }) => {
+        return of(this.userLocal.getItem('userId')).pipe(
+          mergeMap((userId) => {
+            return this.wordsService
+              .addDifficultyWord(wordId, userId, difficulty, newWord)
+              .pipe(map(() => AddDifficultyWords({ wordId, difficulty, newWord })));
+          }),
+        );
+      }),
+    );
+  });
 }
