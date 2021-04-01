@@ -10,8 +10,6 @@ export class TokenInterceptorService implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('intercept', req);
-
     return next.handle(
       req.clone({
         setHeaders: {

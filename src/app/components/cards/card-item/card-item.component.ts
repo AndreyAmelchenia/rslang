@@ -58,8 +58,6 @@ export class CardItemComponent {
   }
 
   stopAndStart() {
-    console.log('werty');
-
     this.play = !this.play;
   }
 }

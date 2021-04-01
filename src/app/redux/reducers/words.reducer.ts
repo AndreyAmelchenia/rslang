@@ -37,7 +37,6 @@ export const booksReducer = createReducer(
   on(retrievedWordsList, (state, { Words }) => addNewWords(state, Words)),
   on(BackWord, (state) => [...state]),
   on(AddDifficultyWords, (state, { wordId, difficulty, newWord }) => {
-    console.log('reducer', state, wordId, difficulty, newWord);
     return [
       {
         ...state[0],
