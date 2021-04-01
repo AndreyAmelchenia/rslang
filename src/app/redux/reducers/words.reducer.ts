@@ -37,6 +37,7 @@ export const booksReducer = createReducer(
   on(retrievedWordsList, (state, { Words }) => addNewWords(state, Words)),
   on(BackWord, (state) => [...state]),
   on(AddDifficultyWords, (state, { wordId, difficulty, newWord }) => {
+    const { group } = state[0].paginatedResults.find((el) => el._id === wordId);
     return [
       {
         ...state[0],
@@ -50,6 +51,15 @@ export const booksReducer = createReducer(
               }
             : el,
         ),
+        totalCount: [
+          {
+            ...state[0].totalCount[0],
+            [group]:
+              difficulty === 'deleted'
+                ? state[0].totalCount[0][group] - 1
+                : state[0].totalCount[0][group],
+          },
+        ],
       },
     ];
   }),

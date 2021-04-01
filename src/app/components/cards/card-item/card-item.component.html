@@ -1,6 +1,6 @@
 <mat-card
   class="example-card"
-  [ngStyle]="{'background': word.userWord?.difficulty === 'hard' ? 'red' : colorRGB(color)}"
+  [ngStyle]="{'background': word.userWord?.difficulty === 'hard' ? colorRGB(0.7) : colorRGB()}"
 >
   <mat-card-header>
     <mat-card-title-group>
@@ -27,7 +27,7 @@
         mat-mini-fab
         color="accent"
         aria-label="Example icon button with a home icon"
-        [title]="word.userWord?.difficulty === 'hard' ? 'add card to easy' : 'add card to hard'"
+        [title]="word.userWord?.difficulty === 'hard' ? 'add card to EASY' : 'add card to HARD'"
         (click)="word.userWord?.difficulty === 'hard' 
         ? addDifficultyWord(word._id, 'easy', !word.userWord) 
         : addDifficultyWord(word._id, 'hard', !word.userWord)"

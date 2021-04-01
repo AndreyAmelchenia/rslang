@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Word } from 'src/app/common/models/word.model';
 import { LoadDifficultyWords } from 'src/app/redux/actions/words.actions';
@@ -8,6 +8,7 @@ import { AppState } from 'src/app/redux/app.state';
   selector: 'app-card-item',
   templateUrl: './card-item.component.html',
   styleUrls: ['./card-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardItemComponent {
   @Input() word: Word;
@@ -24,8 +25,8 @@ export class CardItemComponent {
 
   constructor(private store: Store<AppState>) {}
 
-  colorRGB(color: number[]): string {
-    return `rgba(${[...color, 0.3].join()})`;
+  colorRGB(a = 0.3): string {
+    return `rgba(${[...this.color, a].join()})`;
   }
 
   addDifficultyWord(wordId: string, difficulty: 'easy' | 'hard' | 'deleted', newWord: boolean) {
@@ -33,7 +34,7 @@ export class CardItemComponent {
   }
 
   playAudio() {
-    this.stopAndStart();
+    this.play = true;
     this.audio = new Audio(`https://andey-rslang-back-end.herokuapp.com/${this.word.audio}`);
 
     this.audioExample = new Audio(
@@ -47,17 +48,12 @@ export class CardItemComponent {
     [this.audio, this.audioExample, this.audioMeaning].forEach((el, index, arr) => {
       el.addEventListener('ended', () => arr[index + 1] && arr[index + 1].play());
     });
-    this.audioMeaning.onended = () => setTimeout(() => this.stopAndStart());
   }
 
   stopAudio() {
-    this.stopAndStart();
+    this.play = false;
     this.audio.pause();
     this.audioExample.pause();
     this.audioMeaning.pause();
-  }
-
-  stopAndStart() {
-    this.play = !this.play;
   }
 }
