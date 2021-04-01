@@ -1,1 +1,6 @@
-<p>dictionary works!</p>
+<mat-tab-group mat-align-tabs="center">
+  <mat-tab *ngFor="let tab of asyncTabs | async">
+    <ng-template mat-tab-label>{{tab.label}}</ng-template>
+    <app-dictionary-tab></app-dictionary-tab>
+  </mat-tab>
+</mat-tab-group>
