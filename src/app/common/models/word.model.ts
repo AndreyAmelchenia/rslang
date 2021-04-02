@@ -1,5 +1,7 @@
 export interface Word {
-  id: string;
+  _id: string;
+  page: number;
+  group: number;
   word: string;
   image: string;
   audio: string;
@@ -11,4 +13,10 @@ export interface Word {
   wordTranslate: string;
   textMeaningTranslate: string;
   textExampleTranslate: string;
+  userWord: {
+    difficulty: 'easy' | 'hard' | 'deleted';
+    optional: {
+      repeat: number;
+    };
+  };
 }

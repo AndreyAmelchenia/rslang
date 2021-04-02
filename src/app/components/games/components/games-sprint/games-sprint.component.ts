@@ -5,4 +5,8 @@ import { Component } from '@angular/core';
   templateUrl: './games-sprint.component.html',
   styleUrls: ['./games-sprint.component.scss'],
 })
-export class GamesSprintComponent {}
+export class GamesSprintComponent {
+  constructor() {
+    console.log('dbnhsdfnzdfnds');
+  }
+}
