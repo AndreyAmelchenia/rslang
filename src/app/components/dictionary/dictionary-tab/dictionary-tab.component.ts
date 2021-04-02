@@ -20,17 +20,21 @@ export class DictionaryTabComponent implements OnInit {
   constructor(private store: Store<AppState>) {
     this.asyncTabs = new Observable((observer: Observer<ExampleTab[]>) => {
       observer.next([
-        { label: 'First', icon: 'filter_1', color: 'blue' },
-        { label: 'Second', icon: 'filter_2', color: 'green' },
-        { label: 'Third', icon: 'filter_3', color: 'brown' },
-        { label: 'Four', icon: 'filter_4', color: 'orange' },
-        { label: 'Five', icon: 'filter_5', color: 'red' },
-        { label: 'Six', icon: 'filter_6', color: 'gold' },
+        { group: 0, icon: 'filter_1', color: [252, 0, 0] },
+        { group: 1, icon: 'filter_2', color: [0, 128, 0] },
+        { group: 2, icon: 'filter_3', color: [0, 0, 255] },
+        { group: 3, icon: 'filter_4', color: [255, 165, 0] },
+        { group: 4, icon: 'filter_5', color: [238, 130, 238] },
+        { group: 5, icon: 'filter_6', color: [128, 0, 0] },
       ]);
     });
   }
 
   ngOnInit() {
     this.expectation = this.store.select(selectExpectation);
+  }
+
+  colorRGB(color: number[]): string {
+    return `rgb(${color.join()})`;
   }
 }

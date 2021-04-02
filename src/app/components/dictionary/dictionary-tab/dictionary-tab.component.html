@@ -1,7 +1,7 @@
 <mat-tab-group mat-align-tabs="center">
   <mat-tab *ngFor="let tab of asyncTabs | async">
     <ng-template mat-tab-label
-      ><mat-icon [ngStyle]="{'color': tab.color}" class="example-tab-icon"
+      ><mat-icon [ngStyle]="{'color': colorRGB(tab.color)}" class="example-tab-icon"
         >{{tab.icon}}</mat-icon
       ></ng-template
     >

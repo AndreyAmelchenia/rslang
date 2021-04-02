@@ -4,7 +4,7 @@ import { Observable, Observer } from 'rxjs';
 export interface ExampleTab {
   label: string;
   icon: string;
-  color: string;
+  color: number[];
 }
 
 @Component({
@@ -21,9 +21,9 @@ export class DictionaryComponent {
   constructor() {
     this.asyncTabs = new Observable((observer: Observer<ExampleTab[]>) => {
       observer.next([
-        { label: 'Изучаемые слова', icon: 'filter_1', color: 'blue' },
-        { label: 'Сложные слова', icon: 'filter_2', color: 'green' },
-        { label: 'Удалённые слова', icon: 'filter_3', color: 'brown' },
+        { label: 'Изучаемые слова', icon: 'filter_1', color: [252, 0, 0] },
+        { label: 'Сложные слова', icon: 'filter_2', color: [0, 128, 0] },
+        { label: 'Удалённые слова', icon: 'filter_3', color: [255, 165, 0] },
       ]);
     });
   }
