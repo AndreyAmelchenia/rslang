@@ -13,7 +13,7 @@ const appRoutes: Routes = [
   {
     path: 'games',
     loadChildren: () =>
-      import('./components/games/games-routing.module').then((m) => m.GamesRoutingModule),
+      import('./components/games/modules/games-routing.module').then((m) => m.GamesRoutingModule),
   },
 ];
 

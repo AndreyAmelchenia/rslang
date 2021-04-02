@@ -7,14 +7,15 @@ import { ProfileModule } from './components/profile/profile.module';
 import { SharedModule } from './shared/shared.module';
 import { NavigationModule } from './components/navigation/navigation.module';
 import { AboutUsModule } from './components/aboutUs/modules/about-us.module';
-import { GamesModule } from './components/games/games.module';
+import { GamesModule } from './components/games/modules/games.module';
 import { AppComponent } from './components/app/app.component';
 import { LocalStorageService } from './common/services/storage/local.service';
 import { SessionService } from './common/services/storage/session.service';
 import { MemoryService } from './common/services/storage/memory.service';
+import { SpinnerLoaderComponent } from './components/spinner-loader/components/spinner-loader.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, SpinnerLoaderComponent],
   imports: [
     CardsModule,
     NavigationModule,
