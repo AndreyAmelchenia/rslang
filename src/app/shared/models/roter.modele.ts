@@ -7,4 +7,5 @@ export enum Path {
   Login = 'login',
   Cards = 'cards',
   Profile = 'profile',
+  Dictionary = 'dictionary',
 }
