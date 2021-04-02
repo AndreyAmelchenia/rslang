@@ -27,21 +27,42 @@
   &__head {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 20px 40px;
   }
 
   &__settings {
     display: flex;
     justify-content: flex-start;
+    align-items: center;
   }
 
   &__settings-icon {
-    margin: 0 20px 0 0;
+    margin: 4px 20px 0 0;
     cursor: pointer;
 
     svg {
       width: 36px;
       height: 36px;
+      fill: #fff;
+    }
+  }
+
+  &__settings-button {
+    padding: 5px 5px 0;
+    margin: 0 20px 0 0;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #777;
+    transition: background-color 0.3s ease-in-out;
+
+    &:hover {
+      background-color: #666;
+    }
+
+    svg {
+      width: 30px;
+      height: 30px;
       fill: #fff;
     }
   }
