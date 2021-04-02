@@ -1,4 +1,4 @@
-import { exhaustMap, map, tap } from 'rxjs/operators';
+import { map, mergeMap, tap } from 'rxjs/operators';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 
@@ -12,9 +12,9 @@ export class SettingsEffects {
   saveSettings$ = createEffect(() =>
     this.actions$.pipe(
       ofType(SettingsActionsType.SaveSettings),
-      exhaustMap((action: any) =>
+      mergeMap(({ payload }) =>
         this.settingsService
-          .saveSettings(action.payload)
+          .saveSettings(payload)
           .pipe(map((response: Settings) => settingsActions.setSettings({ response }))),
       ),
       tap(() => {
