@@ -3,52 +3,62 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { URL_BACK_SERVER } from 'src/app/shared/constants/url-constants';
 import { AggregatedWords } from '../../models/aggregatedWords.model';
+import { DifficultyWord, AggregatedWordsToGet } from '../../models/requests.model';
 import { Word } from '../../models/word.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WordsService {
+  filter = {
+    easy: '{"userWord.difficulty":"easy"}',
+    hard: '{"userWord.difficulty":"hard"}',
+    deleted: '{"userWord.difficulty":"deleted"}',
+    noUserWords: '{"userWord":null}',
+  };
+
   constructor(private http: HttpClient) {}
 
   getWords(): Observable<Word[]> {
     return this.http
-      .get<Word[]>('https://andey-rslang-back-end.herokuapp.com/words?group=5&page=10')
+      .get<Word[]>(`${URL_BACK_SERVER}words?group=5&page=10`)
       .pipe(map((words) => words));
   }
 
-  aggregatedWords(
-    group: number,
-    page: number,
-    wordsPerPage: number,
-  ): Observable<AggregatedWords[]> {
+  aggregatedWords({
+    group,
+    page,
+    userId,
+    wordsPerPage,
+  }: AggregatedWordsToGet): Observable<AggregatedWords[]> {
     return this.http
       .get<AggregatedWords[]>(
-        `https://andey-rslang-back-end.herokuapp.com/users/6054f3cd7584ac0015d8b7ca/aggregatedWords?group=${group}&page=${page}&wordsPerPage=${wordsPerPage}&filter={"$or":[{"userWord.difficulty":"easy"},{"userWord":null},{"userWord.difficulty":"hard"}]}`,
+        `${URL_BACK_SERVER.URL_BACK}users/${userId}/aggregatedWords?group=${group}&page=${page}&wordsPerPage=${wordsPerPage}&filter={"$or":[${this.filter.easy},${this.filter.hard},${this.filter.noUserWords}]}`,
       )
       .pipe(map((words) => words));
   }
 
-  addDifficultyWord(
-    wordId: string,
-    userId: string,
-    difficulty: 'easy' | 'hard' | 'deleted' = 'easy',
-    newWord: boolean = true,
-  ): Observable<{
+  addDifficultyWord({
+    wordId,
+    userId,
+    difficulty = 'easy',
+    newWord = true,
+  }: DifficultyWord): Observable<{
     wordId: string;
     difficulty: 'easy' | 'hard' | 'deleted';
     newWord: boolean;
   }> {
     if (newWord) {
       return this.http
-        .post(`https://andey-rslang-back-end.herokuapp.com/users/${userId}/words/${wordId}`, {
+        .post(`${URL_BACK_SERVER.URL_BACK}users/${userId}/words/${wordId}`, {
           difficulty,
         })
         .pipe(map(() => ({ wordId, difficulty, newWord })));
     }
     return this.http
-      .put(`https://andey-rslang-back-end.herokuapp.com/users/${userId}/words/${wordId}`, {
+      .put(`${URL_BACK_SERVER.URL_BACK}users/${userId}/words/${wordId}`, {
         difficulty,
       })
       .pipe(map(() => ({ wordId, difficulty, newWord })));
