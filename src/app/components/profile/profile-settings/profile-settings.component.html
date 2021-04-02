@@ -7,9 +7,9 @@
         [max]="50"
         formControlName="wordsPerDay"
         thumbLabel
-        [(ngModel)]="value"
+        (input)="onSliderChange($event)"
       ></mat-slider>
-      <span>{{value}}</span>
+      <span>{{wordsPerDay}}</span>
     </mat-card-content>
   </mat-card>
   <mat-card class="settings-card">

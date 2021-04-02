@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/redux/app.state';
 import { selectStats } from 'src/app/redux/selectors/stats.selector';
 import { Stats } from 'src/app/common/models/stats.model';
+import { graphType } from '../profile-chart/data';
 
 @Component({
   selector: 'app-profile-stats',
@@ -15,9 +16,9 @@ export class ProfileStatsComponent {
 
   checkedStyle: string;
 
-  daily = 'every day';
+  daily = graphType.daily;
 
-  total = 'total growing';
+  total = graphType.total;
 
   constructor(private store: Store<AppState>) {
     this.store.select(selectStats).subscribe((stats) => {

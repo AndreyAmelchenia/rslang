@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { setSettings } from '../actions/settings.actions';
+import { saveSettings } from '../actions/settings.actions';
 import { Settings } from '../../common/models/settings.model';
 
 export const settingsFeatureKey = 'settings';
@@ -14,5 +14,5 @@ export const initialState: Settings = {
 
 export const settingsReducer = createReducer(
   initialState,
-  on(setSettings, (state, { payload }) => ({ ...payload })),
+  on(saveSettings, (state, { payload }) => ({ ...payload })),
 );

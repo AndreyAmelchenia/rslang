@@ -22,7 +22,7 @@
     <mat-card-content>
       <h2>Global statistics: {{checkedStyle}}</h2>
 
-      <app-profile-chart></app-profile-chart>
+      <app-profile-chart [checkedStyle]="checkedStyle"></app-profile-chart>
 
       <mat-radio-group
         aria-labelledby="radio-group-label"

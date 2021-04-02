@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Settings } from 'src/app/common/models/settings.model';
 import { SettingsService } from 'src/app/common/services/settings.service';
+import { saveSettings } from 'src/app/redux/actions/settings.actions';
 import { AppState } from 'src/app/redux/app.state';
 import { selectSettings } from 'src/app/redux/selectors/settings.selector';
-// import { setSettings } from '../../../redux/actions/settings.actions';
 
 @Component({
   selector: 'app-profile-settings',
@@ -19,7 +19,7 @@ export class ProfileSettingsComponent {
 
   formGroup: FormGroup;
 
-  value: number;
+  wordsPerDay: number;
 
   constructor(
     private store: Store<AppState>,
@@ -30,7 +30,7 @@ export class ProfileSettingsComponent {
       this.settings = settings;
     });
 
-    this.value = this.settings.wordsPerDay;
+    this.wordsPerDay = this.settings.wordsPerDay;
 
     this.formGroup = formBuilder.group({
       wordsPerDay: this.settings.wordsPerDay,
@@ -39,9 +39,11 @@ export class ProfileSettingsComponent {
     });
   }
 
-  onFormSubmit() {
-    // this.store.dispatch(setSettings({ payload: this.formGroup.value }));
+  onSliderChange($event) {
+    this.wordsPerDay = $event.value;
+  }
 
+  onFormSubmit() {
     const { wordsPerDay, displayTranslation, displayHandlingButtons } = this.formGroup.value;
     const payload = {
       wordsPerDay,
@@ -51,9 +53,10 @@ export class ProfileSettingsComponent {
       },
     };
 
-    this.settingsService.saveSettings(payload).subscribe((response) => {
-      this.data = response;
-      console.log(this.data);
-    });
+    // this.settingsService.saveSettings(payload).subscribe((response) => {
+    //   this.data = response;
+    //   console.log(this.data);
+    // });
+    this.store.dispatch(saveSettings({ payload }));
   }
 }

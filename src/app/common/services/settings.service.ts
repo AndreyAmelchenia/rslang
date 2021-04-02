@@ -40,6 +40,7 @@ export class SettingsService {
   }
 
   saveSettings(data: Settings): Observable<Settings> {
+    console.log(data);
     return this.http
       .put<Settings>(`${serverUrl}users/${this.userInfo.userId}/settings`, data)
       .pipe(map((settings) => settings));

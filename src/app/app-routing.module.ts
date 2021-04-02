@@ -4,7 +4,7 @@ import { CardsListComponent } from 'src/app/components/cards/cards-list/cards-li
 import { ProfileComponent } from 'src/app/components/profile/profile/profile.component';
 import { LoginComponent } from './components/navigation/login/login.component';
 import { RegistrationComponent } from './components/navigation/registration/registration.component';
-import { Path } from './shared/models/roter.modele';
+import { Path } from './shared/models/router.model';
 
 import { AboutUsListComponent } from './components/aboutUs/components/about-us-list/about-us-list.component';
 
