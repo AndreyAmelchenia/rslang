@@ -125,6 +125,6 @@
   "defaultProject": "rslang",
   "cli": {
     "analytics": "054eacaa-c594-4732-b77e-9f05ca98533a",
-    "defaultCollection": "@angular-eslint/schematics"
+    "defaultCollection": "@ngrx/schematics"
   }
 }
