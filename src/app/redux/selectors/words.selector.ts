@@ -29,3 +29,15 @@ export const selectBoolLengthWordsByGroup = (group: number, page: number, wordsP
     (words: Word[]) =>
       words.filter((el) => el.group === group).length === (page + 1) * wordsPerPage,
   );
+
+export const selectBoolLengthWordsByGroupAndDeleted = (
+  group: number,
+  page: number,
+  wordsPerPage: number,
+) =>
+  createSelector(
+    selectFeatureWords,
+    (words: Word[]) =>
+      words.filter((el) => el.group === group && el.userWord?.difficulty === 'deleted').length ===
+      (page + 1) * wordsPerPage,
+  );

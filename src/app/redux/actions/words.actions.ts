@@ -3,6 +3,8 @@ import { AggregatedWords } from 'src/app/common/models/aggregatedWords.model';
 
 export enum ArticlesActions {
   LoadWords = '[Words Page] Load Words',
+  LoadDeletedWords = '[Words Page] Load deleted Words',
+  LoadHardWords = '[Words Page] Load hard Words',
   RetrievedWordSuccess = '[Word List/API] Retrieve Words Success',
   BackWord = '[Back Word] Back Word',
   AddDifficulty = '[Add difficulty] Add difficulty',
@@ -16,6 +18,16 @@ export const retrievedWordsList = createAction(
 
 export const LoadWords = createAction(
   ArticlesActions.LoadWords,
+  props<{ group: number; page: number; wordsPerPage: number }>(),
+);
+
+export const LoadDeletedWords = createAction(
+  ArticlesActions.LoadDeletedWords,
+  props<{ group: number; page: number; wordsPerPage: number }>(),
+);
+
+export const LoadHardWords = createAction(
+  ArticlesActions.LoadHardWords,
   props<{ group: number; page: number; wordsPerPage: number }>(),
 );
 

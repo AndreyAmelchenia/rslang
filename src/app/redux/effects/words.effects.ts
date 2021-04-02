@@ -14,8 +14,12 @@ import {
   LoadDifficultyWords,
   LoadWords,
   retrievedWordsList,
+  LoadDeletedWords,
 } from '../actions/words.actions';
-import { selectBoolLengthWordsByGroup } from '../selectors/words.selector';
+import {
+  selectBoolLengthWordsByGroup,
+  selectBoolLengthWordsByGroupAndDeleted,
+} from '../selectors/words.selector';
 
 @Injectable()
 export class WordsEffects {
@@ -48,20 +52,34 @@ export class WordsEffects {
             );
           }),
         );
+      }),
+    );
+  });
 
-        //   .subscribe((el) => {});
-        // this.store.select(selectWordsByGroup(group));
-        // if (!page) this.store.dispatch(expectationRequest({ expectation: false }));
-        // if (bool) {
-        //   this.store.dispatch(expectationRequest({ expectation: true }));
-        //   return of({ type: ArticlesActions.BackWord });
-        // }
-        // return this.wordsService.aggregatedWords(group, page, wordsPerPage).pipe(
-        //   map((word) => {
-        //     if (!page) this.store.dispatch(expectationRequest({ expectation: true }));
-        //     return retrievedWordsList({ Words: word });
-        //   }),
-        // );
+  loadDeletedWords$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LoadDeletedWords),
+      mergeMap(({ group, page, wordsPerPage }) => {
+        return this.store
+          .select(selectBoolLengthWordsByGroupAndDeleted(group, page, wordsPerPage))
+          .pipe(
+            mergeMap((bool) => {
+              if (bool) return of({ type: ArticlesActions.BackWord });
+              if (!page) this.store.dispatch(expectationRequest({ expectation: false }));
+              return of(this.userSession.getItem('user')).pipe(
+                mergeMap(({ userId }) => {
+                  return this.wordsService
+                    .aggregatedWords({ group, page, userId, wordsPerPage })
+                    .pipe(
+                      map((word) => {
+                        if (!page) this.store.dispatch(expectationRequest({ expectation: true }));
+                        return retrievedWordsList({ Words: word });
+                      }),
+                    );
+                }),
+              );
+            }),
+          );
       }),
     );
   });
