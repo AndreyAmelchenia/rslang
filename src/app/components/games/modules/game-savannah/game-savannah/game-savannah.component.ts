@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { GameSavannahLangs } from '../models/game-savannah-langs.enum';
+import { GameSavannahStatus } from '../models/game-savannah-status.model';
 
 @Component({
   selector: 'app-game-savannah',
@@ -6,17 +8,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./game-savannah.component.scss'],
 })
 export class GameSavannahComponent {
-  errors = 2;
+  gameSavannahStatus: GameSavannahStatus = {
+    errors: 2,
+    sound: true,
+    currentLang: GameSavannahLangs.en,
+  };
 
-  attempts = new Array(5);
-
-  sound = true;
-
-  counter(i: number): number[] {
-    return new Array(i);
-  }
-
-  changeSound(): void {
-    this.sound = !this.sound;
+  changeGameSavannahStatus(data: GameSavannahStatus): void {
+    this.gameSavannahStatus = { ...this.gameSavannahStatus, ...data };
   }
 }

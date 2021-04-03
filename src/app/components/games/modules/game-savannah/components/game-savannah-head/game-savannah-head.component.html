@@ -1,0 +1,28 @@
+<div class="savannah__settings">
+  <button
+    type="button"
+    class="savannah__settings-sound"
+    aria-label="on/off sound"
+    mat-icon-button
+    (click)="changeSound()"
+  >
+    <mat-icon>{{ gameSavannahStatus.sound ? 'volume_up' : 'volume_off' }}</mat-icon>
+  </button>
+
+  <div class="savannah__settings-button">
+    <mat-icon>autorenew</mat-icon>
+  </div>
+  <div class="savannah__settings-lang">
+    <span
+      *ngFor="let item of langs"
+      [class.is-active]="gameSavannahStatus.currentLang === item"
+      (click)="changeLang(item)"
+      >{{ item }}</span
+    >
+  </div>
+</div>
+<div class="savannah__progress">
+  <div *ngFor="let heart of attempts; let i = index" class="savannah__progress-heart">
+    <mat-icon>{{ i + 1 > gameSavannahStatus.errors ? 'favorite' : 'favorite_border' }}</mat-icon>
+  </div>
+</div>

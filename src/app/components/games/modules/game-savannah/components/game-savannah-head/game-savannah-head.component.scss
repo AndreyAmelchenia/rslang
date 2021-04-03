@@ -1,0 +1,91 @@
+:host {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 23px 20px 20px;
+}
+
+.savannah {
+
+  &__settings {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .mat-icon {
+      font-size: 24px;
+      color: #fff;
+    }
+  }
+
+  &__settings-sound {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 20px 0 0;
+    cursor: pointer;
+
+    .mat-icon {
+      transition: color 0.3s ease-in-out;
+
+      &:hover {
+        color: #3F51B5;
+      }
+    }
+  }
+
+  &__settings-button {
+    padding: 5px 5px 0;
+    margin: 0 20px 0 0;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #777;
+    transition: background-color 0.3s ease-in-out;
+
+    &:hover {
+      background-color: #666;
+    }
+  }
+
+  &__settings-lang {
+    display: flex;
+    font-size: 0;
+    margin: 1px 0 0;
+    border-radius: 4px;
+    overflow: hidden;
+
+    span {
+      display: inline-block;
+      padding: 7px;
+      font-size: 20px;
+      color: #fff;
+      text-transform: uppercase;
+      background-color: #666;
+      transition: background-color 0.3s ease-in-out;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #777;
+      }
+
+      &.is-active {
+        background-color: #3F51B5;
+        pointer-events: none;
+      }
+    }
+  }
+
+  &__progress {
+    display: flex;
+    padding: 8px 0 0;
+  }
+
+  &__progress-heart {
+    margin: 0 0 0 20px;
+
+    .mat-icon {
+      font-size: 24px;
+      color: orange;
+    }
+  }
+}
