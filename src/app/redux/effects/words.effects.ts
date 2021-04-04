@@ -10,15 +10,15 @@ import { expectationRequest } from '../actions/request.actions';
 
 import {
   AddDifficultyWords,
+  ArticlesActions,
   // ArticlesActions,
   LoadDifficultyWords,
   LoadWords,
   retrievedWordsList,
   // LoadDeletedWords,
 } from '../actions/words.actions';
-import // selectBoolLengthWordsByGroup,
-// selectBoolLengthWordsByGroupAndDeleted,
-'../selectors/words.selector';
+
+import { selectWordsByGroup } from '../selectors/words.selector';
 
 @Injectable()
 export class WordsEffects {
@@ -34,13 +34,15 @@ export class WordsEffects {
   loadWords$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(LoadWords),
-      // tap(({ group, page, wordsPerPage }) => {
-      //   this.store.select(selectWordsByGroup(group))) {
-      //   console.log('tap', group, page, wordsPerPage);
-
-      //   // }
-      // }),
+      tap(({ group, page, wordsPerPage }) => {
+        this.store.select(selectWordsByGroup(group)).subscribe((store) => {
+          this.bool =
+            store[0].paginatedResults.filter((el) => el.group === group).length >=
+            (page + 1) * wordsPerPage;
+        });
+      }),
       mergeMap(({ group, page, wordsPerPage }) => {
+        if (this.bool) return of({ type: ArticlesActions.BackWord });
         if (!page) this.store.dispatch(expectationRequest({ expectation: false }));
         return of(this.userSession.getItem('user')).pipe(
           mergeMap(({ userId }) => {
