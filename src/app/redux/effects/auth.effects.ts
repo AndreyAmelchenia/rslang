@@ -25,6 +25,7 @@ export class AuthEffects {
                 name: user.name,
                 token: user.token,
               },
+              start: false,
             }),
           ),
           catchError((error) => of(authActions.loginFailure({ error }))),
@@ -39,7 +40,9 @@ export class AuthEffects {
         ofType(ActionType.LogInSuccess),
         tap((action: any) => {
           this.sessionService.setItem('user', action.user);
-          this.router.navigateByUrl('/');
+          if (!action.start) {
+            this.router.navigateByUrl('/');
+          }
         }),
       ),
     { dispatch: false },

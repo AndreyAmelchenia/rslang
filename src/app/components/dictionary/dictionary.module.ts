@@ -1,8 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SharedModule } from '../../shared/shared.module';
+import { DictionaryComponent } from './dictionary/dictionary.component';
+import { DictionaryTabComponent } from './dictionary-tab/dictionary-tab.component';
+import { DictionaryListComponent } from './dictionary-list/dictionary-list.component';
+import { DictionaryItemComponent } from './dictionary-item/dictionary-item.component';
 
 @NgModule({
-  declarations: [],
-  imports: [CommonModule],
+  declarations: [
+    DictionaryComponent,
+    DictionaryTabComponent,
+    DictionaryListComponent,
+    DictionaryItemComponent,
+  ],
+  imports: [CommonModule, SharedModule],
 })
 export class DictionaryModule {}
