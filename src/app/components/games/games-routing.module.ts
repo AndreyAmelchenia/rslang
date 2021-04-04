@@ -14,19 +14,19 @@ const routes: Routes = [
         component: GamesListComponent,
       },
       {
-        path: 'Sprint',
+        path: 'sprint',
         component: GamesSprintComponent,
       },
       {
-        path: 'Audio',
+        path: 'audio',
         component: AboutUsListComponent,
       },
       {
-        path: 'Savanna',
+        path: 'savanna',
         component: AboutUsListComponent,
       },
       {
-        path: 'My game',
+        path: 'my-game',
         component: AboutUsListComponent,
       },
     ],

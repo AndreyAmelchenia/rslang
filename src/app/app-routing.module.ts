@@ -6,8 +6,8 @@ import { DictionaryComponent } from './components/dictionary/dictionary/dictiona
 import { LoginComponent } from './components/navigation/login/login.component';
 import { RegistrationComponent } from './components/navigation/registration/registration.component';
 import { Path } from './shared/models/roter.modele';
-
 import { AboutUsListComponent } from './components/aboutUs/components/about-us-list/about-us-list.component';
+import { GamesRoutingModule } from './components/games/games-routing.module';
 
 const appRoutes: Routes = [
   { path: Path.Empty, redirectTo: Path.Empty, pathMatch: 'full' },
@@ -16,8 +16,7 @@ const appRoutes: Routes = [
   { path: Path.Profile, component: ProfileComponent },
   {
     path: Path.Games,
-    loadChildren: () =>
-      import('./components/games/games-routing.module').then((m) => m.GamesRoutingModule),
+    loadChildren: () => GamesRoutingModule,
   },
   { path: Path.Login, component: LoginComponent },
   { path: Path.Registration, component: RegistrationComponent },
