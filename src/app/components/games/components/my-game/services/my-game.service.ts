@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Word } from 'src/app/common/models/word.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MyGameService {
   constructor(private http: HttpClient) {}

@@ -13,19 +13,28 @@ import { MyGameService } from '../../services/my-game.service';
 })
 export class MyGameListComponent implements OnInit {
   words: Word[] = WORDS;
+
   solvedWords: Word[] = [];
+
   unsolvedWords: Word[] = [];
 
   changedGameList: Word[] = [];
+
   myGamesArray: Word[] = [];
+
   imagesArray: Word[] = [];
+
   wordsArray: Word[] = [];
 
-  skipped: number = 0;
-  wordsCount: number = 0;
-  amount: number = 10;
-  countImageArrayLength: number = 0;
-  score: number = 0;
+  skipped = 0;
+
+  wordsCount = 0;
+
+  amount = 10;
+
+  countImageArrayLength = 0;
+
+  score = 0;
 
   dragPictureId: string;
 
@@ -66,7 +75,7 @@ export class MyGameListComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<Word>) {
-    const dropWordId = event.item.data.id;
+    const dropWordId = event.item.data._id;
 
     console.log(this.countImageArrayLength);
     if (this.countImageArrayLength === 4) {
@@ -74,9 +83,9 @@ export class MyGameListComponent implements OnInit {
     } else if (event.previousContainer === event.container) {
       moveItemInArray(this.myGamesArray, event.previousIndex, event.currentIndex);
     } else if (dropWordId === this.dragPictureId) {
-      let elem = event.container.element.nativeElement.querySelector('.inside');
+      const elem = event.container.element.nativeElement.querySelector('.inside');
       elem.appendChild(event.item.element.nativeElement);
-      this.countImageArrayLength++;
+      this.countImageArrayLength += 1;
     }
   }
 
