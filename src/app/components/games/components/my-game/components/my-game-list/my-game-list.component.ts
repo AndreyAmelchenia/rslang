@@ -2,7 +2,7 @@ import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Word } from 'src/app/common/models/word.model';
-import { WORDS } from '../../../../../cards/data/words';
+import { WORDS } from '../../../../../dictionary/words';
 
 import { MyGameService } from '../../services/my-game.service';
 
@@ -89,6 +89,6 @@ export class MyGameListComponent implements OnInit {
   }
 
   enterPredicate(drag: CdkDrag<Word>, drop: CdkDropList<Word>) {
-    return drag.data.id === drop.data.id;
+    return drag.data._id === drop.data._id;
   }
 }
