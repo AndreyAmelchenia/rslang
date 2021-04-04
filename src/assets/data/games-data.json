@@ -16,7 +16,7 @@
   },
   {
     "id": 4,
-    "name": "My game", 
+    "name": "my-game", 
     "img": "./assets/images/game.png" 
   }
 ]

@@ -1,0 +1,44 @@
+<div class="game-field">
+  <div cdkDropListGroup>
+    <div class="item-container">
+      <div
+        class="item-list"
+        id="pictures"
+        cdkDropList
+        [cdkDropListData]="imagesArray"
+        [cdkDropListEnterPredicate]="noReturnPredicate"
+      >
+        <div
+          cdkDrag
+          class="item-box"
+          *ngFor="let item of imagesArray"
+          [cdkDragData]="item"
+          (cdkDragStarted)="started($event, item?.id)"
+        >
+          <div *cdkDragPlaceholder></div>
+          <p class="imgblock">
+            <img [src]="'https://andey-rslang-back-end.herokuapp.com/' + item.image" />
+            <span>{{item.wordTranslate}}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="item-container">
+      <ng-container *ngFor="let item of wordsArray">
+        <div
+          cdkDropList
+          class="item-list"
+          [cdkDropListData]="item"
+          (cdkDropListDropped)="drop($event)"
+          [cdkDropListEnterPredicate]="enterPredicate"
+        >
+          <div cdkDrag class="item-box" [cdkDragDisabled]="true">
+            {{item.word | uppercase}}
+            <div class="inside"></div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

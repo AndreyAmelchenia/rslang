@@ -12,6 +12,7 @@ import { AboutUsService } from './components/aboutUs/services/about-us.service';
 import { GamesModule } from './components/games/games.module';
 import { ProfileModule } from './components/profile/profile.module';
 import { CardsModule } from './components/cards/cards.module';
+import { MyGameModule } from './components/games/components/my-game/my-game.module'
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +26,7 @@ import { CardsModule } from './components/cards/cards.module';
     SharedModule,
     ReduxModule,
     ProfileModule,
+    MyGameModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },
