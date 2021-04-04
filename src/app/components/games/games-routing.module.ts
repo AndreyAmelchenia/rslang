@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { GamesListComponent } from './components/games-list/games-list.component';
 import { AboutUsListComponent } from '../aboutUs/components/about-us-list/about-us-list.component';
-import { GamesSprintComponent } from './games-sprint/components/games-sprint.component';
 
 const routes: Routes = [
   {
@@ -15,7 +14,10 @@ const routes: Routes = [
       },
       {
         path: 'Sprint',
-        component: GamesSprintComponent,
+        loadChildren: () =>
+          import('./modules/games-sprint/games-sprint-routing.module').then(
+            (m) => m.GamesSprintRoutingModule,
+          ),
       },
       {
         path: 'Audio',

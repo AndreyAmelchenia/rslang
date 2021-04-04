@@ -1,9 +1,0 @@
-<!--<mat-progress-spinner class="example-margin" [mode]="mode" [value]="value"></mat-progress-spinner>-->
-<div class="content">
-  <h1>Let's train these words:</h1>
-  <mat-grid-list [cols]="cols" [rowHeight]="rowHeight">
-    <!--<mat-grid-tile *ngFor="let word of wordsInCard">-->
-      <app-games-sprint-card [word]="wordInCard" [translation]="translation" (reaction)="receive($event)"></app-games-sprint-card>
-    <!--</mat-grid-tile>-->
-  </mat-grid-list>
-</div>

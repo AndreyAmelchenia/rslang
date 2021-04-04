@@ -8,4 +8,8 @@ export class CssConstants {
   public static materialColumnsNumberSmall = 1;
 
   public static materialColumnsNumberMiddle = 2;
+
+  public static colorRed = 'red';
+
+  public static colorGreen = 'green';
 }
