@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { SessionService } from '../../../common/services/storage/session.service';
 import { loginSuccess } from '../../../redux/actions/auth.actions';
-import { IHttpUser, IUser } from '../../../redux/models/user.modele';
+import { IHttpUser, IUser } from '../../../redux/models/user.models';
 
 @Injectable({
   providedIn: 'root',

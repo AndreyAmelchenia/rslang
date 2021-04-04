@@ -1,7 +1,11 @@
-<p>dictionary-list works!</p>
+<mat-grid-list [cols]="cols | async" [rowHeight]="rowHeight |async">
+  <mat-grid-tile *ngFor="let word of words |async">
+    <app-dictionary-item [word]="word" [color]="color"></app-dictionary-item>
+  </mat-grid-tile>
+</mat-grid-list>
 <mat-paginator
   #paginator
   [length]="200"
-  [pageSize]="15"
-  [pageSizeOptions]="[5, 10, 25, 100]"
+  [pageSize]="20"
+  (page)="changePage($event)"
 ></mat-paginator>

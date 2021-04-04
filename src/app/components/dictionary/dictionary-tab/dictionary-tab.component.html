@@ -1,11 +1,16 @@
-<mat-tab-group mat-align-tabs="center">
-  <mat-tab *ngFor="let tab of asyncTabs | async">
+<mat-tab-group mat-align-tabs="center" (selectedTabChange)="onGroupChange($event)">
+  <mat-tab *ngFor="let tab of tabs; index as index" label="{{tab.label}}">
     <ng-template mat-tab-label
-      ><mat-icon [ngStyle]="{'color': tab.color}" class="example-tab-icon"
+      ><mat-icon [ngStyle]="{'color': colorRGB(tab.color)}" class="example-tab-icon"
         >{{tab.icon}}</mat-icon
       ></ng-template
     >
-    <app-dictionary-list *ngIf="expectation | async; else elseBlock"></app-dictionary-list>
+    <ng-template matTabContent>
+      <app-dictionary-list
+        *ngIf="expectation | async; else elseBlock"
+        (changePageEvent)="changePage($event)"
+      ></app-dictionary-list>
+    </ng-template>
     <ng-template #elseBlock><mat-spinner></mat-spinner></ng-template>
   </mat-tab>
 </mat-tab-group>

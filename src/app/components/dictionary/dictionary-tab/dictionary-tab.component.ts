@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Observer } from 'rxjs';
 import { AppState } from '../../../redux/app.state';
@@ -17,17 +17,43 @@ export class DictionaryTabComponent implements OnInit {
 
   expectation: Observable<boolean>;
 
+  tabs: any;
+
   constructor(private store: Store<AppState>) {
     this.asyncTabs = new Observable((observer: Observer<ExampleTab[]>) => {
       observer.next([
-        { label: 'First', icon: 'filter_1', color: 'blue' },
-        { label: 'Second', icon: 'filter_2', color: 'green' },
-        { label: 'Third', icon: 'filter_3', color: 'brown' },
-        { label: 'Four', icon: 'filter_4', color: 'orange' },
-        { label: 'Five', icon: 'filter_5', color: 'red' },
-        { label: 'Six', icon: 'filter_6', color: 'gold' },
+        { group: 0, icon: 'filter_1', color: [252, 0, 0] },
+        { group: 1, icon: 'filter_2', color: [0, 128, 0] },
+        { group: 2, icon: 'filter_3', color: [0, 0, 255] },
+        { group: 3, icon: 'filter_4', color: [255, 165, 0] },
+        { group: 4, icon: 'filter_5', color: [238, 130, 238] },
+        { group: 5, icon: 'filter_6', color: [128, 0, 0] },
       ]);
     });
+
+    this.tabs = [
+      { group: 0, icon: 'filter_1', color: [252, 0, 0] },
+      { group: 1, icon: 'filter_2', color: [0, 128, 0] },
+      { group: 2, icon: 'filter_3', color: [0, 0, 255] },
+      { group: 3, icon: 'filter_4', color: [255, 165, 0] },
+      { group: 4, icon: 'filter_5', color: [238, 130, 238] },
+      { group: 5, icon: 'filter_6', color: [128, 0, 0] },
+    ];
+  }
+
+  @Output() changePageEvent = new EventEmitter();
+  @Output() changeGroupEvent = new EventEmitter();
+
+  changePage(event) {
+    this.changePageEvent.emit(event);
+  }
+
+  colorRGB(color: number[]): string {
+    return `rgb(${color.join()})`;
+  }
+
+  onGroupChange(event) {
+    this.changeGroupEvent.emit(event);
   }
 
   ngOnInit() {

@@ -1,6 +1,66 @@
-<mat-tab-group mat-align-tabs="center">
-  <mat-tab *ngFor="let tab of asyncTabs | async">
-    <ng-template mat-tab-label>{{tab.label}}</ng-template>
-    <app-dictionary-tab></app-dictionary-tab>
+<mat-tab-group mat-align-tabs="center" (selectedTabChange)="onChangeSection($event)">
+  <mat-tab *ngFor="let tab of tabs" label="{{tab.label}}">
+    <ng-template matTabContent>
+      <app-dictionary-tab
+        (changePageEvent)="onChangePage($event)"
+        (changeGroupEvent)="onChangeGroup($event)"
+      ></app-dictionary-tab>
+    </ng-template>
   </mat-tab>
+  <!--  <mat-tab label="1">
+    <ng-template matTabContent>
+      <mat-tab-group>
+        <mat-tab label="1">1</mat-tab>
+        <mat-tab label="2">2</mat-tab>
+        <mat-tab label="3">3</mat-tab>
+        <mat-tab label="4">4</mat-tab>
+        <mat-tab label="5">5</mat-tab>
+      </mat-tab-group>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="2">
+    <ng-template matTabContent>
+      <mat-tab-group>
+        <mat-tab label="1">1</mat-tab>
+        <mat-tab label="2">2</mat-tab>
+        <mat-tab label="3">3</mat-tab>
+        <mat-tab label="4">4</mat-tab>
+        <mat-tab label="5">5</mat-tab>
+      </mat-tab-group>
+    </ng-template></mat-tab
+  >
+  <mat-tab label="3">
+    <ng-template matTabContent>
+      <mat-tab-group>
+        <mat-tab label="1">1</mat-tab>
+        <mat-tab label="2">2</mat-tab>
+        <mat-tab label="3">3</mat-tab>
+        <mat-tab label="4">4</mat-tab>
+        <mat-tab label="5">5</mat-tab>
+      </mat-tab-group>
+    </ng-template></mat-tab
+  >
+  <mat-tab label="4">
+    <ng-template matTabContent>
+      <mat-tab-group>
+        <mat-tab label="1">1</mat-tab>
+        <mat-tab label="2">2</mat-tab>
+        <mat-tab label="3">3</mat-tab>
+        <mat-tab label="4">4</mat-tab>
+        <mat-tab label="5">5</mat-tab>
+      </mat-tab-group>
+    </ng-template></mat-tab
+  >
+  <mat-tab label="5">
+    <ng-template matTabContent>
+      <mat-tab-group>
+        <mat-tab label="1">1</mat-tab>
+        <mat-tab label="2">2</mat-tab>
+        <mat-tab label="3">3</mat-tab>
+        <mat-tab label="4">4</mat-tab>
+        <mat-tab label="5">5</mat-tab>
+      </mat-tab-group>
+    </ng-template></mat-tab
+  >
+</mat-tab-group>-->
 </mat-tab-group>

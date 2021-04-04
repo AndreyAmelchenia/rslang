@@ -3,9 +3,9 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { Path } from '../../../shared/models/roter.modele';
+import { Path } from '../../../shared/models/router.model';
 import { isAuth, logout } from '../../../redux/actions/auth.actions';
-import { IUser } from '../../../redux/models/user.modele';
+import { IUser } from '../../../redux/models/user.models';
 import { isLogin, user } from '../../../redux/selectors/auth.selectors';
 
 @Component({
