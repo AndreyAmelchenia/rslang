@@ -16,9 +16,9 @@ export class DictionaryTabComponent implements OnInit {
 
   @Input() totalCount$: Observable<number>;
 
-  @Input() group: number;
-
   @Input() color: number[];
+
+  @Input() label: string;
 
   value: string;
 
@@ -40,18 +40,25 @@ export class DictionaryTabComponent implements OnInit {
   }
 
   @Output() changePageEvent = new EventEmitter();
+
   @Output() changeGroupEvent = new EventEmitter();
+
+  @Output() restoreWordEvent = new EventEmitter();
 
   changePage(event) {
     this.changePageEvent.emit(event);
   }
 
-  colorRGB(color: number[]): string {
-    return `rgb(${color.join()})`;
+  restoreWord(event) {
+    this.restoreWordEvent.emit(event);
   }
 
-  onGroupChange(event) {
-    this.changeGroupEvent.emit(event);
+  onGroupChange(id) {
+    this.changeGroupEvent.emit(id);
+  }
+
+  colorRGB(color: number[]): string {
+    return `rgb(${color.join()})`;
   }
 
   ngOnInit() {

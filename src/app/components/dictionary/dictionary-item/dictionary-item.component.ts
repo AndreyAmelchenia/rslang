@@ -1,8 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
 import { Word } from '../../../common/models/word.model';
-import { LoadDifficultyWords } from '../../../redux/actions/words.actions';
-import { AppState } from '../../../redux/app.state';
 
 @Component({
   selector: 'app-dictionary-item',
@@ -10,10 +7,14 @@ import { AppState } from '../../../redux/app.state';
   styleUrls: ['./dictionary-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DictionaryItemComponent implements OnInit {
+export class DictionaryItemComponent {
   @Input() word: Word;
 
   @Input() color: number[];
+
+  @Input() label: string;
+
+  @Output() restoreWordEvent = new EventEmitter();
 
   audio: HTMLAudioElement;
 
@@ -23,14 +24,8 @@ export class DictionaryItemComponent implements OnInit {
 
   play = false;
 
-  constructor(private store: Store<AppState>) {}
-
   colorRGB(a = 0.3): string {
     return `rgba(${[...this.color, a].join()})`;
-  }
-
-  addDifficultyWord(wordId: string, difficulty: 'easy' | 'hard' | 'deleted', newWord: boolean) {
-    this.store.dispatch(LoadDifficultyWords({ wordId, difficulty, newWord }));
   }
 
   playAudio() {
@@ -57,7 +52,11 @@ export class DictionaryItemComponent implements OnInit {
     this.audioMeaning.pause();
   }
 
-  ngOnInit() {
-    console.log(this.word);
+  isRestore() {
+    return this.label === 'Сложные слова' || this.label === 'Удалённые слова';
+  }
+
+  restoreWord() {
+    this.restoreWordEvent.emit(this.word);
   }
 }

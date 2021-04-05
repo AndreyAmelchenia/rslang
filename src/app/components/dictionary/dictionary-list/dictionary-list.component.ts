@@ -29,9 +29,15 @@ export class DictionaryListComponent implements OnInit {
 
   @Input() color: number[];
 
+  @Input() label: string;
+
   @Input() words$: Observable<Word[]>;
 
   @Input() totalCount$: Observable<number>;
+
+  @Output() changePageEvent = new EventEmitter();
+
+  @Output() restoreWordEvent = new EventEmitter();
 
   // MatPaginator Output
   pageEvent: PageEvent;
@@ -90,10 +96,12 @@ export class DictionaryListComponent implements OnInit {
       );
   }
 
-  @Output() changePageEvent = new EventEmitter();
-
   changePage(event) {
     this.changePageEvent.emit(event);
+  }
+
+  restoreWord(event) {
+    this.restoreWordEvent.emit(event);
   }
 
   ngOnInit(): void {

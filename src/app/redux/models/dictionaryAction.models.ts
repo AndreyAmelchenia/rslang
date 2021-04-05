@@ -3,6 +3,7 @@ export enum ActionType {
   updateWordsSuccess = '[Dictionary] update words success',
   updateWordsFailure = '[Dictionary] update words failure',
   startGame = '[Dictionary] start game',
+  restoreWord = '[Dictionary] restore word',
 }
 
 export interface IDictionaryOptions {

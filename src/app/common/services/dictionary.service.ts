@@ -9,6 +9,7 @@ import { URL_BACK_SERVER } from '../../shared/constants/url-constants';
 import { ICurrentWords } from '../models/aggregatedWords.model';
 import { filter } from '../../shared/constants/http-constans';
 import { updateWords } from '../../redux/actions/dictionary.actions';
+import { Word } from '../models/word.model';
 
 @Injectable({
   providedIn: 'root',
@@ -99,6 +100,15 @@ export class DictionaryService {
       }),
       catchError(this.handleError),
     );
+  }
+
+  restoreWord(word: Word, userData: IUser) {
+    return this.http
+      .put(`${URL_BACK_SERVER.URL_BACK}users/${userData.userId}/words/${word._id}`, {
+        ...word,
+        userWord: { ...word.userWord, difficulty: 'easy' },
+      })
+      .pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {

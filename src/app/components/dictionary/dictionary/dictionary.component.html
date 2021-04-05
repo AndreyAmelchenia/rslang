@@ -5,10 +5,11 @@
         <app-dictionary-tab
           [words$]="words$"
           [totalCount$]="totalCount$"
-          [group]="tab.group"
+          [label]="tab.label"
           [color]="tab.color"
           (changePageEvent)="onChangePage($event)"
           (changeGroupEvent)="onChangeGroup($event)"
+          (restoreWordEvent)="restoreWord($event)"
         ></app-dictionary-tab>
       </ng-template>
     </mat-tab>

@@ -1,6 +1,11 @@
 <mat-grid-list [cols]="cols | async" [rowHeight]="rowHeight |async">
   <mat-grid-tile *ngFor="let word of words$ |async">
-    <app-dictionary-item [word]="word" [color]="color"></app-dictionary-item>
+    <app-dictionary-item
+      [word]="word"
+      [color]="color"
+      [label]="label"
+      (restoreWordEvent)="restoreWord($event)"
+    ></app-dictionary-item>
   </mat-grid-tile>
 </mat-grid-list>
 <mat-paginator

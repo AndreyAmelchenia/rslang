@@ -24,26 +24,14 @@
         <mat-icon>{{play ? 'pause_circle_outline' : 'play_circle' }}</mat-icon>
       </button>
       <button
+        *ngIf="isRestore()"
         mat-mini-fab
         color="accent"
         aria-label="Example icon button with a home icon"
-        [title]="word.userWord?.difficulty === 'hard' ? 'add card to EASY' : 'add card to HARD'"
-        (click)="word.userWord?.difficulty === 'hard' 
-        ? addDifficultyWord(word._id, 'easy', !word.userWord) 
-        : addDifficultyWord(word._id, 'hard', !word.userWord)"
+        title="restore word"
+        (click)="restoreWord()"
       >
-        <mat-icon>
-          {{word.userWord?.difficulty === 'hard' ? 'remove_circle_outline' : 'add_circle_outline'}}
-        </mat-icon>
-      </button>
-      <button
-        mat-mini-fab
-        color="accent"
-        aria-label="Example icon button with a home icon"
-        title="delete card"
-        (click)="addDifficultyWord(word._id, 'deleted', !word.userWord)"
-      >
-        <mat-icon>delete</mat-icon>
+        <mat-icon>add_circle_outline</mat-icon>
       </button>
     </div>
   </mat-card-header>

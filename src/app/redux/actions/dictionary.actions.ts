@@ -14,3 +14,5 @@ export const startGameFromDictionary = createAction(
   ActionType.startGame,
   props<{ words: Word[] }>(),
 );
+
+export const restoreWord = createAction(ActionType.restoreWord, props<{ word: Word }>());
