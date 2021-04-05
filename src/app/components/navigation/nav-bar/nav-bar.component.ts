@@ -3,10 +3,10 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { Path } from '../../../shared/models/roter.modele';
+import { Path } from 'src/app/shared/models/router.model';
 import { isAuth, logout } from '../../../redux/actions/auth.actions';
-import { IUser } from '../../../redux/models/user.modele';
-import { isLogin, user } from '../../../redux/selectors/auth.selectors';
+import { IUser } from '../../../redux/models/user.model';
+import { isLoginSelector, userSelector } from '../../../redux/selectors/auth.selectors';
 
 @Component({
   selector: 'app-nav-bar',
@@ -33,8 +33,8 @@ export class NavBarComponent implements OnInit {
 
   ngOnInit() {
     this.path = Path;
+    this.isAuth$ = this.store.select(isLoginSelector);
+    this.user$ = this.store.select(userSelector);
     this.store.dispatch(isAuth());
-    this.isAuth$ = this.store.select(isLogin);
-    this.user$ = this.store.select(user);
   }
 }

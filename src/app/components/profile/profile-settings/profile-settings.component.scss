@@ -3,10 +3,20 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-top: 8px;
 
   mat-slide-toggle, button {
     margin: 8px 0;
     display: block;
   }
 
+}
+
+.settings-card {
+  margin-bottom: 8px;
+  width: 300px;
+}
+
+.mat-slider-horizontal {
+  width: 250px;
 }

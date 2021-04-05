@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { ActionType } from '../models/action.models';
-import { IHttpUser, IUser } from '../models/user.modele';
+import { IHttpUser, IUser } from '../models/user.model';
 
 export const login = createAction(ActionType.LogIn, props<{ user: IHttpUser }>());
 export const loginSuccess = createAction(

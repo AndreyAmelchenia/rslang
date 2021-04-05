@@ -8,7 +8,7 @@ import * as authActions from '../actions/auth.actions';
 import { ActionType } from '../models/action.models';
 
 import { AuthService } from '../../components/navigation/services/auth.service';
-import { IUser } from '../models/user.modele';
+import { IUser } from '../models/user.model';
 import { SessionService } from '../../common/services/storage/session.service';
 
 @Injectable()
