@@ -1,4 +1,7 @@
 .gs-statictics {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 600px;
   height: 600px;
   padding: 20px;
@@ -8,14 +11,55 @@
   background-color: rgba(white, .3);
 
   &__title {
-    font-size: 20px;
+    margin: 0 0 30px;
+    font-size: 27px;
     text-align: center;
   }
 
   &__body {
+    flex: 1;
+    overflow-y: auto;
 
     table {
       width: 100%;
+      font-size: 18px;
+
+      th,
+      th {
+        padding: 5px 0;
+        text-align: left;
+      }
+    }
+  }
+
+  &__footer {
+    padding: 20px 0 0;
+    text-align: center;
+  }
+
+  &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 50px;
+    border: 2px solid blue;
+    border-radius: 30px;
+    color: blue;
+    cursor: pointer;
+    transition: background-color .3s ease-in-out;
+
+    &:hover {
+      background-color: #fff;
+    }
+
+    span {
+      font-size: 22px;
+    }
+
+    .mat-icon {
+      width: 32px;
+      height: 32px;
+      font-size: 32px;
     }
   }
 }

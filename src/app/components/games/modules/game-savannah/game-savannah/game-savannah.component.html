@@ -3,6 +3,7 @@
     *ngIf="play && !statictics"
     [gameSavannahStatus]="gameSavannahStatus"
     (changeStatus)="changeGameSavannahStatus($event)"
+    (restartGame)="restartGame()"
   ></app-game-savannah-head>
   <div class="savannah__body">
     <app-game-savannah-start-banner
@@ -19,6 +20,7 @@
     <app-game-savannah-statictics
       *ngIf="statictics && !play"
       [words]="words"
+      (repeatGame)="restartGame()"
     ></app-game-savannah-statictics>
     <!-- <div *ngIf="words && words.length" class="status">
       {{ currentWordId + 1 }} / {{ gameSavannahStatus.errors }} / {{ words.length }}

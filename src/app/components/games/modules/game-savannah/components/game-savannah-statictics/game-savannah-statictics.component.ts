@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
 import { GameSavannahWord } from '../../game-savannah/game-savannah.component';
 
 @Component({
@@ -9,4 +9,10 @@ import { GameSavannahWord } from '../../game-savannah/game-savannah.component';
 })
 export class GameSavannahStaticticsComponent {
   @Input() words: GameSavannahWord[];
+
+  @Output() repeatGame = new EventEmitter();
+
+  repeat(): void {
+    this.repeatGame.emit();
+  }
 }

@@ -9,7 +9,7 @@
     <mat-icon>{{ gameSavannahStatus.sound ? 'volume_up' : 'volume_off' }}</mat-icon>
   </button>
 
-  <div class="savannah__settings-button">
+  <div class="savannah__settings-button" (click)="restart()">
     <mat-icon>autorenew</mat-icon>
   </div>
   <div class="savannah__settings-lang">

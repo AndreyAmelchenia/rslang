@@ -15,6 +15,8 @@ export class GameSavannahHeadComponent {
 
   @Output() changeStatus = new EventEmitter();
 
+  @Output() restartGame = new EventEmitter();
+
   langs: string[] = Object.keys(GameSavannahLangs).map((key) => GameSavannahLangs[key]);
 
   attempts = new Array(5);
@@ -36,5 +38,9 @@ export class GameSavannahHeadComponent {
   changeSound(): void {
     this.gameSavannahStatus.sound = !this.gameSavannahStatus.sound;
     this.changeStatus.emit(this.gameSavannahStatus);
+  }
+
+  restart(): void {
+    this.restartGame.emit();
   }
 }

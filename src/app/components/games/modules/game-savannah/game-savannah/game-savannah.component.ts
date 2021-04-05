@@ -74,6 +74,22 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
     this.playWord(0);
   }
 
+  restartGame(): void {
+    this.gameSavannahStatus.errors = 0;
+    this.gameSavannahStatus.progressError = '0%';
+    this.gameSavannahStatus.currentCounts = 0;
+    this.gameSavannahStatus.progressAll = '0%';
+    this.gameSavannahService.updateGameStatus(this.gameSavannahStatus);
+    this.play = false;
+    this.statictics = false;
+    this.paused = true;
+    const timerId = setTimeout(() => {
+      this.startGame();
+      this.paused = false;
+      clearTimeout(timerId);
+    }, 10);
+  }
+
   playWord(id: number): void {
     this.clearTimer();
     if (id >= this.words.length || this.gameSavannahStatus.errors >= 5) {
