@@ -7,6 +7,9 @@
     >
     <ng-template matTabContent>
       <app-dictionary-list
+        [words$]="words$"
+        [totalCount$]="totalCount$"
+        [color]="tab.color"
         *ngIf="expectation | async; else elseBlock"
         (changePageEvent)="changePage($event)"
       ></app-dictionary-list>

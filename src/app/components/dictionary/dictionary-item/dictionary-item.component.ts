@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Word } from '../../../common/models/word.model';
 import { LoadDifficultyWords } from '../../../redux/actions/words.actions';
@@ -10,7 +10,7 @@ import { AppState } from '../../../redux/app.state';
   styleUrls: ['./dictionary-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DictionaryItemComponent {
+export class DictionaryItemComponent implements OnInit {
   @Input() word: Word;
 
   @Input() color: number[];
@@ -55,5 +55,9 @@ export class DictionaryItemComponent {
     this.audio.pause();
     this.audioExample.pause();
     this.audioMeaning.pause();
+  }
+
+  ngOnInit() {
+    console.log(this.word);
   }
 }

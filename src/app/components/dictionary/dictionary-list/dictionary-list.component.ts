@@ -1,6 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   Input,
