@@ -1,5 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
+import { totalCount, words } from 'src/app/redux/selectors/dictionary.selectors';
+import { Word } from 'src/app/common/models/word.model';
 import { DictionaryService } from '../../../common/services/dictionary.service';
 
 export interface ExampleTab {
@@ -14,7 +17,7 @@ export interface ExampleTab {
   styleUrls: ['./dictionary.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DictionaryComponent {
+export class DictionaryComponent implements OnInit {
   asyncTabs: Observable<ExampleTab[]>;
 
   expectation: Observable<boolean>;
@@ -23,7 +26,11 @@ export class DictionaryComponent {
 
   tabs2: any;
 
-  constructor(private dictionaryService: DictionaryService) {
+  words$: Observable<Word[]>;
+
+  totalCount$: Observable<number>;
+
+  constructor(private dictionaryService: DictionaryService, private store: Store) {
     this.asyncTabs = new Observable((observer: Observer<ExampleTab[]>) => {
       observer.next([
         { label: 'Изучаемые слова', icon: 'filter_1', color: 'blue' },
@@ -57,7 +64,11 @@ export class DictionaryComponent {
   }
 
   onChangeSection(event) {
-    console.log(event);
     this.dictionaryService.changeSection(event);
+  }
+
+  ngOnInit() {
+    this.words$ = this.store.select(words);
+    this.totalCount$ = this.store.select(totalCount);
   }
 }

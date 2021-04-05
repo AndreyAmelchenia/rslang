@@ -2,6 +2,8 @@
   <mat-tab *ngFor="let tab of tabs" label="{{tab.label}}">
     <ng-template matTabContent>
       <app-dictionary-tab
+        [this.words$]="words$"
+        [this.totalCount$]="totalCount$"
         (changePageEvent)="onChangePage($event)"
         (changeGroupEvent)="onChangeGroup($event)"
       ></app-dictionary-tab>

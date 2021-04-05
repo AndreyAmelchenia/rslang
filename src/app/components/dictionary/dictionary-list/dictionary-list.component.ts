@@ -11,10 +11,9 @@ import {
 } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Store } from '@ngrx/store';
-import { merge, Observable } from 'rxjs';
-import { delay, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Word } from '../../../common/models/word.model';
-import { LoadWords } from '../../../redux/actions/words.actions';
 import { AppState } from '../../../redux/app.state';
 import { selectWordsByGroup } from '../../../redux/selectors/words.selector';
 
@@ -24,17 +23,19 @@ import { selectWordsByGroup } from '../../../redux/selectors/words.selector';
   styleUrls: ['./dictionary-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DictionaryListComponent implements OnInit, AfterViewInit {
+export class DictionaryListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   @Input() group: number;
 
   @Input() color: number[];
 
+  @Input() words$: Observable<Word[]>;
+
+  @Input() totalCount$: Observable<number>;
+
   // MatPaginator Output
   pageEvent: PageEvent;
-
-  words: Observable<Word[]>;
 
   data: Observable<Word[]>;
 
@@ -92,36 +93,8 @@ export class DictionaryListComponent implements OnInit, AfterViewInit {
 
   @Output() changePageEvent = new EventEmitter();
 
-  connect(): Observable<Word[]> {
-    const dataMutations = [this.data, this.paginator.page];
-    return merge(...dataMutations).pipe(
-      delay(0),
-      map(() => {
-        let words: Word[];
-        this.data.subscribe((data) => {
-          words = data;
-        });
-        return this.getPagedData([...(words || [])]);
-      }),
-    );
-  }
-
   changePage(event) {
     this.changePageEvent.emit(event);
-  }
-
-  private getPagedData(data: Word[]) {
-    if (
-      this.lengthBase !== 0 &&
-      this.lengthBase - 30 <= this.paginator.pageIndex * this.paginator.pageSize &&
-      this.lengthBase < this.length
-    ) {
-      this.store.dispatch(
-        LoadWords({ page: this.lengthBase / 60, group: this.group, wordsPerPage: 60 }),
-      );
-    }
-    const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
-    return data.splice(startIndex, this.paginator.pageSize);
   }
 
   ngOnInit(): void {
@@ -134,9 +107,5 @@ export class DictionaryListComponent implements OnInit, AfterViewInit {
     this.store.select(selectWordsByGroup(this.group)).subscribe((words) => {
       this.length = words[0].totalCount[0][this.group];
     });
-  }
-
-  ngAfterViewInit() {
-    this.words = this.connect();
   }
 }
