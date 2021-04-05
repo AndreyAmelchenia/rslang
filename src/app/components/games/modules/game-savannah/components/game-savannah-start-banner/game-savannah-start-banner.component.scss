@@ -1,0 +1,79 @@
+:host {
+  display: block;
+  width: 600px;
+  max-width: 95%;
+  margin: 0 auto;
+}
+
+.savannah {
+
+  &__title {
+    position: relative;
+    margin: 0 0 70px;
+
+    h1 {
+      font-size: 80px;
+      text-align: center;
+    }
+  }
+
+  &__subtitle {
+    position: absolute;
+    z-index: 3;
+    bottom: -59px;
+    left: 50%;
+    font-size: 30px;
+    margin: 0 0 30px;
+    text-align: center;
+    transform: translate3d(-171px, 0, 0);
+    // color: #3F51B5;
+    text-shadow: 0 0 3px #3F51B5;
+  }
+
+  &__help {
+    margin: 0 0 30px;
+  }
+
+  &__help-title {
+    font-size: 18px;
+    margin: 0 0 15px;
+  }
+
+  &__help-subtitle {
+    font-size: 14px;
+  }
+
+  &__button-wrapper {
+    padding: 30px 0 0;
+  }
+
+  &__button--start {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 51px;
+    margin: 0 auto;
+    border: 2px solid #fff;
+    outline: none;
+    border-radius: 50px;
+    background-color: rgba(white, 0);
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, color .3s ease-in-out;
+
+    &:hover {
+      background-color: rgba(white, 0.7);
+      color: #3F51B5;
+    }
+    span {
+      font-size: 30px;
+    }
+
+    .mat-icon {
+      font-size: 48px;
+      height: 48px;
+      width: 48px;
+      margin: 0 20px 0 0;
+    }
+  }
+}

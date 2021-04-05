@@ -1,8 +1,13 @@
 :host {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px 23px 20px 20px;
+  box-sizing: border-box;
 }
 
 .savannah {
@@ -74,6 +79,11 @@
       }
     }
   }
+
+  // &__settings-level {
+  //   font-size: 30px;
+  //   color: #fff;
+  // }
 
   &__progress {
     display: flex;

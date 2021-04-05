@@ -9,6 +9,7 @@ import { GamesListComponent } from './components/games-list/games-list.component
 import { GamesItemComponent } from './components/games-item/games-item.component';
 import { GamesRoutingModule } from './games-routing.module';
 import { GameSavannahModule } from './modules/game-savannah/game-savannah.module';
+import { GameSavannahService } from './modules/game-savannah/services/game-savannah.service';
 
 @NgModule({
   declarations: [GamesListComponent, GamesItemComponent],
@@ -22,5 +23,6 @@ import { GameSavannahModule } from './modules/game-savannah/game-savannah.module
     GameSavannahModule,
   ],
   exports: [GamesListComponent, GamesItemComponent],
+  providers: [GameSavannahService],
 })
 export class GamesModule {}

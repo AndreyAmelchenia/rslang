@@ -1,0 +1,8 @@
+<div class="gs-list">
+  <div class="gs-list__current">{{ currentWord }}</div>
+  <ol class="gs-list__answers">
+    <li *ngFor="let answer of answers" class="gs-list__answer" (click)="checkedAnswer(answer)">
+      {{ answer }}
+    </li>
+  </ol>
+</div>
