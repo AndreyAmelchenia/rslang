@@ -1,11 +1,11 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { Word } from 'src/app/common/models/word.model';
 import { WORDS } from '../../../../../dictionary/words';
 
 import { MyGameService } from '../../services/my-game.service';
-
 @Component({
   selector: 'app-my-game-list',
   templateUrl: './my-game-list.component.html',
@@ -14,9 +14,9 @@ import { MyGameService } from '../../services/my-game.service';
 export class MyGameListComponent implements OnInit {
   words: Word[] = WORDS;
 
-  solvedWords: Word[] = [];
+  solvedWords = new Set<Word>();
 
-  unsolvedWords: Word[] = [];
+  unsolvedWords = new Set<Word>();
 
   changedGameList: Word[] = [];
 
@@ -34,13 +34,21 @@ export class MyGameListComponent implements OnInit {
 
   countImageArrayLength = 0;
 
+  countMiss = 0;
+
   score = 0;
 
+  tryCount = 0;
+
   dragPictureId: string;
+
+  sound = new Audio();
 
   constructor(private myGameService: MyGameService, private router: Router) {}
 
   ngOnInit() {
+    this.solvedWords = new Set<Word>();
+    this.unsolvedWords = new Set<Word>();
     this.onNewWords();
     this.onChangeWords();
   }
@@ -76,8 +84,6 @@ export class MyGameListComponent implements OnInit {
 
   drop(event: CdkDragDrop<Word>) {
     const dropWordId = event.item.data._id;
-
-    console.log(this.countImageArrayLength);
     if (this.countImageArrayLength === 4) {
       this.onChangeWords();
     } else if (event.previousContainer === event.container) {
@@ -85,7 +91,10 @@ export class MyGameListComponent implements OnInit {
     } else if (dropWordId === this.dragPictureId) {
       const elem = event.container.element.nativeElement.querySelector('.inside');
       elem.appendChild(event.item.element.nativeElement);
+      this.solvedWords.add(event.item.data);
+      this.playAudioScore();
       this.countImageArrayLength += 1;
+      this.score += 10;
     }
   }
 
@@ -99,5 +108,28 @@ export class MyGameListComponent implements OnInit {
 
   enterPredicate(drag: CdkDrag<Word>, drop: CdkDropList<Word>) {
     return drag.data._id === drop.data._id;
+  }
+
+  dropped(event) {
+    if (this.tryCount === 2) {
+      alert('Try again');
+      this.router.navigate(['/my-game']);
+    } else if (event.isPointerOverContainer === false) {
+      this.unsolvedWords.add(event.item.data);
+      this.playAudioTry();
+      this.tryCount += 1;
+    }
+  }
+
+  playAudioScore() {
+    this.sound.src = 'assets/sounds/score.mp3';
+    this.sound.load();
+    this.sound.play();
+  }
+
+  playAudioTry() {
+    this.sound.src = 'assets/sounds/try.mp3';
+    this.sound.load();
+    this.sound.play();
   }
 }

@@ -1,5 +1,5 @@
 <div class="game-field">
-  <div cdkDropListGroup>
+  <div cdkDropListGroup class="game">
     <div class="item-container">
       <div
         class="item-list"
@@ -14,8 +14,8 @@
           *ngFor="let item of imagesArray"
           [cdkDragData]="item"
           (cdkDragStarted)="started($event, item?._id)"
+          (cdkDragDropped)="dropped($event)"
         >
-          <div *cdkDragPlaceholder></div>
           <p class="imgblock">
             <img [src]="'https://andey-rslang-back-end.herokuapp.com/' + item.image" />
             <span>{{item.wordTranslate}}</span>
@@ -39,6 +39,21 @@
           </div>
         </div>
       </ng-container>
+    </div>
+
+    <div>
+      <mat-card>
+        <mat-card-title>Score:</mat-card-title>
+        <mat-card-content>
+          <p>{{ score }}</p>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="try-amount">
+        <mat-card-title>Try:</mat-card-title>
+        <mat-card-content>
+          <p>{{ tryCount }}</p>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </div>
