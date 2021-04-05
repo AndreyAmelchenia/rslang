@@ -24,6 +24,10 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
 
   play = false;
 
+  statictics = false;
+
+  paused = true;
+
   words: Word[];
 
   currentWord: string;
@@ -32,6 +36,8 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
 
   answers: string[];
 
+  animationTime = 5;
+
   constructor(private gameSavannahService: GameSavannahService, private http: HttpClient) {
     this.http
       .get('assets/data/words.json')
@@ -39,9 +45,7 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    this.gameSavannahService.data.subscribe((data) => {
-      // eslint-disable-next-line no-console
-      console.log(data);
+    this.subscription = this.gameSavannahService.data.subscribe((data) => {
       this.gameSavannahStatus = data;
     });
   }
@@ -60,23 +64,26 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
   }
 
   startGame(): void {
+    this.gameSavannahStatus.wordsCount = this.words.length;
+    this.gameSavannahService.updateGameStatus(this.gameSavannahStatus);
     this.play = true;
     this.playWord(0);
-    // eslint-disable-next-line no-console
-    console.log(this.words);
   }
 
   playWord(id: number): void {
     this.clearTimer();
-    // if (id >= this.words.length - 1) {
-    //   console.log('end');
-    // }
-    this.currentWordId = id;
-    this.currentWord = this.words[id][this.langKey()];
-    this.answers = this.setAnswersWrods(id);
-    this.timerId = setTimeout(() => {
-      this.checkAnswer('');
-    }, 10000);
+    if (id >= this.words.length || this.gameSavannahStatus.errors >= 5) {
+      this.statictics = true;
+      this.play = false;
+    } else {
+      this.paused = false;
+      this.currentWordId = id;
+      this.currentWord = this.words[id][this.langKey()];
+      this.answers = this.setAnswersWrods(id);
+      this.timerId = setTimeout(() => {
+        this.checkAnswer('');
+      }, this.animationTime * 1000);
+    }
   }
 
   setAnswersWrods(id: number): string[] {
@@ -87,15 +94,28 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
         res.push(this.words[ind][this.answersKey()]);
       }
     }
-    return res;
+    return this.shufle(res);
   }
 
   checkAnswer(answer: string) {
+    this.paused = true;
     if (answer !== this.words[this.currentWordId][this.answersKey()]) {
       this.gameSavannahStatus.errors += 1;
-      this.gameSavannahService.updateGameStatus(this.gameSavannahStatus);
+    } else {
+      this.gameSavannahStatus.currentCounts += 1;
     }
-    this.playWord(this.currentWordId + 1);
+    this.gameSavannahStatus.progressError = `${
+      (this.gameSavannahStatus.errors / this.gameSavannahStatus.wordsCount) * 100
+    }%`;
+    this.gameSavannahStatus.progressAll = `${
+      ((this.gameSavannahStatus.errors + this.gameSavannahStatus.currentCounts) /
+        this.gameSavannahStatus.wordsCount) *
+      100
+    }%`;
+    this.gameSavannahService.updateGameStatus(this.gameSavannahStatus);
+    setTimeout(() => {
+      this.playWord(this.currentWordId + 1);
+    }, 500);
   }
 
   setWords(words: Word[]): void {

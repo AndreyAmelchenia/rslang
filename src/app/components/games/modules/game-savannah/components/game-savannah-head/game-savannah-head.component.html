@@ -36,4 +36,20 @@
   <div *ngFor="let heart of attempts; let i = index" class="savannah__progress-heart">
     <mat-icon>{{ i + 1 > gameSavannahStatus.errors ? 'favorite' : 'favorite_border' }}</mat-icon>
   </div>
+  <div class="savannah__progress-chart">
+    <div *ngIf="gameSavannahStatus.wordsCount" class="savannah__progress-count">
+      {{ gameSavannahStatus.wordsCount + ' / ' + gameSavannahStatus.currentCounts + ' / ' +
+      gameSavannahStatus.errors }}
+    </div>
+    <div
+      *ngIf="gameSavannahStatus.progressAll"
+      class="savannah__progress-chart_inner"
+      [ngStyle]="{ width: gameSavannahStatus.progressAll }"
+    ></div>
+    <div
+      *ngIf="gameSavannahStatus.progressError"
+      class="savannah__progress-chart_error"
+      [ngStyle]="{ width: gameSavannahStatus.progressError }"
+    ></div>
+  </div>
 </div>

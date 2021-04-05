@@ -1,22 +1,59 @@
+:host {
+  position: relative;
+  flex: 1;
+}
+
 .gs-list {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 
   &__current {
-    font-size: 30px;
+    font-size: 49px;
+    animation: moveDown var(--time, 5s) ease-in 0s 1 normal none;
   }
 
   &__answers {
     display: flex;
+    animation: fade .5s linear 0s 1 normal none;
   }
 
   &__answer {
     padding: 10px;
     margin: 0 20px;
-    font-size: 20px;
+    font-size: 24px;
     cursor: pointer;
+  }
+}
+
+@keyframes moveDown {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -40vh, 0);
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0.2;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.9;
   }
 }

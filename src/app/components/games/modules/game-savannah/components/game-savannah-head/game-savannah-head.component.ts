@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChange,
+} from '@angular/core';
 // import { FormControl, Validators } from '@angular/forms';
 import { GameSavannahLangs } from '../../models/game-savannah-langs.enum';
 import { GameSavannahStatus } from '../../models/game-savannah-status.model';

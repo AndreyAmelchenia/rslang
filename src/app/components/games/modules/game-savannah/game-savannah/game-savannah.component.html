@@ -1,20 +1,22 @@
 <div class="savannah" [class.is-dark]="!play">
   <app-game-savannah-head
-    *ngIf="play"
+    *ngIf="play && !statictics"
     [gameSavannahStatus]="gameSavannahStatus"
     (changeStatus)="changeGameSavannahStatus($event)"
   ></app-game-savannah-head>
   <div class="savannah__body">
     <app-game-savannah-start-banner
-      *ngIf="!play"
+      *ngIf="!play && !statictics"
       (startGame)="startGame()"
     ></app-game-savannah-start-banner>
     <app-game-savannah-list
-      *ngIf="play"
+      *ngIf="play && !statictics && !paused"
       [currentWord]="currentWord"
       [answers]="answers"
+      [time]="'--time: ' + animationTime + 's'"
       (checked)="checkAnswer($event)"
     ></app-game-savannah-list>
+    <app-game-savannah-statictics *ngIf="statictics && !play"></app-game-savannah-statictics>
     <!-- <div *ngIf="words && words.length" class="status">
       {{ currentWordId + 1 }} / {{ gameSavannahStatus.errors }} / {{ words.length }}
     </div> -->

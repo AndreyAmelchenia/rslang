@@ -11,6 +11,8 @@ export class GameSavannahListComponent {
 
   @Input() answers: string[];
 
+  @Input() time = '--time: 5s;';
+
   @Output() checked = new EventEmitter();
 
   checkedAnswer(answer: string): void {

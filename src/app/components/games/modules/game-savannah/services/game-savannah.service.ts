@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { GameSavannahLangs } from '../models/game-savannah-langs.enum';
 import { GameSavannahStatus } from '../models/game-savannah-status.model';
 
@@ -11,6 +11,8 @@ export class GameSavannahService {
     errors: 0,
     sound: true,
     currentLang: GameSavannahLangs.en,
+    currentCounts: 0,
+    wordsCount: 0,
   });
 
   data = this.status.asObservable();
