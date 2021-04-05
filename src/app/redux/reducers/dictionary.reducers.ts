@@ -13,7 +13,7 @@ export const dictionaryReducer = createReducer(
   initialDictionaryState,
   on(dictionaryActions.updateWordsSuccess, (state, action) => ({
     ...state,
-    paginatedResults: [...action.paginatedResults],
+    paginatedResults: action.paginatedResults.slice(),
     totalCount: action.totalCount,
   })),
   on(dictionaryActions.updateWordsFailure, (state, action) => ({

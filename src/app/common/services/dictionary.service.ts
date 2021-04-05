@@ -2,11 +2,11 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { IUser } from '../../redux/models/user.models';
 import { user } from '../../redux/selectors/auth.selectors';
 import { URL_BACK_SERVER } from '../../shared/constants/url-constants';
-import { AggregatedWords, ICurrentWords } from '../models/aggregatedWords.model';
+import { ICurrentWords } from '../models/aggregatedWords.model';
 import { filter } from '../../shared/constants/http-constans';
 import { updateWords } from '../../redux/actions/dictionary.actions';
 
@@ -84,9 +84,21 @@ export class DictionaryService {
   }
 
   getWords(userData: IUser): Observable<ICurrentWords> {
-    return this.http
-      .get<ICurrentWords>(this.updateUrl(userData.userId))
-      .pipe(catchError(this.handleError));
+    return this.http.get(this.updateUrl(userData.userId)).pipe(
+      map((res) => {
+        if (res[0].paginatedResults.length === 0) {
+          return {
+            paginatedResults: [],
+            totalCount: 0,
+          };
+        }
+        return {
+          paginatedResults: res[0].paginatedResults,
+          totalCount: res[0].totalCount[0].count,
+        };
+      }),
+      catchError(this.handleError),
+    );
   }
 
   private handleError(error: HttpErrorResponse) {

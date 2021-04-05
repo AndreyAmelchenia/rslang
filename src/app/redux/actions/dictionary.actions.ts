@@ -5,7 +5,7 @@ import { ActionType } from '../models/dictionaryAction.models';
 export const updateWords = createAction(ActionType.updateWords);
 export const updateWordsSuccess = createAction(
   ActionType.updateWordsSuccess,
-  props<{ paginatedResults: Word[]; totalCount: number }>(),
+  props<{ paginatedResults: Word[]; totalCount: number; errorMessage?: string }>(),
 );
 
 export const updateWordsFailure = createAction(ActionType.updateWordsSuccess, props<any>());
