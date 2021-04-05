@@ -1,1 +1,23 @@
-<div class="gs-statictics">gs-statictics</div>
+<div class="gs-statictics">
+  <div class="gs-statictics__title">Статистика</div>
+  <div class="gs-statictics__body">
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Слово</th>
+          <th>Перевод</th>
+          <th>Результат</th>
+        </tr>
+      </thead>
+      <ng-container *ngFor="let item of words; let i = index">
+        <tr *ngIf="item.hasOwnProperty('statistics')">
+          <td>{{ i + 1 }}</td>
+          <td>{{ item.word }}</td>
+          <td>{{ item.wordTranslate }}</td>
+          <td>{{ item.statistics ? '+' : '-' }}</td>
+        </tr>
+      </ng-container>
+    </table>
+  </div>
+</div>

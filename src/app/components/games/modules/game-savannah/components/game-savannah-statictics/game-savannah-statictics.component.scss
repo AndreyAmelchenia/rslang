@@ -6,4 +6,16 @@
   border-radius: 40px;
   box-shadow: 0 0 15px 5px rgba(white, .3);
   background-color: rgba(white, .3);
+
+  &__title {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  &__body {
+
+    table {
+      width: 100%;
+    }
+  }
 }

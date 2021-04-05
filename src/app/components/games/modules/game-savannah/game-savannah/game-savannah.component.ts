@@ -6,6 +6,10 @@ import { GameSavannahLangs } from '../models/game-savannah-langs.enum';
 import { GameSavannahStatus } from '../models/game-savannah-status.model';
 import { GameSavannahService } from '../services/game-savannah.service';
 
+export interface GameSavannahWord extends Word {
+  statistics?: boolean;
+}
+
 @Component({
   selector: 'app-game-savannah',
   templateUrl: './game-savannah.component.html',
@@ -28,7 +32,7 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
 
   paused = true;
 
-  words: Word[];
+  words: GameSavannahWord[];
 
   currentWord: string;
 
@@ -100,10 +104,20 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
   checkAnswer(answer: string) {
     this.paused = true;
     if (answer !== this.words[this.currentWordId][this.answersKey()]) {
+      this.words[this.currentWordId].statistics = false;
       this.gameSavannahStatus.errors += 1;
     } else {
+      this.words[this.currentWordId].statistics = true;
       this.gameSavannahStatus.currentCounts += 1;
     }
+    this.updateStatus();
+    const timerId = setTimeout(() => {
+      this.playWord(this.currentWordId + 1);
+      clearTimeout(timerId);
+    }, 700);
+  }
+
+  updateStatus() {
     this.gameSavannahStatus.progressError = `${
       (this.gameSavannahStatus.errors / this.gameSavannahStatus.wordsCount) * 100
     }%`;
@@ -113,9 +127,6 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
       100
     }%`;
     this.gameSavannahService.updateGameStatus(this.gameSavannahStatus);
-    setTimeout(() => {
-      this.playWord(this.currentWordId + 1);
-    }, 500);
   }
 
   setWords(words: Word[]): void {

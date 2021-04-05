@@ -16,7 +16,10 @@
       [time]="'--time: ' + animationTime + 's'"
       (checked)="checkAnswer($event)"
     ></app-game-savannah-list>
-    <app-game-savannah-statictics *ngIf="statictics && !play"></app-game-savannah-statictics>
+    <app-game-savannah-statictics
+      *ngIf="statictics && !play"
+      [words]="words"
+    ></app-game-savannah-statictics>
     <!-- <div *ngIf="words && words.length" class="status">
       {{ currentWordId + 1 }} / {{ gameSavannahStatus.errors }} / {{ words.length }}
     </div> -->

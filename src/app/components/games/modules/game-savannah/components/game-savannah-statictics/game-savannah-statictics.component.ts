@@ -1,15 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { GameSavannahWord } from '../../game-savannah/game-savannah.component';
 
 @Component({
   selector: 'app-game-savannah-statictics',
   templateUrl: './game-savannah-statictics.component.html',
-  styleUrls: ['./game-savannah-statictics.component.scss']
+  styleUrls: ['./game-savannah-statictics.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GameSavannahStaticticsComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class GameSavannahStaticticsComponent {
+  @Input() words: GameSavannahWord[];
 }
