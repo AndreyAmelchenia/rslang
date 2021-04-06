@@ -27,6 +27,8 @@ export class MyGameListComponent implements OnInit {
   wordsArray: Word[] = [];
 
   skipped = 0;
+  wordsPerPage = 5;
+  wordsPerPageDivinedCountIndex = 4;
 
   wordsCount = 0;
 
@@ -34,15 +36,16 @@ export class MyGameListComponent implements OnInit {
 
   countImageArrayLength = 0;
 
-  countMiss = 0;
-
   score = 0;
-
+  scorePerDividedWord = 10;
   tryCount = 0;
+  maxTryCount = 4;
 
   dragPictureId: string;
 
   sound = new Audio();
+  scoreAudio = 'assets/sounds/score.mp3';
+  tryAudio = 'assets/sounds/try.mp3';
 
   constructor(private myGameService: MyGameService, private router: Router) {}
 
@@ -57,10 +60,10 @@ export class MyGameListComponent implements OnInit {
     this.countImageArrayLength = 0;
     this.imagesArray = [];
     this.wordsArray = [];
-    this.myGamesArray = this.changedGameList.slice(this.skipped, this.skipped + 5);
+    this.myGamesArray = this.changedGameList.slice(this.skipped, this.skipped + this.wordsPerPage);
     this.imagesArray.push(...this.myGamesArray);
     this.wordsArray.push(...this.myGamesArray);
-    this.skipped += 5;
+    this.skipped += this.wordsPerPage;
 
     this.wordsArray.sort(() => Math.random() - 0.5);
 
@@ -84,7 +87,7 @@ export class MyGameListComponent implements OnInit {
 
   drop(event: CdkDragDrop<Word>) {
     const dropWordId = event.item.data._id;
-    if (this.countImageArrayLength === 4) {
+    if (this.countImageArrayLength === this.wordsPerPageDivinedCountIndex) {
       this.onChangeWords();
     } else if (event.previousContainer === event.container) {
       moveItemInArray(this.myGamesArray, event.previousIndex, event.currentIndex);
@@ -92,9 +95,10 @@ export class MyGameListComponent implements OnInit {
       const elem = event.container.element.nativeElement.querySelector('.inside');
       elem.appendChild(event.item.element.nativeElement);
       this.solvedWords.add(event.item.data);
-      this.playAudioScore();
+      //this.playAudioScore();
+      this.playSound(this.scoreAudio);
       this.countImageArrayLength += 1;
-      this.score += 10;
+      this.score += this.scorePerDividedWord;
     }
   }
 
@@ -111,24 +115,18 @@ export class MyGameListComponent implements OnInit {
   }
 
   dropped(event) {
-    if (this.tryCount === 2) {
+    if (this.tryCount === this.maxTryCount) {
       alert('Try again');
       this.router.navigate(['/my-game']);
     } else if (event.isPointerOverContainer === false) {
       this.unsolvedWords.add(event.item.data);
-      this.playAudioTry();
+      this.playSound(this.tryAudio);
       this.tryCount += 1;
     }
   }
 
-  playAudioScore() {
-    this.sound.src = 'assets/sounds/score.mp3';
-    this.sound.load();
-    this.sound.play();
-  }
-
-  playAudioTry() {
-    this.sound.src = 'assets/sounds/try.mp3';
+  playSound(soundName: string) {
+    this.sound.src = soundName;
     this.sound.load();
     this.sound.play();
   }
