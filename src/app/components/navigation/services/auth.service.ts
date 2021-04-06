@@ -35,7 +35,7 @@ export class AuthService {
   isAuth() {
     const user: IUser | null = this.getUser();
     if (user) {
-      this.store.dispatch(loginSuccess({ user }));
+      this.store.dispatch(loginSuccess({ user, start: true }));
     }
   }
 

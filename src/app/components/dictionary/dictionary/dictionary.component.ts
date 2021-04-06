@@ -9,7 +9,7 @@ import { restoreWord } from '../../../redux/actions/dictionary.actions';
 export interface ExampleTab {
   label: string;
   icon: string;
-  color: string;
+  color: number[];
 }
 
 @Component({

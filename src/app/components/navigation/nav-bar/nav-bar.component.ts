@@ -6,7 +6,7 @@ import { map, shareReplay } from 'rxjs/operators';
 import { Path } from '../../../shared/models/router.model';
 import { isAuth, logout } from '../../../redux/actions/auth.actions';
 import { IUser } from '../../../redux/models/user.models';
-import { isLogin, user } from '../../../redux/selectors/auth.selectors';
+import { isLoginSelector, userSelector } from '../../../redux/selectors/auth.selectors';
 
 @Component({
   selector: 'app-nav-bar',
@@ -33,8 +33,8 @@ export class NavBarComponent implements OnInit {
 
   ngOnInit() {
     this.path = Path;
+    this.isAuth$ = this.store.select(isLoginSelector);
+    this.user$ = this.store.select(userSelector);
     this.store.dispatch(isAuth());
-    this.isAuth$ = this.store.select(isLogin);
-    this.user$ = this.store.select(user);
   }
 }

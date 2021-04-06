@@ -11,14 +11,14 @@ import { SessionService } from '../../common/services/storage/session.service';
 import { ActionType } from '../models/dictionaryAction.models';
 import * as dictionaryActions from '../actions/dictionary.actions';
 import { IUser } from '../models/user.models';
-import { user } from '../selectors/auth.selectors';
+import { userSelector } from '../selectors/auth.selectors';
 
 @Injectable()
 export class DictionaryEffects {
   updateWords$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ActionType.updateWords, ActionType.restoreWordSuccess),
-      concatLatestFrom(() => this.store.select(user)),
+      concatLatestFrom(() => this.store.select(userSelector)),
       switchMap(([, userData]) =>
         this.dictionaryService.getWords(userData).pipe(
           map((res: ICurrentWords) =>
@@ -37,7 +37,7 @@ export class DictionaryEffects {
   restoreWord$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ActionType.restoreWord),
-      concatLatestFrom(() => this.store.select(user)),
+      concatLatestFrom(() => this.store.select(userSelector)),
       switchMap(([action, userData]: [action: any, userData: IUser]) =>
         this.dictionaryService.restoreWord(action.word, userData).pipe(
           map((word) => dictionaryActions.restoreWordSuccess({ word })),
