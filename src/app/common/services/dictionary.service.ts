@@ -2,14 +2,14 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { IUser } from '../../redux/models/user.models';
 import { user } from '../../redux/selectors/auth.selectors';
 import { URL_BACK_SERVER } from '../../shared/constants/url-constants';
 import { ICurrentWords } from '../models/aggregatedWords.model';
 import { filter } from '../../shared/constants/http-constans';
 import { updateWords } from '../../redux/actions/dictionary.actions';
-import { Word } from '../models/word.model';
+import { Word, IHttpAnswer } from '../models/word.model';
 
 @Injectable({
   providedIn: 'root',
@@ -38,11 +38,7 @@ export class DictionaryService {
 
   currentData = {};
 
-  constructor(private http: HttpClient, private store: Store) {
-    this.store.select(user).subscribe((stateUser) => {
-      this.urlOptions.userId = stateUser.userId;
-    });
-  }
+  constructor(private http: HttpClient, private store: Store) {}
 
   changeGroup({ index }) {
     this.urlOptions.group = index;
@@ -102,11 +98,10 @@ export class DictionaryService {
     );
   }
 
-  restoreWord(word: Word, userData: IUser) {
+  restoreWord(word: Word, userData: IUser): Observable<IHttpAnswer> {
     return this.http
-      .put(`${URL_BACK_SERVER.URL_BACK}users/${userData.userId}/words/${word._id}`, {
-        ...word,
-        userWord: { ...word.userWord, difficulty: 'easy' },
+      .put<IHttpAnswer>(`${URL_BACK_SERVER.URL_BACK}users/${userData.userId}/words/${word._id}`, {
+        difficulty: 'easy',
       })
       .pipe(catchError(this.handleError));
   }
@@ -118,7 +113,7 @@ export class DictionaryService {
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong.
-      console.error(`Backend returned code ${error.status}, ` + `body was: ${error.error}`);
+      console.error(`Backend returned code ${error.status}, body was: ${error.error}`);
     }
     // Return an observable with a user-facing error message.
     return throwError('Something bad happened; please try again later.');

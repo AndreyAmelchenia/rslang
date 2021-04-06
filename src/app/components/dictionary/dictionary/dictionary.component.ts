@@ -56,5 +56,6 @@ export class DictionaryComponent implements OnInit {
   ngOnInit() {
     this.words$ = this.store.select(words);
     this.totalCount$ = this.store.select(totalCount);
+    this.dictionaryService.updateWords();
   }
 }

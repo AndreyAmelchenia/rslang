@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { ICurrentWords } from '../../common/models/aggregatedWords.model';
 import { DictionaryService } from '../../common/services/dictionary.service';
 
@@ -17,7 +17,7 @@ import { user } from '../selectors/auth.selectors';
 export class DictionaryEffects {
   updateWords$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ActionType.updateWords),
+      ofType(ActionType.updateWords, ActionType.restoreWordSuccess),
       concatLatestFrom(() => this.store.select(user)),
       switchMap(([, userData]) =>
         this.dictionaryService.getWords(userData).pipe(
@@ -34,16 +34,17 @@ export class DictionaryEffects {
     ),
   );
 
-  restoreWord$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(ActionType.restoreWord),
-        concatLatestFrom(() => this.store.select(user)),
-        tap(([action, userData]: [action: any, userData: IUser]) => {
-          console.log('action', action.word, 'user', userData);
-        }),
+  restoreWord$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ActionType.restoreWord),
+      concatLatestFrom(() => this.store.select(user)),
+      switchMap(([action, userData]: [action: any, userData: IUser]) =>
+        this.dictionaryService.restoreWord(action.word, userData).pipe(
+          map((word) => dictionaryActions.restoreWordSuccess({ word })),
+          catchError((error) => of(dictionaryActions.updateWordsFailure({ error }))),
+        ),
       ),
-    { dispatch: false },
+    ),
   );
 
   constructor(

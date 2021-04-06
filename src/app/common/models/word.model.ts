@@ -20,3 +20,9 @@ export interface Word {
     };
   };
 }
+
+export interface IHttpAnswer {
+  id: string;
+  difficulty: string;
+  wordId: string;
+}
