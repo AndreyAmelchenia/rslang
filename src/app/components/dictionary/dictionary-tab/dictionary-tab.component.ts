@@ -12,6 +12,14 @@ import { ExampleTab } from '../../cards/cards-list/cards-list.component';
   styleUrls: ['./dictionary-tab.component.scss'],
 })
 export class DictionaryTabComponent implements OnInit {
+  value: string;
+
+  asyncTabs: Observable<ExampleTab[]>;
+
+  expectation: Observable<boolean>;
+
+  tabs: any;
+
   @Input() words$: Observable<Word[]>;
 
   @Input() totalCount$: Observable<number>;
@@ -20,13 +28,13 @@ export class DictionaryTabComponent implements OnInit {
 
   @Input() label: string;
 
-  value: string;
+  @Input() group: number;
 
-  asyncTabs: Observable<ExampleTab[]>;
+  @Output() changePageEvent = new EventEmitter();
 
-  expectation: Observable<boolean>;
+  @Output() changeGroupEvent = new EventEmitter();
 
-  tabs: any;
+  @Output() restoreWordEvent = new EventEmitter();
 
   constructor(private store: Store<AppState>) {
     this.tabs = [
@@ -38,12 +46,6 @@ export class DictionaryTabComponent implements OnInit {
       { group: 5, icon: 'filter_6', color: [128, 0, 0] },
     ];
   }
-
-  @Output() changePageEvent = new EventEmitter();
-
-  @Output() changeGroupEvent = new EventEmitter();
-
-  @Output() restoreWordEvent = new EventEmitter();
 
   changePage(event) {
     this.changePageEvent.emit(event);

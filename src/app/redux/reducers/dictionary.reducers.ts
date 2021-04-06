@@ -21,8 +21,4 @@ export const dictionaryReducer = createReducer(
     ...state,
     errorMessage: action.errorMessage,
   })),
-  // on(dictionaryActions.restoreWordSuccess, (state, action) => ({
-  //   ...state,
-  //   paginatedResults: state.paginatedResults.filter((word) => word._id !== action.word._id),
-  // })),
 );

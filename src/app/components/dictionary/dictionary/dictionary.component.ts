@@ -25,6 +25,10 @@ export class DictionaryComponent implements OnInit {
 
   tabs: any;
 
+  currentSection: number;
+
+  currentGroup: number;
+
   words$: Observable<Word[]>;
 
   totalCount$: Observable<number>;
@@ -46,6 +50,7 @@ export class DictionaryComponent implements OnInit {
   }
 
   onChangeSection(event) {
+    this.getGroup();
     this.dictionaryService.changeSection(event);
   }
 
@@ -53,9 +58,19 @@ export class DictionaryComponent implements OnInit {
     this.store.dispatch(restoreWord({ word: event }));
   }
 
+  getGroup() {
+    this.currentGroup = this.dictionaryService.getGroup();
+  }
+
+  getSection() {
+    this.currentSection = this.dictionaryService.getSection();
+  }
+
   ngOnInit() {
     this.words$ = this.store.select(words);
     this.totalCount$ = this.store.select(totalCount);
     this.dictionaryService.updateWords();
+    this.getGroup();
+    this.getSection();
   }
 }

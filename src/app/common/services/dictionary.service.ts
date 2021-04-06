@@ -28,16 +28,27 @@ export class DictionaryService {
     wordsPerPage: 20,
   };
 
-  initialData = {
-    section: 'learned',
-    group: 0,
-    page: 0,
-    wordsPerPage: 15,
-  };
-
-  currentData = {};
-
   constructor(private http: HttpClient, private store: Store) {}
+
+  getGroup() {
+    return this.urlOptions.group;
+  }
+
+  getSection() {
+    switch (this.urlOptions.section) {
+      case 'learned':
+        return 0;
+        break;
+      case 'hard':
+        return 1;
+        break;
+      case 'deleted':
+        return 2;
+        break;
+      default:
+        return 0;
+    }
+  }
 
   changeGroup({ index }) {
     this.urlOptions.group = index;

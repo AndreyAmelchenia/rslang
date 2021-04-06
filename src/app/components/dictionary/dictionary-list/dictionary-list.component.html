@@ -1,5 +1,5 @@
 <mat-grid-list [cols]="cols | async" [rowHeight]="rowHeight |async">
-  <mat-grid-tile *ngFor="let word of words$ |async">
+  <mat-grid-tile *ngFor="let word of words$ |async; trackBy:identify">
     <app-dictionary-item
       [word]="word"
       [color]="color"

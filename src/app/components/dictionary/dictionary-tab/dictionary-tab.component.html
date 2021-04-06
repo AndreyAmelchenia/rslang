@@ -1,4 +1,8 @@
-<mat-tab-group mat-align-tabs="center" (selectedTabChange)="onGroupChange($event)">
+<mat-tab-group
+  mat-align-tabs="center"
+  (selectedTabChange)="onGroupChange($event)"
+  selectedIndex="{{group}}"
+>
   <mat-tab *ngFor="let tab of tabs" label="{{tab.label}}">
     <ng-template mat-tab-label
       ><mat-icon [ngStyle]="{'color': colorRGB(tab.color)}" class="example-tab-icon"

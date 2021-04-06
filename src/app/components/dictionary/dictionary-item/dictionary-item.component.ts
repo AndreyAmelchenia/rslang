@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
 import { Word } from '../../../common/models/word.model';
+import { URL_BACK_SERVER } from '../../../shared/constants/url-constants';
 
 @Component({
   selector: 'app-dictionary-item',
@@ -30,15 +31,11 @@ export class DictionaryItemComponent {
 
   playAudio() {
     this.play = true;
-    this.audio = new Audio(`https://andey-rslang-back-end.herokuapp.com/${this.word.audio}`);
+    this.audio = new Audio(`${URL_BACK_SERVER.URL_BACK}/${this.word.audio}`);
 
-    this.audioExample = new Audio(
-      `https://andey-rslang-back-end.herokuapp.com/${this.word.audioExample}`,
-    );
+    this.audioExample = new Audio(`${URL_BACK_SERVER.URL_BACK}/${this.word.audioExample}`);
 
-    this.audioMeaning = new Audio(
-      `https://andey-rslang-back-end.herokuapp.com/${this.word.audioMeaning}`,
-    );
+    this.audioMeaning = new Audio(`${URL_BACK_SERVER.URL_BACK}/${this.word.audioMeaning}`);
     this.audio.play();
     [this.audio, this.audioExample, this.audioMeaning].forEach((el, index, arr) => {
       el.addEventListener('ended', () => arr[index + 1] && arr[index + 1].play());

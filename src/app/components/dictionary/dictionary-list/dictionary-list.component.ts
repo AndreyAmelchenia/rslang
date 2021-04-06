@@ -104,6 +104,10 @@ export class DictionaryListComponent implements OnInit {
     this.restoreWordEvent.emit(event);
   }
 
+  identify(index, item: Word) {
+    return item._id;
+  }
+
   ngOnInit(): void {
     this.data = this.store.select(selectWordsByGroup(this.group)).pipe(
       map((words) => {
