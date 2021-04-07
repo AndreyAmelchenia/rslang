@@ -30,6 +30,8 @@ export class CardItemComponent {
   }
 
   addDifficultyWord(wordId: string, difficulty: 'easy' | 'hard' | 'deleted', newWord: boolean) {
+    console.log(this.store.dispatch(LoadDifficultyWords({ wordId, difficulty, newWord })));
+
     this.store.dispatch(LoadDifficultyWords({ wordId, difficulty, newWord }));
   }
 

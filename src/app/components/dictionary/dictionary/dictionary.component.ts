@@ -1,7 +1,7 @@
 import { Store } from '@ngrx/store';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { totalCount, words } from 'src/app/redux/selectors/dictionary.selectors';
+import { totalCount, wordsDictionary } from 'src/app/redux/selectors/dictionary.selectors';
 import { Word } from 'src/app/common/models/word.model';
 import { DictionaryService } from '../../../common/services/dictionary.service';
 import { restoreWord } from '../../../redux/actions/dictionary.actions';
@@ -67,7 +67,7 @@ export class DictionaryComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.words$ = this.store.select(words);
+    this.words$ = this.store.select(wordsDictionary);
     this.totalCount$ = this.store.select(totalCount);
     this.dictionaryService.updateWords();
     this.getGroup();
