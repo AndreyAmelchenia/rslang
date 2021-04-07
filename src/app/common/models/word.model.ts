@@ -17,6 +17,7 @@ export interface Word {
     difficulty: 'easy' | 'hard' | 'deleted';
     optional: {
       repeat: number;
+      failCount: number;
     };
   };
 }
