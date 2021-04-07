@@ -32,7 +32,7 @@
       <ng-template [ngIf]="isAuth$|async" [ngIfThen]="loginBlock" [ngIfElse]="log"> </ng-template>
       <ng-template #log>
         <a [routerLink]="[path.Registration]" class="link">Register</a>
-        <a routerLink="/login" class="link">Sign In</a>
+        <a routerLink="/" class="link">Sign In</a>
       </ng-template>
       <ng-template #loginBlock>
         <div>

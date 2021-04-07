@@ -1,1 +1,15 @@
-<p>start-page works!</p>
+<mat-grid-list [cols]="(isAuth$|async) ? 4 : 3" rowHeight="43vh">
+  <!-- <mat-grid-tile
+    *ngFor="let tile of tiles"
+    [colspan]="tile.cols"
+    [rowspan]="tile.rows"
+    [style.background]="tile.color"
+    [ngComponentOutlet]
+  > -->
+  <mat-grid-tile [colspan]="3" [rowspan]="1" [style.background]="'lightblue'"> </mat-grid-tile>
+  <mat-grid-tile *ngIf="isAuth$|async" [colspan]="1" [rowspan]="2" [style.background]="'lightgreen'"
+    ><app-login></app-login
+  ></mat-grid-tile>
+  <mat-grid-tile [colspan]="1" [rowspan]="1" [style.background]="'lightpink'"></mat-grid-tile>
+  <mat-grid-tile [colspan]="2" [rowspan]="1" [style.background]="'#DDBDF1'"></mat-grid-tile>
+</mat-grid-list>

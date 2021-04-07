@@ -11,4 +11,5 @@ export interface IHttpUser {
   email: string;
   password: string;
   name?: string;
+  photo?: FormDataEntryValue;
 }

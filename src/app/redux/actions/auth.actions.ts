@@ -8,7 +8,7 @@ export const loginSuccess = createAction(
   props<{ user: IUser; start: boolean }>(),
 );
 export const loginFailure = createAction(ActionType.LogInFailure, props<any>());
-export const signUp = createAction(ActionType.SignUp, props<{ user: IHttpUser }>());
+export const signUp = createAction(ActionType.SignUp, props<{ user: FormData }>());
 export const signUpSuccess = createAction(ActionType.SignUpSuccess, props<any>());
 export const signUpFailure = createAction(ActionType.SignUpFailure, props<any>());
 export const logout = createAction(ActionType.LogOut);

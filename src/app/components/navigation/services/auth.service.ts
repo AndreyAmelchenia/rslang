@@ -21,11 +21,11 @@ export class AuthService {
   ) {}
 
   registerUser(user: IHttpUser): Observable<IUser> {
-    return this.http.post<IHttpUser>(this.registerUrl, user);
+    return this.http.post<IUser>(this.registerUrl, user);
   }
 
   loginUser(user: IHttpUser): Observable<IUser> {
-    return this.http.post<IHttpUser>(this.loginUrl, user);
+    return this.http.post<IUser>(this.loginUrl, user);
   }
 
   logout() {
