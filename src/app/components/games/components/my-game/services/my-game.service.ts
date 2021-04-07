@@ -7,11 +7,9 @@ import { Word } from 'src/app/common/models/word.model';
   providedIn: 'root',
 })
 export class MyGameService {
-
   constructor(private http: HttpClient) {}
 
   getWords() {
     return this.http.get<Word[]>('assets/data/words.json');
   }
-
 }

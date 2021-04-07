@@ -96,3 +96,29 @@ mat-card-title {
     width: 200px;
   }
 }
+
+@media only screen and (max-width: 600px) {
+  .item-container {
+    width: 120px;
+  }
+  mat-card {
+    width: 30px;
+  }
+
+  mat-card-title {
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .item-container {
+    width: 120px;
+  }
+  mat-card {
+    width: 30px;
+  }
+
+  mat-card-title {
+    font-size: 14px;
+  }
+}
