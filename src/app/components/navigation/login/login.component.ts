@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../redux/models/app.state';
+import { AppState } from '../../../redux/app.state';
 import { AuthService } from '../services/auth.service';
 import { login } from '../../../redux/actions/auth.actions';
 
