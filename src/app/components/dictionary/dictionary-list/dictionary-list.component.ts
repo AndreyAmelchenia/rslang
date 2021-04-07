@@ -3,7 +3,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   Input,
-  OnInit,
   Output,
   ViewChild,
   EventEmitter,
@@ -14,7 +13,6 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Word } from '../../../common/models/word.model';
 import { AppState } from '../../../redux/app.state';
-import { selectWordsByGroup } from '../../../redux/selectors/words.selector';
 
 @Component({
   selector: 'app-dictionary-list',
@@ -22,7 +20,7 @@ import { selectWordsByGroup } from '../../../redux/selectors/words.selector';
   styleUrls: ['./dictionary-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DictionaryListComponent implements OnInit {
+export class DictionaryListComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   @Input() group: number;
@@ -106,17 +104,5 @@ export class DictionaryListComponent implements OnInit {
 
   identify(index, item: Word) {
     return item._id;
-  }
-
-  ngOnInit(): void {
-    this.data = this.store.select(selectWordsByGroup(this.group)).pipe(
-      map((words) => {
-        this.lengthBase = words[0].paginatedResults.length;
-        return words[0].paginatedResults;
-      }),
-    );
-    this.store.select(selectWordsByGroup(this.group)).subscribe((words) => {
-      this.length = words[0].totalCount[0][this.group];
-    });
   }
 }
