@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Settings } from 'src/app/common/models/settings.model';
-import { SettingsService } from 'src/app/common/services/settings.service';
 import { saveSettings } from 'src/app/redux/actions/settings.actions';
 import { AppState } from 'src/app/redux/app.state';
 import { selectSettings } from 'src/app/redux/selectors/settings.selector';
@@ -15,17 +14,11 @@ import { selectSettings } from 'src/app/redux/selectors/settings.selector';
 export class ProfileSettingsComponent {
   settings: Settings;
 
-  data: any;
-
   formGroup: FormGroup;
 
   wordsPerDay: number;
 
-  constructor(
-    private store: Store<AppState>,
-    private settingsService: SettingsService,
-    formBuilder: FormBuilder,
-  ) {
+  constructor(private store: Store<AppState>, formBuilder: FormBuilder) {
     this.store.select(selectSettings).subscribe((settings) => {
       this.settings = settings;
     });
@@ -52,11 +45,6 @@ export class ProfileSettingsComponent {
         displayHandlingButtons,
       },
     };
-
-    // this.settingsService.saveSettings(payload).subscribe((response) => {
-    //   this.data = response;
-    //   console.log(this.data);
-    // });
     this.store.dispatch(saveSettings({ payload }));
   }
 }

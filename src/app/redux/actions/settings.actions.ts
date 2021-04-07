@@ -11,3 +11,6 @@ export const setSettings = createAction(
   SettingsActionsType.SetSettings,
   props<{ response: Settings }>(),
 );
+
+export const getSettings = createAction(SettingsActionsType.GetSettings);
+export const resetSettings = createAction(SettingsActionsType.ResetSettings);
