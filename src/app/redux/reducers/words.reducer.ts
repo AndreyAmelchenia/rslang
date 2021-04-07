@@ -46,7 +46,7 @@ export const booksReducer = createReducer(
             ? {
                 ...el,
                 userWord: newWord
-                  ? { difficulty, optional: { repeat: 0 } }
+                  ? { difficulty, optional: { repeat: 0, failCount: 0 } }
                   : { ...el.userWord, difficulty },
               }
             : el,

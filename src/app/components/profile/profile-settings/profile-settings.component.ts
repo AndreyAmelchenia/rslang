@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Settings } from 'src/app/common/models/settings.model';
+import { SettingsService } from 'src/app/common/services/settings.service';
+import { saveSettings } from 'src/app/redux/actions/settings.actions';
 import { AppState } from 'src/app/redux/app.state';
 import { selectSettings } from 'src/app/redux/selectors/settings.selector';
-import { setSettings } from '../../../redux/actions/settings.actions';
 
 @Component({
   selector: 'app-profile-settings',
@@ -14,20 +15,48 @@ import { setSettings } from '../../../redux/actions/settings.actions';
 export class ProfileSettingsComponent {
   settings: Settings;
 
+  data: any;
+
   formGroup: FormGroup;
 
-  constructor(private store: Store<AppState>, formBuilder: FormBuilder) {
+  wordsPerDay: number;
+
+  constructor(
+    private store: Store<AppState>,
+    private settingsService: SettingsService,
+    formBuilder: FormBuilder,
+  ) {
     this.store.select(selectSettings).subscribe((settings) => {
       this.settings = settings;
     });
 
+    this.wordsPerDay = this.settings.wordsPerDay;
+
     this.formGroup = formBuilder.group({
-      displayTranslation: this.settings.displayTranslation,
-      displayHandlingButtons: this.settings.displayHandlingButtons,
+      wordsPerDay: this.settings.wordsPerDay,
+      displayTranslation: this.settings.optional.displayTranslation,
+      displayHandlingButtons: this.settings.optional.displayHandlingButtons,
     });
   }
 
+  onSliderChange($event) {
+    this.wordsPerDay = $event.value;
+  }
+
   onFormSubmit() {
-    this.store.dispatch(setSettings({ payload: this.formGroup.value }));
+    const { wordsPerDay, displayTranslation, displayHandlingButtons } = this.formGroup.value;
+    const payload = {
+      wordsPerDay,
+      optional: {
+        displayTranslation,
+        displayHandlingButtons,
+      },
+    };
+
+    // this.settingsService.saveSettings(payload).subscribe((response) => {
+    //   this.data = response;
+    //   console.log(this.data);
+    // });
+    this.store.dispatch(saveSettings({ payload }));
   }
 }

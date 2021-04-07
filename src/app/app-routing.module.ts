@@ -5,7 +5,8 @@ import { ProfileComponent } from 'src/app/components/profile/profile/profile.com
 import { DictionaryComponent } from './components/dictionary/dictionary/dictionary.component';
 import { LoginComponent } from './components/start-page/login/login.component';
 import { RegistrationComponent } from './components/navigation/registration/registration.component';
-import { Path } from './shared/models/roter.modele';
+import { Path } from './shared/models/router.model';
+
 import { AboutUsListComponent } from './components/aboutUs/components/about-us-list/about-us-list.component';
 import { GamesRoutingModule } from './components/games/games-routing.module';
 import { StartPageComponent } from './components/start-page/start-page/start-page.component';
