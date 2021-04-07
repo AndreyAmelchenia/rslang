@@ -1,5 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Observable, Observer } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { totalCount, words } from 'src/app/redux/selectors/dictionary.selectors';
+import { Word } from 'src/app/common/models/word.model';
+import { DictionaryService } from '../../../common/services/dictionary.service';
+import { restoreWord } from '../../../redux/actions/dictionary.actions';
 
 export interface ExampleTab {
   label: string;
@@ -13,18 +18,59 @@ export interface ExampleTab {
   styleUrls: ['./dictionary.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DictionaryComponent {
+export class DictionaryComponent implements OnInit {
   asyncTabs: Observable<ExampleTab[]>;
 
   expectation: Observable<boolean>;
 
-  constructor() {
-    this.asyncTabs = new Observable((observer: Observer<ExampleTab[]>) => {
-      observer.next([
-        { label: 'Изучаемые слова', icon: 'filter_1', color: [252, 0, 0] },
-        { label: 'Сложные слова', icon: 'filter_2', color: [0, 128, 0] },
-        { label: 'Удалённые слова', icon: 'filter_3', color: [255, 165, 0] },
-      ]);
-    });
+  tabs: any;
+
+  currentSection: number;
+
+  currentGroup: number;
+
+  words$: Observable<Word[]>;
+
+  totalCount$: Observable<number>;
+
+  constructor(private dictionaryService: DictionaryService, private store: Store) {
+    this.tabs = [
+      { label: 'Изучаемые слова', icon: 'filter_1', color: 'blue', id: 1 },
+      { label: 'Сложные слова', icon: 'filter_2', color: 'green', id: 2 },
+      { label: 'Удалённые слова', icon: 'filter_3', color: 'brown', id: 3 },
+    ];
+  }
+
+  onChangePage(event) {
+    this.dictionaryService.changePage(event);
+  }
+
+  onChangeGroup(event) {
+    this.dictionaryService.changeGroup(event);
+  }
+
+  onChangeSection(event) {
+    this.getGroup();
+    this.dictionaryService.changeSection(event);
+  }
+
+  restoreWord(event) {
+    this.store.dispatch(restoreWord({ word: event }));
+  }
+
+  getGroup() {
+    this.currentGroup = this.dictionaryService.getGroup();
+  }
+
+  getSection() {
+    this.currentSection = this.dictionaryService.getSection();
+  }
+
+  ngOnInit() {
+    this.words$ = this.store.select(words);
+    this.totalCount$ = this.store.select(totalCount);
+    this.dictionaryService.updateWords();
+    this.getGroup();
+    this.getSection();
   }
 }

@@ -1,4 +1,4 @@
-import { IUser } from './user.modele';
+import { IUser } from './user.models';
 
 export interface ILoginState {
   isAuthenticated: boolean;

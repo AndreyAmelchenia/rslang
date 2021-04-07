@@ -32,9 +32,10 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSliderModule } from '@angular/material/slider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
-
 @NgModule({
   exports: [
     FormsModule,
@@ -71,7 +72,9 @@ import { FormsModule } from '@angular/forms';
     MatDatepickerModule,
     MatTooltipModule,
     MatSlideToggleModule,
+    MatSliderModule,
     MatProgressBarModule,
+    MatDialogModule
   ],
 })
 export class AngularMaterialModule {}

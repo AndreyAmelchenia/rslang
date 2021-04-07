@@ -19,7 +19,6 @@ const aboutUsRoutes: Routes = [
   imports: [
     CommonModule,
     MatCardModule,
-    MatCardModule,
     MatListModule,
     MatGridListModule,
     RouterModule.forChild(aboutUsRoutes),
