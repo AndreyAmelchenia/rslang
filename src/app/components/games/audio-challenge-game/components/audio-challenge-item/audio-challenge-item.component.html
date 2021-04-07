@@ -1,13 +1,54 @@
-<ng-container *ngIf="currentWord._id">
-  <button mat-fab (click)="playWordAudio()">
-    <i class="material-icons">volume_up</i>
-  </button>
-  <img [src]="'https://andey-rslang-back-end.herokuapp.com/'+ currentWord.image" alt="" />
-  <mat-list class="list-horizontal">
-    <ng-container *ngFor="let translation of currentWord.translationsArray">
-      <mat-list-item>
-        <button mat-button (click)="makeChoice()">{{translation}}</button>
-      </mat-list-item>
-    </ng-container>
-  </mat-list>
+<ng-container *ngIf="wordState.currentWord._id && !wordState.isGameEnded">
+  <mat-progress-bar
+    mode="determinate"
+    [value]="wordState.resultList.length/gameLength*100"
+  ></mat-progress-bar>
+  <div class="item-container">
+    <mat-card class="audio-game-card">
+      <mat-card-header>
+        <button mat-card-avatar mat-mini-fab (click)="playWordAudio()">
+          <i class="material-icons">volume_up</i>
+        </button>
+        <mat-card-title *ngIf="wordState.isTranslationChoosed">
+          {{wordState.currentWord.word}}
+        </mat-card-title>
+        <mat-card-subtitle *ngIf="wordState.isTranslationChoosed">
+          {{wordState.currentWord.transcription}}
+        </mat-card-subtitle>
+      </mat-card-header>
+      <div class="img-card-container">
+        <img
+          mat-card-image
+          [src]="apiUrl + wordState.currentWord.image"
+          alt=""
+          *ngIf="wordState.isTranslationChoosed"
+        />
+      </div>
+    </mat-card>
+
+    <mat-list class="list-horizontal">
+      <ng-container
+        *ngFor="let translation of wordState.currentWord.translationsArray; index as index"
+      >
+        <mat-list-item>
+          <button
+            mat-button
+            (click)="makeChoice(index)"
+            [disabled]="wordState.isTranslationChoosed"
+          >
+            <span class="key-button"> {{index+1}} </span>
+            {{translation}}
+          </button>
+          <div *ngIf="wordState.isTranslationChoosed">
+            <span class="material-icons" *ngIf="translation===wordState.currentWord.wordTranslate">
+              check_circle_outline
+            </span>
+            <span class="material-icons" *ngIf="translation!==wordState.currentWord.wordTranslate">
+              highlight_off
+            </span>
+          </div>
+        </mat-list-item>
+      </ng-container>
+    </mat-list>
+  </div>
 </ng-container>

@@ -1,14 +1,4 @@
-<div *ngIf="currentWord">
-  <app-audio-challenge-item [currentWord]="currentWord"></app-audio-challenge-item>
-  <div>
-    <button mat-stroked-button color="warn" *ngIf="gameState.isTranslationChoosed | async">
-      skip
-    </button>
-    <button mat-stroked-button color="primary" (click)="nextWord()" *ngIf="turnEnded|async">
-      next
-    </button>
-    <p>{{gameState.isTranslationChoosed | async}}</p>
-  </div>
-</div>
-
-<button mat-raised-button color="primary" (click)="newGame()">Start new Game</button>
+<app-audio-challenge-item [wordState]="wordState | async"></app-audio-challenge-item>
+<app-audio-challenge-game-manage [wordState]="wordState | async"></app-audio-challenge-game-manage>
+<app-audio-challenge-game-start [wordState]="wordState | async"></app-audio-challenge-game-start>
+<app-audio-challenge-game-end [wordState]="wordState | async"></app-audio-challenge-game-end>

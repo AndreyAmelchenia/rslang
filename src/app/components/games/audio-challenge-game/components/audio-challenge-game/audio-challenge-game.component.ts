@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AudioChallengeGameStateService } from '../../services/audio-challenge-game-status.service';
 
 import { AudioChallengeGameService } from '../../services/audio-challenge-game.service';
 
@@ -9,37 +8,15 @@ import { AudioChallengeGameService } from '../../services/audio-challenge-game.s
   styleUrls: ['./audio-challenge-game.component.scss'],
 })
 export class AudioChallengeGameComponent implements OnInit {
-  currentWord;
+  wordState;
 
-  gameState;
-
-  turnEnded;
-
-  constructor(
-    private audioChallengeGameService: AudioChallengeGameService,
-    private audioChallengeGameStateService: AudioChallengeGameStateService,
-  ) {}
+  constructor(private audioChallengeGameService: AudioChallengeGameService) {}
 
   ngOnInit(): void {
-    this.currentWord = this.audioChallengeGameService.gameState.currentWord;
-    this.gameState = this.audioChallengeGameStateService.getStateChange();
-    this.turnEnded = this.gameState.isTranslationChoosed;
-    console.log(this.gameState, 'dddddddddddddddddd');
+    this.wordState = this.audioChallengeGameService.getStateChange();
   }
 
   newGame() {
-    this.audioChallengeGameService.getWords();
-    this.currentWord = this.audioChallengeGameService.gameState.currentWord;
-  }
-
-  nextWord() {
-    this.audioChallengeGameService.nextWord();
-    this.currentWord = this.audioChallengeGameService.gameState.currentWord;
-    this.makeTurn();
-  }
-
-  makeTurn() {
-    this.audioChallengeGameService.gameState.isTranslationChoosed = !this.audioChallengeGameService
-      .gameState.isTranslationChoosed;
+    this.audioChallengeGameService.gameStart();
   }
 }

@@ -1,68 +1,70 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { AppState } from 'src/app/redux/app.state';
 import { selectWords } from 'src/app/redux/selectors/words.seletor';
 import { Word } from 'src/app/common/models/word.model';
 import { AudioChallengeState, AudioChallengeWord } from '../models/game-adio-challenge.model';
-
-const initialAudioChallengeWord: AudioChallengeWord = {
-  _id: '',
-  word: '',
-  image: '',
-  audio: '',
-  audioMeaning: '',
-  audioExample: '',
-  textMeaning: '',
-  textExample: '',
-  transcription: '',
-  wordTranslate: '',
-  textMeaningTranslate: '',
-  textExampleTranslate: '',
-  translationsArray: [],
-};
-
-const initialAudioChallengeState: AudioChallengeState = {
-  wordsInGame: [],
-  resultList: [],
-  isGameStarted: true,
-  currentWord: initialAudioChallengeWord,
-  audio: new Audio(),
-  isTranslationChoosed: false,
-  maxRightAnswers: 0,
-  previousMaxAnswers: 0,
-  isGameEnded: false,
-  isSoundOn: false,
-};
+import { GAME_LENGHT, initialAudioChallengeState } from '../constants/audio-challenge.constants';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AudioChallengeGameService {
-  gameState: AudioChallengeState = initialAudioChallengeState;
+  private gameState = new BehaviorSubject<AudioChallengeState>(initialAudioChallengeState);
 
   constructor(private store: Store<AppState>) {}
 
+  getStateChange(): Observable<AudioChallengeState> {
+    return this.gameState.asObservable();
+  }
+
+  getCurrentState(): AudioChallengeState {
+    return this.gameState.getValue();
+  }
+
+  setGameState(state: Partial<AudioChallengeState>) {
+    const newState = { ...this.getCurrentState(), ...state };
+    this.gameState.next(newState);
+  }
+
   gameStart() {
-    this.gameState = initialAudioChallengeState;
+    const newState = { ...initialAudioChallengeState, isGameStarted: true };
+    this.gameState.next(newState);
+    this.getWords();
+  }
+
+  gameEnd() {
+    this.setGameState({ isGameEnded: true });
+    console.log('game end');
   }
 
   getWords() {
     this.store.select(selectWords).subscribe((words) => {
-      this.gameState.wordsInGame = [...words];
+      this.setGameState({
+        wordsInGame: words,
+      });
       const [currentWord] = words;
-      this.gameState.currentWord = this.createAudioChallengeWord(currentWord);
+      this.setGameState({
+        currentWord: this.createAudioChallengeWord(currentWord),
+      });
       return undefined;
     });
   }
 
   nextWord() {
-    this.gameState.resultList = [
-      ...this.gameState.resultList,
-      { word: this.gameState.currentWord, result: true },
-    ];
-    const nextWord = this.gameState.wordsInGame[this.gameState.resultList.length];
-    this.gameState.currentWord = this.createAudioChallengeWord(nextWord);
+    const { resultList, wordsInGame } = this.getCurrentState();
+
+    const nextWord = wordsInGame[resultList.length];
+    const currentWord = this.createAudioChallengeWord(nextWord);
+    this.setGameState({
+      currentWord,
+      isTranslationChoosed: false,
+    });
+    if (resultList.length === GAME_LENGHT) {
+      this.gameEnd();
+    }
   }
 
   createAudioChallengeWord(word: Word): AudioChallengeWord {
@@ -72,18 +74,36 @@ export class AudioChallengeGameService {
 
   createTranslationTask(wordArg: Word): string[] {
     const { _id: id } = wordArg;
+
     const filterFunction = (word: Word) => {
       const { _id: wordId } = word;
       return wordId !== id;
     };
+
     const array = this.shuffle(
-      this.gameState.wordsInGame.filter(filterFunction).map((word: Word) => word.wordTranslate),
+      this.getCurrentState()
+        .wordsInGame.filter(filterFunction)
+        .map((word: Word) => word.wordTranslate),
     ).slice(0, 4);
     return this.shuffle([...array, wordArg.wordTranslate]);
   }
 
-  makeTurn() {
-    this.gameState.isTranslationChoosed = !this.gameState.isTranslationChoosed;
+  makeTurn(index: number | undefined) {
+    let resultUnswer = false;
+    const { resultList, currentWord, isTranslationChoosed } = this.getCurrentState();
+    if (isTranslationChoosed) {
+      return;
+    }
+    if (index) {
+      resultUnswer = currentWord.wordTranslate === currentWord.translationsArray[index];
+    }
+
+    const resultListNew = [...resultList, { word: currentWord, result: resultUnswer }];
+
+    this.setGameState({
+      resultList: resultListNew,
+      isTranslationChoosed: true,
+    });
   }
 
   shuffle(arr = []) {

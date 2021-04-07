@@ -1,0 +1,12 @@
+:root{
+  padding: 1rem;
+}
+
+table {
+  width: calc(100% - 2rem);
+  margin: 1rem auto;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}

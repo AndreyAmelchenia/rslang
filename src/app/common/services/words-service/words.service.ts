@@ -34,7 +34,7 @@ export class WordsService {
   ): Observable<AggregatedWords[]> {
     return this.http
       .get<AggregatedWords[]>(
-        `https://andey-rslang-back-end.herokuapp.com/users/605a58c856278f00153a243e/aggregatedWords?group=${group}&page=${page}&wordsPerPage=${wordsPerPage}&filter={"userWord":null}`,
+        `https://andey-rslang-back-end.herokuapp.com/users/6054f3cd7584ac0015d8b7ca/aggregatedWords?group=${group}&page=${page}&wordsPerPage=${wordsPerPage}&filter={"userWord":null}`,
         // this.httpOptions,
       )
       .pipe(map((words) => words));

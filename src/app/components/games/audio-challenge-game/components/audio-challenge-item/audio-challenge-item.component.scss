@@ -1,7 +1,24 @@
 mat-list.mat-list.mat-list-base.list-horizontal {
   display: flex;
   flex-flow: row wrap;
+  justify-content: space-around;
   mat-list-item {
     display: contents;
   }
+}
+.item-container {
+  padding: 1rem;
+}
+.audio-game-card {
+  max-width: 20rem;
+  margin: 0 auto;
+}
+.mat-card-header {
+  height: 60px;
+}
+.img-card-container {
+  height: 234px;
+}
+.mat-card-image:first-child {
+  margin-top: 0 !important;
 }

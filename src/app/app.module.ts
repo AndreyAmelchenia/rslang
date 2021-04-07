@@ -16,19 +16,11 @@ import { CardsModule } from './components/cards/cards.module';
 @NgModule({
   declarations: [AppComponent],
   imports: [
-<<<<<<< HEAD
-    BrowserModule,
-    CardsModule,
-    NavigationModule,
-    AboutUsModule,
-    GamesModule,
-=======
     NavigationModule,
     AboutUsModule,
     GamesModule,
     CardsModule,
     BrowserModule,
->>>>>>> d01204844fc66bda64c62b1ae936c572838b6969
     BrowserAnimationsModule,
     SharedModule,
     ReduxModule,

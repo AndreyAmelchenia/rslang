@@ -1,33 +1,41 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { AudioChallengeWord } from '../../models/game-adio-challenge.model';
-import { AudioChallengeGameStateService } from '../../services/audio-challenge-game-status.service';
+import { Component, HostListener, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { API_URL, GAME_LENGHT } from '../../constants/audio-challenge.constants';
+import { AudioChallengeState } from '../../models/game-adio-challenge.model';
+import { AudioChallengeGameService } from '../../services/audio-challenge-game.service';
 
 @Component({
   selector: 'app-audio-challenge-item',
   templateUrl: './audio-challenge-item.component.html',
   styleUrls: ['./audio-challenge-item.component.scss'],
 })
-export class AudioChallengeItemComponent implements OnInit, OnChanges {
+export class AudioChallengeItemComponent implements OnChanges {
   audio = new Audio();
 
+  apiUrl = API_URL;
+
+  gameLength = GAME_LENGHT;
+
   @Input()
-  currentWord: AudioChallengeWord;
+  wordState: AudioChallengeState;
 
-  constructor(private audioChallengeGameStateService: AudioChallengeGameStateService) {}
-
-  ngOnInit(): void {
-    console.log('hhh');
-  }
+  constructor(private audioChallengeGameService: AudioChallengeGameService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    const { currentWord } = changes;
-    if (currentWord.currentValue.audio) {
-      this.audio.src = `https://andey-rslang-back-end.herokuapp.com/${this.currentWord.audio}`;
+    const { wordState } = changes;
+    if (wordState.currentValue.currentWord.audio) {
+      this.audio.src = this.apiUrl + this.wordState.currentWord.audio;
     }
   }
 
-  makeChoice() {
-    this.audioChallengeGameStateService.setAuthState({ isTranslationChoosed: true });
+  @HostListener('window:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    if (+event.key > 0 && +event.key < 6) {
+      this.makeChoice(+event.key - 1);
+    }
+  }
+
+  makeChoice(index: number) {
+    this.audioChallengeGameService.makeTurn(index);
   }
 
   playWordAudio() {
