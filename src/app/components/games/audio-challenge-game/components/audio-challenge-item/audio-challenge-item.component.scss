@@ -1,0 +1,7 @@
+mat-list.mat-list.mat-list-base.list-horizontal {
+  display: flex;
+  flex-flow: row wrap;
+  mat-list-item {
+    display: contents;
+  }
+}

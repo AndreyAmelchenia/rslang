@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { AppState } from 'src/app/redux/app.state';
-import { selectWords } from 'src/app/redux/selectors/words.selectors';
+import { selectWords } from 'src/app/redux/selectors/words.seletor';
+import { Word } from 'src/app/common/models/word.model';
 import { AudioChallengeState, AudioChallengeWord } from '../models/game-adio-challenge.model';
 
 const initialAudioChallengeWord: AudioChallengeWord = {
@@ -42,11 +43,15 @@ export class AudioChallengeGameService {
 
   constructor(private store: Store<AppState>) {}
 
+  gameStart() {
+    this.gameState = initialAudioChallengeState;
+  }
+
   getWords() {
     this.store.select(selectWords).subscribe((words) => {
       this.gameState.wordsInGame = [...words];
       const [currentWord] = words;
-      this.gameState.currentWord = { ...this.gameState.currentWord, ...currentWord };
+      this.gameState.currentWord = this.createAudioChallengeWord(currentWord);
       return undefined;
     });
   }
@@ -56,13 +61,30 @@ export class AudioChallengeGameService {
       ...this.gameState.resultList,
       { word: this.gameState.currentWord, result: true },
     ];
-    this.gameState.currentWord = {
-      ...this.gameState.wordsInGame[this.gameState.resultList.length],
-      translationsArray: [],
-    };
+    const nextWord = this.gameState.wordsInGame[this.gameState.resultList.length];
+    this.gameState.currentWord = this.createAudioChallengeWord(nextWord);
   }
 
-  gameStart() {}
+  createAudioChallengeWord(word: Word): AudioChallengeWord {
+    const translationsArray = this.createTranslationTask(word);
+    return { ...word, translationsArray };
+  }
+
+  createTranslationTask(wordArg: Word): string[] {
+    const { _id: id } = wordArg;
+    const filterFunction = (word: Word) => {
+      const { _id: wordId } = word;
+      return wordId !== id;
+    };
+    const array = this.shuffle(
+      this.gameState.wordsInGame.filter(filterFunction).map((word: Word) => word.wordTranslate),
+    ).slice(0, 4);
+    return this.shuffle([...array, wordArg.wordTranslate]);
+  }
+
+  makeTurn() {
+    this.gameState.isTranslationChoosed = !this.gameState.isTranslationChoosed;
+  }
 
   shuffle(arr = []) {
     const res = [...arr];

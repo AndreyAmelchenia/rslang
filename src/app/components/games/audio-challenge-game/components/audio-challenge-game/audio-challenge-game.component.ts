@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AudioChallengeGameStateService } from '../../services/audio-challenge-game-status.service';
 
 import { AudioChallengeGameService } from '../../services/audio-challenge-game.service';
 
@@ -10,10 +11,20 @@ import { AudioChallengeGameService } from '../../services/audio-challenge-game.s
 export class AudioChallengeGameComponent implements OnInit {
   currentWord;
 
-  constructor(private audioChallengeGameService: AudioChallengeGameService) {}
+  gameState;
+
+  turnEnded;
+
+  constructor(
+    private audioChallengeGameService: AudioChallengeGameService,
+    private audioChallengeGameStateService: AudioChallengeGameStateService,
+  ) {}
 
   ngOnInit(): void {
     this.currentWord = this.audioChallengeGameService.gameState.currentWord;
+    this.gameState = this.audioChallengeGameStateService.getStateChange();
+    this.turnEnded = this.gameState.isTranslationChoosed;
+    console.log(this.gameState, 'dddddddddddddddddd');
   }
 
   newGame() {
@@ -24,5 +35,11 @@ export class AudioChallengeGameComponent implements OnInit {
   nextWord() {
     this.audioChallengeGameService.nextWord();
     this.currentWord = this.audioChallengeGameService.gameState.currentWord;
+    this.makeTurn();
+  }
+
+  makeTurn() {
+    this.audioChallengeGameService.gameState.isTranslationChoosed = !this.audioChallengeGameService
+      .gameState.isTranslationChoosed;
   }
 }

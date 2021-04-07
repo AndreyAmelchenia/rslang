@@ -1,0 +1,13 @@
+<ng-container *ngIf="currentWord._id">
+  <button mat-fab (click)="playWordAudio()">
+    <i class="material-icons">volume_up</i>
+  </button>
+  <img [src]="'https://andey-rslang-back-end.herokuapp.com/'+ currentWord.image" alt="" />
+  <mat-list class="list-horizontal">
+    <ng-container *ngFor="let translation of currentWord.translationsArray">
+      <mat-list-item>
+        <button mat-button (click)="makeChoice()">{{translation}}</button>
+      </mat-list-item>
+    </ng-container>
+  </mat-list>
+</ng-container>
