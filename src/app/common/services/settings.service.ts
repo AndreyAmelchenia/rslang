@@ -5,9 +5,9 @@ import { Store } from '@ngrx/store';
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AppState } from 'src/app/redux/models/app.state';
 
 import { URL_BACK_SERVER } from 'src/app/shared/constants/url-constants';
+import { AppState } from 'src/app/redux/app.state';
 import { Settings } from '../models/settings.model';
 import { SessionService } from './storage/session.service';
 

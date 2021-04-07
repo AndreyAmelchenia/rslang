@@ -1,16 +1,20 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { formatDate } from '@angular/common';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
 
-import { data, graphType } from './data';
+import { IDay } from 'src/app/common/models/stats.model';
+import { graphType } from 'src/app/shared/constants/stats-constants';
 
 @Component({
   selector: 'app-profile-chart',
   templateUrl: './profile-chart.component.html',
   styleUrls: ['./profile-chart.component.scss'],
 })
-export class ProfileChartComponent implements OnChanges {
+export class ProfileChartComponent implements OnChanges, OnInit {
   @Input() checkedStyle: string;
+
+  @Input() longData: IDay[];
 
   barChartOptions: ChartOptions = {
     responsive: true,
@@ -31,23 +35,23 @@ export class ProfileChartComponent implements OnChanges {
     },
   ];
 
-  constructor() {
-    data.forEach((el) => {
-      this.barChartLabels.push(el.date);
+  ngOnInit() {
+    this.longData.forEach((el) => {
+      this.barChartLabels.push(formatDate(el.date, 'mediumDate', 'en-US'));
     });
   }
 
   ngOnChanges() {
     this.barChartData[0].data = [];
     if (this.checkedStyle === graphType.daily) {
-      data.forEach((el) => {
-        this.barChartData[0].data.push(el.count);
+      this.longData.forEach((el) => {
+        this.barChartData[0].data.push(el.learned);
       });
     }
     if (this.checkedStyle === graphType.total) {
-      data.reduce((acc, el) => {
-        this.barChartData[0].data.push(el.count + acc);
-        return acc + el.count;
+      this.longData.reduce((acc, el) => {
+        this.barChartData[0].data.push(el.learned + acc);
+        return acc + el.learned;
       }, 0);
     }
   }

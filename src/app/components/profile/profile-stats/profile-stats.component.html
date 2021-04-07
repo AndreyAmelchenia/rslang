@@ -1,28 +1,17 @@
 <div class="stats-wrapper">
   <mat-card class="stats-card">
     <mat-card-content>
-      <h2>Daily statistics</h2>
-      <p>Learned words: {{stats.totalLearned}}</p>
-      <p>Right answers: {{stats.totalRightPercent}} %</p>
-      <div>
-        <p>Longest series</p>
-        <p>Savanna: {{stats.longestSeries.savanna}}</p>
-        <p>Sprint: {{stats.longestSeries.sprint}}</p>
-        <p>Audio: {{stats.longestSeries.audio}}</p>
-        <p>My game: {{stats.longestSeries.myGame}}</p>
-      </div>
-      <div>
-        <p>Daily status</p>
-        <p>Learned words: {{stats.dailyStatus.learned}}</p>
-        <p>Right answers: {{stats.dailyStatus.rightPercent}} %</p>
-      </div>
+      <app-profile-short [shortData]="shortStats | async"></app-profile-short>
     </mat-card-content>
   </mat-card>
   <mat-card class="graph-card">
     <mat-card-content>
       <h2>Global statistics: {{checkedStyle}}</h2>
 
-      <app-profile-chart [checkedStyle]="checkedStyle"></app-profile-chart>
+      <app-profile-chart
+        [checkedStyle]="checkedStyle"
+        [longData]="longStats | async"
+      ></app-profile-chart>
 
       <mat-radio-group
         aria-labelledby="radio-group-label"
