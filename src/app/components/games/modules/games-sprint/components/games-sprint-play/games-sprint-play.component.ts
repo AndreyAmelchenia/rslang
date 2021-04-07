@@ -5,6 +5,9 @@ import { Router } from '@angular/router';
 
 import { Word } from 'src/app/common/models/word.model';
 import { GeneratorShuffleArrayService } from 'src/app/common/services/generator-shuffle-array.service';
+import { selectGameList } from 'src/app/redux/selectors/listGame.selectors';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/redux/app.state';
 import { CssConstants } from '../../../../../../shared/constants/css-constants';
 import { DataConstants } from '../../../../../../shared/constants/data-constants';
 import { GamesSprintService } from '../../services/games-sprint.service';
@@ -74,10 +77,11 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
     private elem: ElementRef,
     private router: Router,
     private location: Location,
+    private store: Store<AppState>,
   ) {}
 
   ngOnInit() {
-    this.gamesSprintService.getWords().subscribe((words) => {
+    this.store.select(selectGameList()).subscribe((words) => {
       this.words = words;
       this.setDifferentWordAndTranslation();
     });
