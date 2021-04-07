@@ -12,5 +12,6 @@
   #paginator
   [length]="totalCount$|async"
   [pageSize]="20"
+  hidePageSize="true"
   (page)="changePage($event)"
 ></mat-paginator>

@@ -7,12 +7,13 @@
 
 mat-card {
   height: calc(100% - 42px);
+  z-index: 1;
 }
 mat-card-content {
   justify-content: center;
   margin: 10px;
 }
-.group-button{
+.group-button {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -23,7 +24,7 @@ mat-card-header {
   justify-content: space-between;
 }
 
-h3{
+h3 {
   font-weight: bold;
   margin-bottom: 0;
 }
@@ -32,7 +33,7 @@ h3{
 //   background-size: cover;
 // }
 
-img{
+img {
   height: auto;
   min-height: 125px;
   width: 50%;
