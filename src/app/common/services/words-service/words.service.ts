@@ -34,6 +34,32 @@ export class WordsService {
       .pipe(map((words) => words));
   }
 
+  aggregatedGameList({
+    group,
+    page,
+    userId,
+    wordsPerPage,
+  }: AggregatedWordsToGet): Observable<AggregatedWords[]> {
+    return this.http
+      .get<AggregatedWords[]>(
+        `${URL_BACK_SERVER.URL_BACK}users/${userId}/aggregatedWords?group=${group}&page=${page}&wordsPerPage=${wordsPerPage}&filter={"$or":[${filter.easy},${filter.hard}]}`,
+      )
+      .pipe(map((words) => words));
+  }
+
+  aggregatedGameListNew({
+    group,
+    page,
+    userId,
+    wordsPerPage,
+  }: AggregatedWordsToGet): Observable<AggregatedWords[]> {
+    return this.http
+      .get<AggregatedWords[]>(
+        `${URL_BACK_SERVER.URL_BACK}users/${userId}/aggregatedWords?group=${group}&page=${page}&wordsPerPage=${wordsPerPage}&filter=${filter.noUserWords}`,
+      )
+      .pipe(map((words) => words));
+  }
+
   addDifficultyWord({
     wordId,
     userId,

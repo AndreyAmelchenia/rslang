@@ -1,11 +1,12 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
-import { ValueConverter } from '@angular/compiler/src/render3/view/template';
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 import { Word } from 'src/app/common/models/word.model';
-import { WORDS } from '../../../../../dictionary/words';
+import { AppState } from 'src/app/redux/app.state';
+import { selectGameList } from 'src/app/redux/selectors/listGame.selectors';
 
 import { MyGameService } from '../../services/my-game.service';
 import { DialogTotalGameComponent } from '../dialog-total-game/dialog-total-game.component';
@@ -15,9 +16,10 @@ import { DialogTotalGameComponent } from '../dialog-total-game/dialog-total-game
   styleUrls: ['./my-game-list.component.scss'],
 })
 export class MyGameListComponent implements OnInit {
-  words: Word[] = WORDS;
+  words: Word[];
 
   solvedWords = new Set<Word>();
+
   unsolvedWords = new Set<Word>();
 
   changedGameList: Word[] = [];
@@ -60,7 +62,12 @@ export class MyGameListComponent implements OnInit {
     private myGameService: MyGameService,
     private router: Router,
     public dialog: MatDialog,
-  ) {}
+    private store: Store<AppState>,
+  ) {
+    this.store.select(selectGameList()).subscribe((gameList) => {
+      this.words = gameList;
+    });
+  }
 
   ngOnInit() {
     this.solvedWords = new Set<Word>();
@@ -77,9 +84,7 @@ export class MyGameListComponent implements OnInit {
     this.imagesArray.push(...this.myGamesArray);
     this.wordsArray.push(...this.myGamesArray);
     this.skipped += this.wordsPerPage;
-
     this.wordsArray.sort(() => Math.random() - 0.5);
-
     if (this.myGamesArray.length === 0) {
       this.onNewWords();
       if (this.changedGameList.length !== 0) {
@@ -93,8 +98,6 @@ export class MyGameListComponent implements OnInit {
     this.changedGameList = randomWords.slice(this.wordsCount, this.wordsCount + this.amount);
     this.wordsCount += this.amount;
     if (this.changedGameList.length === 0) {
-      //alert('Well done!');
-      //this.router.navigate(['/my-game']);
       this.openDialog();
     }
   }
@@ -102,7 +105,6 @@ export class MyGameListComponent implements OnInit {
   drop(event: CdkDragDrop<Word>) {
     const dropWordId = event.item.data._id;
     if (this.countImageArrayLength === this.wordsPerPageDivinedCountIndex) {
-      //this.onChangeWords();
       this.onChangeWords();
     } else if (event.previousContainer === event.container) {
       moveItemInArray(this.myGamesArray, event.previousIndex, event.currentIndex);
