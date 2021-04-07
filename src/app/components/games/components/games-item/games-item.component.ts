@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { GamesService } from 'src/app/common/services/games.service';
 
+import { GamesService } from '../../../../common/services/games.service';
 import { GameModel } from '../../../../common/models/games.model';
 
 @Component({
