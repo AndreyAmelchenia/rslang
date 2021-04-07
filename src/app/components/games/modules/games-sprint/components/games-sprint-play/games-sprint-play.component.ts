@@ -46,21 +46,27 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
 
   response: {} = {};
 
+  responseEndGame: {} = {};
+
   countWords = 0;
 
   countTrue = 0;
+
+  countTrueSeries: number[] = [];
 
   countDown;
 
   counter = 60;
 
-  audio = new Audio();
+  audio = new Audio('assets/sounds/tick.mp3');
 
   end = false;
 
   play = true;
 
   start = false;
+
+  a;
 
   constructor(
     private gamesSprintService: GamesSprintService,
@@ -73,7 +79,7 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.gamesSprintService.getWords().subscribe((words) => {
       this.words = words;
-      this.setWordAndTranslation();
+      this.setDifferentWordAndTranslation();
     });
   }
 
@@ -94,36 +100,38 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   }
 
   playAudio() {
-    this.audio.src = 'assets/sounds/tick.mp3';
     this.audio.load();
     this.audio.play();
   }
 
-  setSameWordAndTranslation() {
+  pauseAudio() {
+    this.audio.pause();
+    this.audio.currentTime = 0;
+  }
+
+  setWord() {
     this.wordsInCard = this.setRandomWord(this.words.length, wordsQuantityPerCard).map(
       (number) => this.words[number],
     );
     this.wordsNew = this.words.filter((word) => !this.wordsInCard.includes(word));
-    this.translations = this.wordsInCard;
     if (this.wordsInCard.length === 1) {
       [this.wordInCard] = this.wordsInCard;
     }
+  }
+
+  setSameWordAndTranslation() {
+    this.setWord();
+    this.translations = this.wordsInCard;
     if (this.translations.length === 1) {
       [this.translation] = this.translations;
     }
   }
 
-  setWordAndTranslation() {
-    this.wordsInCard = this.setRandomWord(this.words.length, wordsQuantityPerCard).map(
-      (number) => this.words[number],
-    );
-    this.wordsNew = this.words.filter((word) => !this.wordsInCard.includes(word));
+  setDifferentWordAndTranslation() {
+    this.setWord();
     this.translations = this.setRandomWord(this.wordsNew.length, wordsQuantityPerCard).map(
       (number) => this.wordsNew[number],
     );
-    if (this.wordsInCard.length === 1) {
-      [this.wordInCard] = this.wordsInCard;
-    }
     if (this.translations.length === 1) {
       [this.translation] = this.translations;
     }
@@ -133,54 +141,26 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
     return this.generatorShuffleArrayService.getRandomNumbers(length, number);
   }
 
-  onAgree() {
-    this.mistake = !this.gamesSprintService.compareWordAndTranslation(
-      this.wordInCard,
-      this.translation,
-    );
-    this.response = {
-      _id: this.wordInCard._id,
-      mistake: this.mistake,
-      game: 'Sprint',
-    };
-    this.countWords += 1;
-    if (!this.mistake) {
-      this.countTrue += 1;
-      this.countScore();
-      this.elem.nativeElement.querySelectorAll('.score')[0].style.color = CssConstants.colorGreen;
-    } else {
-      this.countTrue = 0;
-      this.elem.nativeElement.querySelectorAll('.score')[0].style.color = CssConstants.colorRed;
-      this.deltaInScore = DataConstants.deltaInScore;
-    }
-    const randomNumbers = this.setRandomWord(
-      DataConstants.wordsPerMinute,
-      DataConstants.trueWordsPerMinute,
-    );
-    if (randomNumbers.includes(this.countWords)) {
-      this.setSameWordAndTranslation();
-    } else {
-      this.setWordAndTranslation();
-    }
-  }
-
-  onDisagree() {
+  onAgree(ifAgree) {
     this.mistake = this.gamesSprintService.compareWordAndTranslation(
       this.wordInCard,
       this.translation,
     );
+    if (ifAgree) {
+      this.mistake = !this.mistake;
+    }
     this.response = {
       _id: this.wordInCard._id,
       mistake: this.mistake,
       game: 'Sprint',
     };
     this.countWords += 1;
-
     if (!this.mistake) {
       this.countTrue += 1;
-      this.elem.nativeElement.querySelectorAll('.score')[0].style.color = CssConstants.colorGreen;
       this.countScore();
+      this.elem.nativeElement.querySelectorAll('.score')[0].style.color = CssConstants.colorGreen;
     } else {
+      this.countTrueSeries.push(this.countTrue);
       this.countTrue = 0;
       this.elem.nativeElement.querySelectorAll('.score')[0].style.color = CssConstants.colorRed;
       this.deltaInScore = DataConstants.deltaInScore;
@@ -192,7 +172,7 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
     if (randomNumbers.includes(this.countWords)) {
       this.setSameWordAndTranslation();
     } else {
-      this.setWordAndTranslation();
+      this.setDifferentWordAndTranslation();
     }
   }
 
@@ -204,10 +184,13 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   }
 
   stopGame() {
-    this.audio.pause();
-    this.audio.currentTime = 0;
+    this.pauseAudio();
     this.play = false;
     this.end = true;
+    this.responseEndGame = {
+      game: 'Sprint',
+      bestSeries: Math.max(...this.countTrueSeries),
+    };
   }
 
   goBack(): void {

@@ -19,8 +19,8 @@
         <app-games-sprint-card [word]="wordInCard" [translation]="translation"></app-games-sprint-card>
     </div>
     <mat-card-actions>
-      <button mat-raised-button color="warn" [disabled]="!start" (click)="onDisagree()">FALSE</button>
-      <button mat-raised-button color="primary" [disabled]="!start" (click)="onAgree()">TRUE</button>
+      <button mat-raised-button color="warn" [disabled]="!start" (click)="onAgree(false)">FALSE</button>
+      <button mat-raised-button color="primary" [disabled]="!start" (click)="onAgree(true)">TRUE</button>
     </mat-card-actions>
   </div>  
   <div *ngIf="end">
