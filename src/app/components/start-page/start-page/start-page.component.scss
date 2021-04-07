@@ -1,0 +1,17 @@
+.team{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.block_img{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  > img{
+    width: 50%;
+    border-radius: 50%;
+    background-size: cover;
+  }
+}

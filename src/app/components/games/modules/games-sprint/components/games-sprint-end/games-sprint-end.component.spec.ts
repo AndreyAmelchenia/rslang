@@ -8,9 +8,8 @@ describe('GamesSprintEndComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GamesSprintEndComponent ]
-    })
-    .compileComponents();
+      declarations: [GamesSprintEndComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

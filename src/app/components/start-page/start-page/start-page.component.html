@@ -10,6 +10,31 @@
   <mat-grid-tile *ngIf="isAuth$|async" [colspan]="1" [rowspan]="2" [style.background]="'lightgreen'"
     ><app-login></app-login
   ></mat-grid-tile>
-  <mat-grid-tile [colspan]="1" [rowspan]="1" [style.background]="'lightpink'"></mat-grid-tile>
-  <mat-grid-tile [colspan]="2" [rowspan]="1" [style.background]="'#DDBDF1'"></mat-grid-tile>
+  <mat-grid-tile [colspan]="1" [rowspan]="1" [style.background]="'lightpink'">
+    <div class="team">
+      <h1>Наша команда</h1>
+      <div class="block_img">
+        <button
+          mat-icon-button
+          aria-label="Example icon button with a menu icon"
+          (click)="nextItem(this.index-1)"
+        >
+          <mat-icon>arrow_back_ios </mat-icon>
+        </button>
+        <img class="team" [src]="(aboutUsItem|async).url + '.png'" alt="" />
+        <button
+          mat-icon-button
+          aria-label="Example icon button with a menu icon"
+          (click)="nextItem(this.index+1)"
+        >
+          <mat-icon> arrow_forward_ios </mat-icon>
+        </button>
+      </div>
+      <h2>{{(aboutUsItem|async).role}}</h2>
+      <h2>{{(aboutUsItem|async).name}}</h2>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="2" [rowspan]="1" [style.background]="'#DDBDF1'">
+    <iframe [src]="safeURL" frameborder="0" allowfullscreen width="560" height="315"></iframe>
+  </mat-grid-tile>
 </mat-grid-list>

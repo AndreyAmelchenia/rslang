@@ -2,11 +2,9 @@ import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-// import { login } from 'src/app/redux/actions/auth.actions';
 import { login } from 'src/app/redux/actions/auth.actions';
-import { AppState } from '../../../redux/models/app.state';
+import { AppState } from 'src/app/redux/app.state';
 import { AuthService } from '../../navigation/services/auth.service';
-// import { login } from '../../../redux/actions/auth.actions';
 
 const myNameValidator = (control: FormControl) => {
   const condition = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[+/-/_/@/$/!/%/*/?/&/#/./,/;/:/{/}/])[0-9a-zA-Z+/-/_/@/$/!/%/*/?/&/#/./,/;/:/[/{/}/]{8,}/.test(

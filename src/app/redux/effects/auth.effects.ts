@@ -24,6 +24,7 @@ export class AuthEffects {
                 userId: user.userId,
                 name: user.name,
                 token: user.token,
+                photo: user.photo,
               },
               start: false,
             }),
