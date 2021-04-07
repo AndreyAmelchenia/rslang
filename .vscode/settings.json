@@ -8,4 +8,9 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true,
   },
+  "githubPullRequests.remotes": [
+    "origin",
+    "upstream",
+    "develop"
+  ],
 }

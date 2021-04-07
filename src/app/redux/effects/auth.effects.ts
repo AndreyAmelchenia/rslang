@@ -6,10 +6,10 @@ import { of } from 'rxjs';
 import { catchError, exhaustMap, map, switchMap, tap } from 'rxjs/operators';
 
 import * as authActions from '../actions/auth.actions';
-import { ActionType } from '../models/action.models';
+import { ActionType } from '../models/authAction.models';
 
 import { AuthService } from '../../components/navigation/services/auth.service';
-import { IUser } from '../models/user.model';
+import { IUser } from '../models/user.models';
 import { SessionService } from '../../common/services/storage/session.service';
 
 @Injectable()

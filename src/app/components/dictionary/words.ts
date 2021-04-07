@@ -1,4 +1,6 @@
-export const WORDS = [
+import { Word } from 'src/app/common/models/word.model';
+
+export const WORDS: Word[] = [
   {
     _id: '60534cebd1a3081aa4990cff',
     word: 'alcohol',
