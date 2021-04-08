@@ -1,43 +1,101 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-// import { of } from 'rxjs';
+import { of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
+// import { LocalStorageService } from 'src/app/common/services/storage/local.service';
+import { SessionService } from 'src/app/common/services/storage/session.service';
 import { WordsService } from 'src/app/common/services/words-service/words.service';
+import { expectationRequest } from '../actions/request.actions';
 
-import { LoadWords, retrievedWordsList } from '../actions/words.actions';
+import {
+  AddDifficultyWords,
+  ArticlesActions,
+  LoadDifficultyWords,
+  LoadWords,
+  retrievedWordsList,
+  LoadDeletedWords,
+} from '../actions/words.actions';
+import {
+  selectBoolLengthWordsByGroup,
+  selectBoolLengthWordsByGroupAndDeleted,
+} from '../selectors/words.selector';
 
 @Injectable()
 export class WordsEffects {
   constructor(
     private actions$: Actions,
     private wordsService: WordsService,
+    private userSession: SessionService,
     private store: Store,
   ) {}
 
-  loadMovies$ = createEffect(() => {
-    // this.store.dispatch(expectationRequest({ expectation: false }));
+  loadWords$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(LoadWords),
       mergeMap(({ group, page, wordsPerPage }) => {
-        console.log(group, page, wordsPerPage);
+        return this.store.select(selectBoolLengthWordsByGroup(group, page, wordsPerPage)).pipe(
+          mergeMap((bool) => {
+            if (bool) return of({ type: ArticlesActions.BackWord });
+            if (!page) this.store.dispatch(expectationRequest({ expectation: false }));
+            return of(this.userSession.getItem('user')).pipe(
+              mergeMap(({ userId }) => {
+                return this.wordsService
+                  .aggregatedWords({ group, page, userId, wordsPerPage })
+                  .pipe(
+                    map((word) => {
+                      if (!page) this.store.dispatch(expectationRequest({ expectation: true }));
+                      return retrievedWordsList({ Words: word });
+                    }),
+                  );
+              }),
+            );
+          }),
+        );
+      }),
+    );
+  });
 
-        return this.wordsService.aggregatedWords(group, page, wordsPerPage).pipe(
-          map((word) => {
-            console.log(word);
-            // this.store.dispatch(expectationRequest({ expectation: true }));
-            return retrievedWordsList({ Words: word[0].paginatedResults });
+  loadDeletedWords$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LoadDeletedWords),
+      mergeMap(({ group, page, wordsPerPage }) => {
+        return this.store
+          .select(selectBoolLengthWordsByGroupAndDeleted(group, page, wordsPerPage))
+          .pipe(
+            mergeMap((bool) => {
+              if (bool) return of({ type: ArticlesActions.BackWord });
+              if (!page) this.store.dispatch(expectationRequest({ expectation: false }));
+              return of(this.userSession.getItem('user')).pipe(
+                mergeMap(({ userId }) => {
+                  return this.wordsService
+                    .aggregatedWords({ group, page, userId, wordsPerPage })
+                    .pipe(
+                      map((word) => {
+                        if (!page) this.store.dispatch(expectationRequest({ expectation: true }));
+                        return retrievedWordsList({ Words: word });
+                      }),
+                    );
+                }),
+              );
+            }),
+          );
+      }),
+    );
+  });
+
+  addDifficultyWords$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LoadDifficultyWords),
+      mergeMap(({ wordId, difficulty, newWord }) => {
+        return of(this.userSession.getItem('user')).pipe(
+          mergeMap(({ userId }) => {
+            return this.wordsService
+              .addDifficultyWord({ wordId, userId, difficulty, newWord })
+              .pipe(map(() => AddDifficultyWords({ wordId, difficulty, newWord })));
           }),
         );
       }),
     );
   });
 }
-// ofType('[Movies Page] Load Movies'),
-// mergeMap(() =>
-//   this.moviesService.getAll().pipe(
-//     map((movies) => ({ type: '[Movies API] Movies Loaded Success', payload: movies })),
-//     catchError(() => of({ type: '[Movies API] Movies Loaded Error' })),
-//   ),
-// ),
-// map((words) => ({ type: '[Word List/API] Retrieve Words Success', payload: words })),

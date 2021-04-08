@@ -1,7 +1,25 @@
 <form class="settings-form" [formGroup]="formGroup" (ngSubmit)="onFormSubmit()">
-  <mat-slide-toggle formControlName="displayTranslation">Display Translation</mat-slide-toggle>
-  <mat-slide-toggle formControlName="displayHandlingButtons">
-    Display Handling Buttons
-  </mat-slide-toggle>
+  <mat-card class="settings-card">
+    <mat-card-content>
+      <h2>Words per day</h2>
+      <mat-slider
+        [min]="1"
+        [max]="50"
+        formControlName="wordsPerDay"
+        thumbLabel
+        (input)="onSliderChange($event)"
+      ></mat-slider>
+      <span>{{wordsPerDay}}</span>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="settings-card">
+    <mat-card-content>
+      <h2>Display settings</h2>
+      <mat-slide-toggle formControlName="displayTranslation">Display Translation</mat-slide-toggle>
+      <mat-slide-toggle formControlName="displayHandlingButtons">
+        Display Handling Buttons
+      </mat-slide-toggle>
+    </mat-card-content>
+  </mat-card>
   <button mat-raised-button type="submit">Save Settings</button>
 </form>

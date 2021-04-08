@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { WordsService } from 'src/app/common/services/words-service/words.service';
-import { LoadWords } from 'src/app/redux/actions/words.actions';
+import { SessionService } from 'src/app/common/services/storage/session.service';
+import { LoadListGame } from 'src/app/redux/actions/listGame.actions';
 import { AppState } from 'src/app/redux/app.state';
 
 @Component({
@@ -10,11 +10,13 @@ import { AppState } from 'src/app/redux/app.state';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  constructor(private store: Store<AppState>, private userSession: SessionService) {}
+
   title = 'rslang';
 
-  constructor(private wordsService: WordsService, private store: Store<AppState>) {}
-
   ngOnInit() {
-    this.store.dispatch(LoadWords({ page: 1, group: 1, wordsPerPage: 60 }));
+    if (this.userSession.getItem('user')) {
+      this.store.dispatch(LoadListGame({ group: 3, page: 0, wordsPerPage: 20 }));
+    }
   }
 }

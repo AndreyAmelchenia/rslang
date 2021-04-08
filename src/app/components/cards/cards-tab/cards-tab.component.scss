@@ -1,20 +1,9 @@
-.example-card {
-  box-sizing: border-box;
-  width: calc(100% - 40px);
-  height: 180px;
-  margin: 20px auto;
+.example-button-row {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  > button{
+    margin:10px  30px 10px 0;
+  }
 }
 
-.example-header-image {
-  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-  background-size: cover;
-}
-
-img{
-  width: 150px;
-
-}
-
-.example-form-field {
-  width: 200px;
-}

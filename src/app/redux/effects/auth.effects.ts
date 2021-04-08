@@ -5,10 +5,11 @@ import { of } from 'rxjs';
 import { catchError, exhaustMap, map, switchMap, tap } from 'rxjs/operators';
 
 import * as authActions from '../actions/auth.actions';
-import { ActionType } from '../models/action.models';
+import { ActionType } from '../models/authAction.models';
 
 import { AuthService } from '../../components/navigation/services/auth.service';
-import { IUser } from '../models/user.modele';
+import { IUser } from '../models/user.models';
+import { SessionService } from '../../common/services/storage/session.service';
 
 @Injectable()
 export class AuthEffects {
@@ -17,7 +18,16 @@ export class AuthEffects {
       ofType(ActionType.LogIn),
       exhaustMap((action: any) =>
         this.authService.loginUser(action.user).pipe(
-          map((user: IUser) => authActions.loginSuccess(user)),
+          map((user: IUser) =>
+            authActions.loginSuccess({
+              user: {
+                userId: user.userId,
+                name: user.name,
+                token: user.token,
+              },
+              start: false,
+            }),
+          ),
           catchError((error) => of(authActions.loginFailure({ error }))),
         ),
       ),
@@ -28,9 +38,11 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(ActionType.LogInSuccess),
-        tap((user: any) => {
-          localStorage.setItem('token', user.token);
-          this.router.navigateByUrl('/');
+        tap((action: any) => {
+          this.sessionService.setItem('user', action.user);
+          if (!action.start) {
+            this.router.navigateByUrl('/');
+          }
         }),
       ),
     { dispatch: false },
@@ -62,9 +74,18 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(ActionType.LogOut),
         tap(() => {
-          localStorage.removeItem('token');
+          this.sessionService.removeItem('user');
           this.router.navigateByUrl('/');
         }),
+      ),
+    { dispatch: false },
+  );
+
+  isAuth$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(ActionType.isAuth),
+        tap(() => this.authService.isAuth()),
       ),
     { dispatch: false },
   );
@@ -73,5 +94,6 @@ export class AuthEffects {
     private actions$: Actions,
     private authService: AuthService,
     private router: Router,
+    private sessionService: SessionService,
   ) {}
 }

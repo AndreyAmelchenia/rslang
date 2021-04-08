@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './components/app/app.component';
+import { DictionaryModule } from './components/dictionary/dictionary.module';
 import { TokenInterceptorService } from './components/navigation/services/token-interceptor.service';
 import { ReduxModule } from './redux/redux.module';
 import { SharedModule } from './shared/shared.module';
@@ -12,6 +13,7 @@ import { AboutUsService } from './components/aboutUs/services/about-us.service';
 import { GamesModule } from './components/games/games.module';
 import { ProfileModule } from './components/profile/profile.module';
 import { CardsModule } from './components/cards/cards.module';
+import { MyGameModule } from './components/games/components/my-game/my-game.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +27,8 @@ import { CardsModule } from './components/cards/cards.module';
     SharedModule,
     ReduxModule,
     ProfileModule,
+    MyGameModule,
+    DictionaryModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },

@@ -2,9 +2,10 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CardsListComponent } from 'src/app/components/cards/cards-list/cards-list.component';
 import { ProfileComponent } from 'src/app/components/profile/profile/profile.component';
+import { DictionaryComponent } from './components/dictionary/dictionary/dictionary.component';
 import { LoginComponent } from './components/navigation/login/login.component';
 import { RegistrationComponent } from './components/navigation/registration/registration.component';
-import { Path } from './shared/models/roter.modele';
+import { Path } from './shared/models/router.model';
 
 import { AboutUsListComponent } from './components/aboutUs/components/about-us-list/about-us-list.component';
 
@@ -20,6 +21,7 @@ const appRoutes: Routes = [
   },
   { path: Path.Login, component: LoginComponent },
   { path: Path.Registration, component: RegistrationComponent },
+  { path: Path.Dictionary, component: DictionaryComponent },
 ];
 
 @NgModule({

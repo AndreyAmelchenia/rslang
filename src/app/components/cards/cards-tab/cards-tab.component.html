@@ -1,24 +1,22 @@
-<mat-grid-list [cols]="cols" rowHeight="200px">
+<mat-grid-list [cols]="cols | async" [rowHeight]="rowHeight |async">
+  <div class="example-button-row">
+    <button
+      mat-raised-button
+      [ngStyle]="{'background': colorRGB(0.6)}"
+      *ngFor="let game of games$ | async;"
+      [routerLink]="['/games/', game.name]"
+      (click)="addGameList()"
+    >
+      {{ game.name }}
+    </button>
+  </div>
   <mat-grid-tile *ngFor="let word of words |async">
-    <mat-card class="example-card">
-      <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>{{word.word}}</mat-card-title>
-        <mat-card-subtitle>{{word.wordTranslate}}</mat-card-subtitle>
-      </mat-card-header>
-      <img
-        (click)="clickres()"
-        mat-card-image
-        [src]="'https://andey-rslang-back-end.herokuapp.com/' + word.image"
-        alt="Photo of a Shiba Inu"
-      />
-      <mat-card-content> </mat-card-content>
-    </mat-card>
+    <app-card-item [word]="word" [color]="color"></app-card-item>
   </mat-grid-tile>
 </mat-grid-list>
 <mat-paginator
   #paginator
-  [length]="data.length"
-  [pageSize]="15"
-  [pageSizeOptions]="[5, 10, 25, 100]"
+  [length]="length"
+  [pageSize]="20"
+  [pageSizeOptions]="[20, 30]"
 ></mat-paginator>

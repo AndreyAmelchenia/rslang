@@ -1,42 +1,86 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { URL_BACK_SERVER } from 'src/app/shared/constants/url-constants';
 import { AggregatedWords } from '../../models/aggregatedWords.model';
+import { DifficultyWord, AggregatedWordsToGet } from '../../models/requests.model';
 import { Word } from '../../models/word.model';
+import { filter } from '../../../shared/constants/http-constans';
 
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNTRmM2NkNzU4NGFjMDAxNWQ4YjdjYSIsImlhdCI6MTYxNzAzMjQxNiwiZXhwIjoxNjE3MDQ2ODE2fQ.D6I1C92s6VjNU_Q_mFyzetKBXNmnU72PVi2e_6MMHi0';
 @Injectable({
   providedIn: 'root',
 })
 export class WordsService {
-  httpOptions = {
-    headers: new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    }),
-  };
-
   constructor(private http: HttpClient) {}
 
   getWords(): Observable<Word[]> {
     return this.http
-      .get<Word[]>('https://andey-rslang-back-end.herokuapp.com/words?group=5&page=10')
+      .get<Word[]>(`${URL_BACK_SERVER}words?group=5&page=10`)
       .pipe(map((words) => words));
   }
 
-  aggregatedWords(
-    group: number,
-    page: number,
-    wordsPerPage: number,
-  ): Observable<AggregatedWords[]> {
+  aggregatedWords({
+    group,
+    page,
+    userId,
+    wordsPerPage,
+  }: AggregatedWordsToGet): Observable<AggregatedWords[]> {
     return this.http
       .get<AggregatedWords[]>(
-        `https://andey-rslang-back-end.herokuapp.com/users/6054f3cd7584ac0015d8b7ca/aggregatedWords?group=${group}&page=${page}&wordsPerPage=${wordsPerPage}&filter={"userWord":null}`,
-        // this.httpOptions,
+        `${URL_BACK_SERVER.URL_BACK}users/${userId}/aggregatedWords?group=${group}&page=${page}&wordsPerPage=${wordsPerPage}&filter={"$or":[${filter.easy},${filter.hard},${filter.noUserWords}]}`,
       )
       .pipe(map((words) => words));
+  }
+
+  aggregatedGameList({
+    group,
+    page,
+    userId,
+    wordsPerPage,
+  }: AggregatedWordsToGet): Observable<AggregatedWords[]> {
+    return this.http
+      .get<AggregatedWords[]>(
+        `${URL_BACK_SERVER.URL_BACK}users/${userId}/aggregatedWords?group=${group}&page=${page}&wordsPerPage=${wordsPerPage}&filter={"$or":[${filter.easy},${filter.hard}]}`,
+      )
+      .pipe(map((words) => words));
+  }
+
+  aggregatedGameListNew({
+    group,
+    page,
+    userId,
+    wordsPerPage,
+  }: AggregatedWordsToGet): Observable<AggregatedWords[]> {
+    return this.http
+      .get<AggregatedWords[]>(
+        `${URL_BACK_SERVER.URL_BACK}users/${userId}/aggregatedWords?group=${group}&page=${page}&wordsPerPage=${wordsPerPage}&filter=${filter.noUserWords}`,
+      )
+      .pipe(map((words) => words));
+  }
+
+  addDifficultyWord({
+    wordId,
+    userId,
+    difficulty = 'easy',
+    newWord = true,
+  }: DifficultyWord): Observable<{
+    wordId: string;
+    difficulty: 'easy' | 'hard' | 'deleted';
+    newWord: boolean;
+  }> {
+    if (newWord) {
+      return this.http
+        .post(`${URL_BACK_SERVER.URL_BACK}users/${userId}/words/${wordId}`, {
+          difficulty,
+        })
+        .pipe(map(() => ({ wordId, difficulty, newWord })));
+    }
+    return this.http
+      .put(`${URL_BACK_SERVER.URL_BACK}users/${userId}/words/${wordId}`, {
+        difficulty,
+      })
+      .pipe(map(() => ({ wordId, difficulty, newWord })));
   }
 }

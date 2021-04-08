@@ -14,12 +14,18 @@
       </button>
     </div>
     <mat-nav-list (click)="drawer.toggle()">
-      <a mat-list-item routerLink="/">Start Page</a>
-      <a mat-list-item routerLink="/cards">Cards</a>
-      <a mat-list-item routerLink="/games">Games List</a>
-      <a mat-list-item href="#">Dictionary</a>
-      <a mat-list-item routerLink="/profile" href="#">Profile</a>
-      <a mat-list-item routerLink="/about-us">About Us</a>
+      <a mat-list-item [routerLink]="this.path.Empty">Start Page</a>
+      <a mat-list-item [routerLink]="this.path.Cards">Cards</a>
+      <a mat-list-item [routerLink]="this.path.Games">Games List</a>
+      <a mat-list-item [routerLink]="this.path.Dictionary">Dictionary</a>
+      <a
+        mat-list-item
+        [routerLink]="this.path.Profile"
+        href="#"
+        [disabled]="(isAuth$ | async) === false"
+        >Profile</a
+      >
+      <a mat-list-item [routerLink]="this.path.AboutUs">About Us</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content class="sidenav-content">

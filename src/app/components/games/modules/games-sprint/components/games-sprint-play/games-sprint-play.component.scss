@@ -1,0 +1,32 @@
+:host {
+    flex: 1;
+    margin: 2rem;
+}
+.content{
+    text-align: center;
+    margin: 1rem auto;
+    max-width: 20rem;
+
+    .start-button {
+        margin: 1rem auto;
+    }
+
+    .icons {
+        display: flex;
+        justify-content: space-between; 
+       
+        .flex {
+            display: flex;
+            justify-content: left;
+            font-size: 1.4rem;
+
+            div {
+                align-self: center;
+            }
+        }
+    }
+}
+
+p {
+    text-align: center;
+}
