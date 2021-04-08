@@ -30,10 +30,9 @@
           cdkDropList
           class="item-list"
           [cdkDropListData]="item"
-          (cdkDropListDropped)="drop($event)"
-          [cdkDropListEnterPredicate]="enterPredicate"
+          (cdkDropListDropped)="drop($event, item?._id)"
         >
-          <div cdkDrag class="item-box" [cdkDragDisabled]="true">
+          <div cdkDrag class="item-box" [cdkDragDisabled]="disabled">
             {{item.word | uppercase}}
             <div class="inside"></div>
           </div>
@@ -57,4 +56,3 @@
     </div>
   </div>
 </div>
-<button mat-raised-button (click)="openDialog()">Open</button>

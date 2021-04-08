@@ -38,7 +38,7 @@ export class MyGameListComponent implements OnInit {
 
   wordsCount = 0;
 
-  amount = 10;
+  amount = 20;
 
   countImageArrayLength = 0;
 
@@ -51,12 +51,14 @@ export class MyGameListComponent implements OnInit {
   maxTryCount = 4;
 
   dragPictureId: string;
+  dropPictureId: string;
 
   sound = new Audio();
 
   scoreAudio = 'assets/sounds/score.mp3';
-
   tryAudio = 'assets/sounds/try.mp3';
+
+  disabled: boolean = true;
 
   constructor(
     private myGameService: MyGameService,
@@ -70,6 +72,7 @@ export class MyGameListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.tryCount = 0;
     this.solvedWords = new Set<Word>();
     this.unsolvedWords = new Set<Word>();
     this.onNewWords();
@@ -87,9 +90,6 @@ export class MyGameListComponent implements OnInit {
     this.wordsArray.sort(() => Math.random() - 0.5);
     if (this.myGamesArray.length === 0) {
       this.onNewWords();
-      if (this.changedGameList.length !== 0) {
-        this.onChangeWords();
-      }
     }
   }
 
@@ -102,7 +102,40 @@ export class MyGameListComponent implements OnInit {
     }
   }
 
-  drop(event: CdkDragDrop<Word>) {
+  drop(event, dropPictureId: string) {
+    console.log(this.countImageArrayLength);
+    console.log(this.wordsPerPageDivinedCountIndex);
+
+    this.dropPictureId = dropPictureId;
+    this.checkCountImageArrayLength();
+   if (this.dragPictureId !== dropPictureId) {
+      this.unsolvedWords.add(event.item.data);
+      this.playSoundTry();
+      this.tryCount += 1;
+    } else {
+      console.log('yes drag ' + this.dragPictureId + ' drop ' + this.dropPictureId);
+      const elem = event.container.element.nativeElement.querySelector('.inside');
+      elem.appendChild(event.item.element.nativeElement);
+      this.solvedWords.add(event.item.data.word);
+      this.playSoundScore();
+      this.countImageArrayLength += 1;
+      this.score += this.scorePerDividedWord;
+    } 
+  }
+
+  dropped(event) {
+    if (this.tryCount === this.maxTryCount) {
+      this.tryCount = 5;
+      this.openDialog();
+  }
+}
+
+  checkCountImageArrayLength() {
+    if (this.countImageArrayLength === this.wordsPerPageDivinedCountIndex) {
+      this.onChangeWords();
+    }
+  }
+  /*
     const dropWordId = event.item.data._id;
     if (this.countImageArrayLength === this.wordsPerPageDivinedCountIndex) {
       this.onChangeWords();
@@ -112,11 +145,11 @@ export class MyGameListComponent implements OnInit {
       const elem = event.container.element.nativeElement.querySelector('.inside');
       elem.appendChild(event.item.element.nativeElement);
       this.solvedWords.add(event.item.data.word);
-      this.playSound(this.scoreAudio);
+      //this.playSound(this.scoreAudio);
+      this.playSoundScore();
       this.countImageArrayLength += 1;
       this.score += this.scorePerDividedWord;
-    }
-  }
+    } */
 
   started(event, dragPictureId: string) {
     this.dragPictureId = dragPictureId;
@@ -126,22 +159,38 @@ export class MyGameListComponent implements OnInit {
     return false;
   }
 
-  enterPredicate(drag: CdkDrag<Word>, drop: CdkDropList<Word>) {
-    return drag.data._id === drop.data._id;
-  }
-
+  //enterPredicate(drag: CdkDrag<Word>, drop: CdkDropList<Word>) {
+  //  return drag.data._id === drop.data._id;
+  //}
+  /*
   dropped(event) {
     if (this.tryCount === this.maxTryCount) {
+      this.tryCount = 5;
       this.openDialog();
     } else if (event.isPointerOverContainer === false) {
       this.unsolvedWords.add(event.item.data);
-      this.playSound(this.tryAudio);
+      //this.playSound(this.tryAudio);
+      this.playSoundTry();
       this.tryCount += 1;
     }
   }
-
+  */
+  /*
   playSound(soundName: string) {
     this.sound.src = soundName;
+    this.sound.load();
+    this.sound.play();
+  }
+*/
+
+  playSoundScore() {
+    this.sound.src = 'assets/sounds/score.mp3';
+    this.sound.load();
+    this.sound.play();
+  }
+
+  playSoundTry() {
+    this.sound.src = 'assets/sounds/try.mp3';
     this.sound.load();
     this.sound.play();
   }
