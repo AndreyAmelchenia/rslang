@@ -69,8 +69,6 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
 
   start = false;
 
-  a;
-
   constructor(
     private gamesSprintService: GamesSprintService,
     public generatorShuffleArrayService: GeneratorShuffleArrayService,
@@ -88,9 +86,16 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.countDown = null;
+    console.log('onDestroy');
     this.score = 0;
     this.deltaInScore = 10;
+    this.pauseAudio();
+    this.play = false;
+    this.end = true;
+    if(this.countDown) {
+      this.countDown.unsubscribe();
+      this.countDown = null;
+   }
   }
 
   onStart() {
@@ -98,8 +103,11 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
       this.playAudio();
       // eslint-disable-next-line no-return-assign
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      this.counter > 0 ? (this.counter -= 1) : this.stopGame();
+      if (this.counter) {
+        this.counter > 0 ? (this.counter -= 1) : this.stopGame();
+      }      
     });
+    console.log('onStart');
     this.start = true;
   }
 
@@ -109,8 +117,11 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   }
 
   pauseAudio() {
-    this.audio.pause();
-    this.audio.currentTime = 0;
+    this.audio.play().then(() => {
+      console.log('4');
+      this.audio.pause();
+      this.audio.currentTime = 0;
+    });
   }
 
   setWord() {
@@ -188,9 +199,14 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   }
 
   stopGame() {
+    console.log('Stop');
     this.pauseAudio();
     this.play = false;
     this.end = true;
+  //  if(this.countDown) {
+      this.countDown.unsubscribe();
+      this.countDown = null;
+  //  }
     this.responseEndGame = {
       game: 'Sprint',
       bestSeries: Math.max(...this.countTrueSeries),
@@ -198,6 +214,10 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   }
 
   goBack(): void {
+       if(this.countDown) {
+        this.countDown.unsubscribe();
+        this.countDown = null;
+      }
     this.location.back();
   }
 }
