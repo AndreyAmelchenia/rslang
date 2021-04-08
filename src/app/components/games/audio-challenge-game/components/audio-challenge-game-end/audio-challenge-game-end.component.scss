@@ -1,6 +1,12 @@
 :root{
   padding: 1rem;
 }
+.end-game-manage {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  gap: 2rem;
+}
 
 table {
   width: calc(100% - 2rem);

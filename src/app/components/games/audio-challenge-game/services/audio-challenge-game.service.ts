@@ -30,14 +30,17 @@ export class AudioChallengeGameService {
   }
 
   gameStart() {
-    const newState = { ...initialAudioChallengeState, isGameStarted: true };
+    const newState = { ...initialAudioChallengeState };
     this.gameState.next(newState);
     this.getWords();
+    const { wordsInGame } = this.getCurrentState();
+    if (wordsInGame.length) {
+      this.setGameState({ isGameStarted: true });
+    }
   }
 
   gameEnd() {
     this.setGameState({ isGameEnded: true });
-    console.log('game end');
   }
 
   getWords() {
@@ -109,5 +112,9 @@ export class AudioChallengeGameService {
   shuffle(arr = []) {
     const res = [...arr];
     return res.sort(() => Math.random() - 0.5);
+  }
+
+  closeGame() {
+    this.setGameState(initialAudioChallengeState);
   }
 }

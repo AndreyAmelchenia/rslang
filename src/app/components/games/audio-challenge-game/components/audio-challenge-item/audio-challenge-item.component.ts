@@ -9,8 +9,6 @@ import { AudioChallengeGameService } from '../../services/audio-challenge-game.s
   styleUrls: ['./audio-challenge-item.component.scss'],
 })
 export class AudioChallengeItemComponent implements OnChanges {
-  audio = new Audio();
-
   apiUrl = API_URL;
 
   gameLength = GAME_LENGHT;
@@ -23,7 +21,7 @@ export class AudioChallengeItemComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     const { wordState } = changes;
     if (wordState.currentValue.currentWord.audio) {
-      this.audio.src = this.apiUrl + this.wordState.currentWord.audio;
+      this.playWordAudio();
     }
   }
 
@@ -39,6 +37,8 @@ export class AudioChallengeItemComponent implements OnChanges {
   }
 
   playWordAudio() {
-    this.audio.play();
+    const audio = new Audio();
+    audio.src = this.apiUrl + this.wordState.currentWord.audio;
+    audio.play();
   }
 }
