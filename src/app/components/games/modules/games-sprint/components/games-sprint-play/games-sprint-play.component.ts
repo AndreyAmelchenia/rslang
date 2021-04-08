@@ -69,8 +69,6 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
 
   start = false;
 
-  a;
-
   constructor(
     private gamesSprintService: GamesSprintService,
     public generatorShuffleArrayService: GeneratorShuffleArrayService,
@@ -88,9 +86,13 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.countDown = null;
     this.score = 0;
     this.deltaInScore = 10;
+    this.pauseAudio();
+    this.play = false;
+    this.end = true;
+    this.countDown.unsubscribe();
+    this.countDown = null;
   }
 
   onStart() {
@@ -109,8 +111,10 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   }
 
   pauseAudio() {
-    this.audio.pause();
-    this.audio.currentTime = 0;
+    this.audio.play().then(() => {
+      this.audio.pause();
+      this.audio.currentTime = 0;
+    });
   }
 
   setWord() {
@@ -191,6 +195,8 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
     this.pauseAudio();
     this.play = false;
     this.end = true;
+    this.countDown.unsubscribe();
+    this.countDown = null;
     this.responseEndGame = {
       game: 'Sprint',
       bestSeries: Math.max(...this.countTrueSeries),
