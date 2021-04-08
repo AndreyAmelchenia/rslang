@@ -24,6 +24,15 @@
     margin: 0 20px;
     font-size: 24px;
     cursor: pointer;
+    border-radius: 30px;
+
+    &.is-error {
+      background-color: red;
+    }
+
+    &.is-right {
+      background-color: green;
+    }
   }
 }
 

@@ -11,11 +11,19 @@ export class GameSavannahListComponent {
 
   @Input() answers: string[];
 
+  @Input() answer: string;
+
   @Input() time = '--time: 5s;';
 
   @Output() checked = new EventEmitter();
 
+  current = '';
+
   checkedAnswer(answer: string): void {
-    this.checked.emit(answer);
+    this.current = this.answer;
+    const timerId = setTimeout(() => {
+      this.checked.emit(answer);
+      clearTimeout(timerId);
+    }, 500);
   }
 }

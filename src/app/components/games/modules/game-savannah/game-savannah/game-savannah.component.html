@@ -14,6 +14,7 @@
       *ngIf="play && !statictics && !paused"
       [currentWord]="currentWord"
       [answers]="answers"
+      [answer]="getAnswer()"
       [time]="'--time: ' + animationTime + 's'"
       (checked)="checkAnswer($event)"
     ></app-game-savannah-list>

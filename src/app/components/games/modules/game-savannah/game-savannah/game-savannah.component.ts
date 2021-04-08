@@ -55,6 +55,7 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
   }
 
   ngOnDestroy(): void {
+    this.restartGame();
     this.clearTimer();
     this.subscription.unsubscribe();
   }
@@ -102,7 +103,7 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
       this.answers = this.setAnswersWrods(id);
       this.timerId = setTimeout(() => {
         this.checkAnswer('');
-      }, this.animationTime * 1000);
+      }, (this.animationTime + 2) * 1000);
     }
   }
 
@@ -117,20 +118,26 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
     return this.shufle(res);
   }
 
+  getAnswer(): string {
+    return this.words[this.currentWordId][this.answersKey()];
+  }
+
   checkAnswer(answer: string) {
-    this.paused = true;
-    if (answer !== this.words[this.currentWordId][this.answersKey()]) {
-      this.words[this.currentWordId].statistics = false;
-      this.gameSavannahStatus.errors += 1;
-    } else {
-      this.words[this.currentWordId].statistics = true;
-      this.gameSavannahStatus.currentCounts += 1;
+    if (this.timerId) {
+      this.paused = true;
+      if (answer !== this.getAnswer()) {
+        this.words[this.currentWordId].statistics = false;
+        this.gameSavannahStatus.errors += 1;
+      } else {
+        this.words[this.currentWordId].statistics = true;
+        this.gameSavannahStatus.currentCounts += 1;
+      }
+      this.updateStatus();
+      const timerId = setTimeout(() => {
+        this.playWord(this.currentWordId + 1);
+        clearTimeout(timerId);
+      }, (this.animationTime + 5) * 100);
     }
-    this.updateStatus();
-    const timerId = setTimeout(() => {
-      this.playWord(this.currentWordId + 1);
-      clearTimeout(timerId);
-    }, 700);
   }
 
   updateStatus() {
