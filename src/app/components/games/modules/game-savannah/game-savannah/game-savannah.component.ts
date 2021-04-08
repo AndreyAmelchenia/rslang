@@ -66,6 +66,7 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
 
   changeGameSavannahStatus(data: GameSavannahStatus): void {
     this.gameSavannahService.updateGameStatus(data);
+    this.restartGame();
   }
 
   startGame(): void {
@@ -83,12 +84,12 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
     this.gameSavannahService.updateGameStatus(this.gameSavannahStatus);
     this.play = false;
     this.statictics = false;
-    this.paused = true;
+    this.setWords(this.shufle(this.words));
     const timerId = setTimeout(() => {
       this.startGame();
       this.paused = false;
       clearTimeout(timerId);
-    }, 10);
+    }, 0);
   }
 
   playWord(id: number): void {

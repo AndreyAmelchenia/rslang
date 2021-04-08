@@ -4,6 +4,7 @@
   justify-content: space-between;
   width: 600px;
   height: 600px;
+  max-height: 75vh;
   padding: 20px;
   border: 2px solid #fff;
   border-radius: 40px;
@@ -11,9 +12,23 @@
   background-color: rgba(white, .3);
 
   &__title {
-    margin: 0 0 30px;
+    margin: 0 0 15px;
     font-size: 27px;
     text-align: center;
+
+    @media (max-width: 1024px) {
+      font-size: 24px;
+    }
+  }
+
+  &__subtitle {
+    margin: 0 0 30px;
+    font-size: 22px;
+    text-align: center;
+
+    @media (max-width: 1024px) {
+      font-size: 18px;
+    }
   }
 
   &__body {
@@ -24,10 +39,17 @@
       width: 100%;
       font-size: 18px;
 
-      th,
       th {
-        padding: 5px 0;
+        border-top: 1px solid #eee;
+      }
+
+      th,
+      td {
+        padding: 5px;
         text-align: left;
+        border-left: none;
+        border-right: none;
+        border-bottom: 1px solid #eee;
       }
     }
   }

@@ -38,8 +38,8 @@
   </div>
   <div class="savannah__progress-chart">
     <div *ngIf="gameSavannahStatus.wordsCount" class="savannah__progress-count">
-      {{ gameSavannahStatus.wordsCount + ' / ' + gameSavannahStatus.currentCounts + ' / ' +
-      gameSavannahStatus.errors }}
+      {{ gameSavannahStatus.errors + ' / ' + gameSavannahStatus.currentCounts + ' / ' +
+      gameSavannahStatus.wordsCount }}
     </div>
     <div
       *ngIf="gameSavannahStatus.progressAll"

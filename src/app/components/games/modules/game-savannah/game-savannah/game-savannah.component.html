@@ -7,7 +7,7 @@
   ></app-game-savannah-head>
   <div class="savannah__body">
     <app-game-savannah-start-banner
-      *ngIf="!play && !statictics"
+      *ngIf="!play && !statictics && paused"
       (startGame)="startGame()"
     ></app-game-savannah-start-banner>
     <app-game-savannah-list
