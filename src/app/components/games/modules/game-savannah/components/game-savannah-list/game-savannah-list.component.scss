@@ -9,13 +9,26 @@
   justify-content: center;
   align-items: center;
 
+  @media (max-width: 768px) {
+    padding: 30vh 0 0;
+  }
+
   &__current {
     font-size: 49px;
+    opacity: 0;
     animation: moveDown var(--time, 5s) ease-in 0s 1 normal none;
+
+    @media (max-width: 768px) {
+      font-size: 35px;
+    }
   }
 
   &__answers {
     display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100vw;
+    padding: 0;
     animation: fade .5s linear 0s 1 normal none;
   }
 
@@ -25,6 +38,7 @@
     font-size: 24px;
     cursor: pointer;
     border-radius: 30px;
+    list-style-position: inside;
 
     &.is-error {
       background-color: red;
@@ -32,6 +46,16 @@
 
     &.is-right {
       background-color: green;
+    }
+
+    @media (max-width: 1024px) {
+      padding: 10px;
+      margin: 0 5px 10px;
+      font-size: 18px;
+    }
+
+    @media (max-width: 768px) {
+      padding: 10px 8px;
     }
   }
 }

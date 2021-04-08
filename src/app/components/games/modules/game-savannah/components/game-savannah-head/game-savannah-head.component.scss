@@ -8,6 +8,11 @@
   align-items: center;
   padding: 20px 23px 20px 20px;
   box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    align-items: flex-start;
+    padding: 10px 23px 10px 20px;
+  }
 }
 
 .savannah {
@@ -20,6 +25,11 @@
     .mat-icon {
       font-size: 24px;
       color: #fff;
+    }
+
+    @media (max-width: 768px) {
+      flex-direction: column-reverse;
+      align-items: flex-start;
     }
   }
 
@@ -37,6 +47,10 @@
         color: #3F51B5;
       }
     }
+
+    @media (max-width: 768px) {
+      margin: 14px 0 0 -5px;
+    }
   }
 
   &__settings-button {
@@ -49,6 +63,10 @@
 
     &:hover {
       background-color: #666;
+    }
+
+    @media (max-width: 768px) {
+      margin: 20px 0 0 0;
     }
   }
 
@@ -89,6 +107,10 @@
     position: relative;
     display: flex;
     padding: 8px 0 0;
+
+    @media (max-width: 768px) {
+      padding: 0;
+    }
   }
 
   &__progress-heart {
@@ -97,6 +119,10 @@
     .mat-icon {
       font-size: 24px;
       color: orange;
+    }
+
+    @media (max-width: 768px) {
+      margin: 0 0 0 4px;
     }
   }
 
@@ -107,6 +133,12 @@
     height: 18px;
     width: 200px;
     background-color: orange;
+
+    @media (max-width: 768px) {
+      bottom: -10px;
+      width: 133px;
+      height: 12px;
+    }
   }
 
   &__progress-count {
@@ -115,6 +147,11 @@
     padding: 0 3px 0 0;
     text-align: right;
     color: #fff;
+
+    @media (max-width: 768px) {
+      font-size: 10px;
+      line-height: 12px;
+    }
   }
 
   &__progress-chart_inner,
