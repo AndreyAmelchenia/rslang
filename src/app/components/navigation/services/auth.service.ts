@@ -20,7 +20,7 @@ export class AuthService {
     private store: Store,
   ) {}
 
-  registerUser(user: IHttpUser): Observable<IUser> {
+  registerUser(user: FormData): Observable<IUser> {
     return this.http.post<IUser>(this.registerUrl, user);
   }
 

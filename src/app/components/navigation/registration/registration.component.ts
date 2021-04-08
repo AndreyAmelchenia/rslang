@@ -34,7 +34,7 @@ export class RegistrationComponent {
   formData = new FormData();
 
   userData = this.formBuilder.group({
-    name: '',
+    name: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, myNameValidator]],
     filedata: '',
@@ -45,9 +45,7 @@ export class RegistrationComponent {
   }
 
   goBack() {
-    console.log(this.userData.value);
-
-    // this.location.back();
+    this.location.back();
   }
 
   onFileChange(event, field) {
@@ -60,7 +58,6 @@ export class RegistrationComponent {
         this.cd.markForCheck();
       } else {
         this.formData.append(field, file);
-        console.log(this.userData.value[field]);
         this.cd.markForCheck();
       }
     }
@@ -72,7 +69,6 @@ export class RegistrationComponent {
     });
     if (!this.userData.invalid) {
       this.store.dispatch(signUp({ user: this.formData }));
-      this.userData.reset();
       this.formData = new FormData();
     }
   }

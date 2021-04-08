@@ -51,10 +51,14 @@ export class AuthEffects {
 
   signUp$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ActionType.SignUp),
-      switchMap((action: any) =>
-        this.authService.registerUser(action.user).pipe(
-          map((user) => authActions.signUpSuccess(user)),
+      ofType(authActions.signUp),
+      switchMap(({ user }) =>
+        this.authService.registerUser(user).pipe(
+          map(() => {
+            return authActions.login({
+              user: { email: user.get('email'), password: user.get('password') },
+            });
+          }),
           catchError((error) => of(authActions.signUpFailure({ error }))),
         ),
       ),

@@ -20,18 +20,18 @@
       </div>
       <mat-form-field appearance="fill" class="input">
         <mat-label>Name</mat-label>
-        <input formControlName="name" name="name" type="text" matInput />
+        <input formControlName="name" name="name" type="text" matInput required />
       </mat-form-field>
       <mat-form-field appearance="fill" class="input">
         <mat-label>Email</mat-label>
-        <input formControlName="email" name="email" type="email" matInput />
+        <input formControlName="email" name="email" type="email" matInput required />
         <mat-error *ngIf="this.userData.controls.email.invalid"
           >{{getErrorEmailMessage()}}</mat-error
         >
       </mat-form-field>
       <mat-form-field appearance="fill" class="input">
         <mat-label>Password</mat-label>
-        <input formControlName="password" name="password" type="password" matInput />
+        <input formControlName="password" name="password" type="password" matInput required />
         <mat-error *ngIf="this.userData.controls.password.invalid"
           >{{getErrorPasswordMessage()}}</mat-error
         >

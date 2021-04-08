@@ -8,8 +8,8 @@ export interface IUser {
 }
 
 export interface IHttpUser {
-  email: string;
-  password: string;
+  email: string | FormDataEntryValue;
+  password: string | FormDataEntryValue;
   name?: string;
   photo?: FormDataEntryValue;
 }
