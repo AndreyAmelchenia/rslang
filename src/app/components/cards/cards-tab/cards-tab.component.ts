@@ -15,6 +15,9 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/redux/app.state';
 import { selectWordsByGroup } from 'src/app/redux/selectors/words.selector';
 import { LoadWords } from 'src/app/redux/actions/words.actions';
+import { GamesService } from 'src/app/common/services/games.service';
+import { GameModel } from 'src/app/common/models/games.model';
+import { gameWordsList } from 'src/app/redux/actions/listGame.actions';
 @Component({
   selector: 'app-cards-tab',
   templateUrl: './cards-tab.component.html',
@@ -30,17 +33,26 @@ export class CardsTabComponent implements OnInit, AfterViewInit {
 
   words: Observable<Word[]>;
 
+  gameList: Word[];
+
   data: Observable<Word[]>;
 
   cols: Observable<number>;
 
   rowHeight: Observable<string>;
 
+  games$: Observable<GameModel[]>;
+
   length: number;
 
   lengthBase: number;
 
-  constructor(public breakpointObserver: BreakpointObserver, private store: Store<AppState>) {
+  constructor(
+    public breakpointObserver: BreakpointObserver,
+    private store: Store<AppState>,
+    private gamesService: GamesService,
+  ) {
+    this.games$ = this.gamesService.getGames();
     this.cols = this.breakpointObserver.observe(['(min-width: 700px)', '(min-width: 1060px)']).pipe(
       map(({ breakpoints }) => {
         if (breakpoints['(min-width: 1060px)']) return 3;
@@ -92,6 +104,7 @@ export class CardsTabComponent implements OnInit, AfterViewInit {
         let words: Word[];
         this.data.subscribe((data) => {
           words = data;
+          this.gameList = data;
         });
         const res = this.getPagedData([...(words || [])]);
         console.log(res);
@@ -102,6 +115,7 @@ export class CardsTabComponent implements OnInit, AfterViewInit {
   }
 
   private getPagedData(data: Word[]) {
+    this.gameList = data;
     if (
       this.lengthBase !== 0 &&
       this.lengthBase - 30 <= this.paginator.pageIndex * this.paginator.pageSize &&
@@ -116,6 +130,8 @@ export class CardsTabComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    console.log(this.gameList);
+
     this.data = this.store.select(selectWordsByGroup(this.group)).pipe(
       map((words) => {
         this.lengthBase = words[0].paginatedResults.length;
@@ -129,5 +145,13 @@ export class CardsTabComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.words = this.connect();
+  }
+
+  colorRGB(a = 0.3): string {
+    return `rgba(${[...this.color, a].join()})`;
+  }
+
+  addGameList() {
+    this.store.dispatch(gameWordsList({ Words: this.gameList.slice(0, 20) }));
   }
 }

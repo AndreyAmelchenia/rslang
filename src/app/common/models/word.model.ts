@@ -17,6 +17,13 @@ export interface Word {
     difficulty: 'easy' | 'hard' | 'deleted';
     optional: {
       repeat: number;
+      failCount: number;
     };
   };
+}
+
+export interface IHttpAnswer {
+  id: string;
+  difficulty: string;
+  wordId: string;
 }

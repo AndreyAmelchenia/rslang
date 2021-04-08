@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GamesSprintComponent } from './games-sprint.component';
+import { GamesSprintMainComponent } from './games-sprint-main.component';
 
 describe('GamesSprintComponent', () => {
-  let component: GamesSprintComponent;
-  let fixture: ComponentFixture<GamesSprintComponent>;
+  let component: GamesSprintMainComponent;
+  let fixture: ComponentFixture<GamesSprintMainComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [GamesSprintComponent],
+      declarations: [GamesSprintMainComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GamesSprintComponent);
+    fixture = TestBed.createComponent(GamesSprintMainComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

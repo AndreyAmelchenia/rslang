@@ -162,11 +162,12 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
   }
 
   private shufle(arr: any[]): any[] {
+    const res = [...arr];
     let j;
-    for (let i = arr.length - 1; i > 0; i -= 1) {
+    for (let i = res.length - 1; i > 0; i -= 1) {
       j = Math.floor(Math.random() * (i + 1));
-      [arr[j], arr[i]] = [arr[i], arr[j]];
+      [res[j], res[i]] = [res[i], res[j]];
     }
-    return arr;
+    return res;
   }
 }

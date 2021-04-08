@@ -7,18 +7,12 @@ import { URL_BACK_SERVER } from 'src/app/shared/constants/url-constants';
 import { AggregatedWords } from '../../models/aggregatedWords.model';
 import { DifficultyWord, AggregatedWordsToGet } from '../../models/requests.model';
 import { Word } from '../../models/word.model';
+import { filter } from '../../../shared/constants/http-constans';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WordsService {
-  filter = {
-    easy: '{"userWord.difficulty":"easy"}',
-    hard: '{"userWord.difficulty":"hard"}',
-    deleted: '{"userWord.difficulty":"deleted"}',
-    noUserWords: '{"userWord":null}',
-  };
-
   constructor(private http: HttpClient) {}
 
   getWords(): Observable<Word[]> {
@@ -35,7 +29,33 @@ export class WordsService {
   }: AggregatedWordsToGet): Observable<AggregatedWords[]> {
     return this.http
       .get<AggregatedWords[]>(
-        `${URL_BACK_SERVER.URL_BACK}users/${userId}/aggregatedWords?group=${group}&page=${page}&wordsPerPage=${wordsPerPage}&filter={"$or":[${this.filter.easy},${this.filter.hard},${this.filter.noUserWords}]}`,
+        `${URL_BACK_SERVER.URL_BACK}users/${userId}/aggregatedWords?group=${group}&page=${page}&wordsPerPage=${wordsPerPage}&filter={"$or":[${filter.easy},${filter.hard},${filter.noUserWords}]}`,
+      )
+      .pipe(map((words) => words));
+  }
+
+  aggregatedGameList({
+    group,
+    page,
+    userId,
+    wordsPerPage,
+  }: AggregatedWordsToGet): Observable<AggregatedWords[]> {
+    return this.http
+      .get<AggregatedWords[]>(
+        `${URL_BACK_SERVER.URL_BACK}users/${userId}/aggregatedWords?group=${group}&page=${page}&wordsPerPage=${wordsPerPage}&filter={"$or":[${filter.easy},${filter.hard}]}`,
+      )
+      .pipe(map((words) => words));
+  }
+
+  aggregatedGameListNew({
+    group,
+    page,
+    userId,
+    wordsPerPage,
+  }: AggregatedWordsToGet): Observable<AggregatedWords[]> {
+    return this.http
+      .get<AggregatedWords[]>(
+        `${URL_BACK_SERVER.URL_BACK}users/${userId}/aggregatedWords?group=${group}&page=${page}&wordsPerPage=${wordsPerPage}&filter=${filter.noUserWords}`,
       )
       .pipe(map((words) => words));
   }
