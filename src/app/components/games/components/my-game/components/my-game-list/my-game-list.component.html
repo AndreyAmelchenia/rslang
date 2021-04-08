@@ -14,7 +14,6 @@
           *ngFor="let item of imagesArray"
           [cdkDragData]="item"
           (cdkDragStarted)="started($event, item?._id)"
-          (cdkDragDropped)="dropped($event)"
         >
           <p class="imgblock">
             <img [src]="'https://andey-rslang-back-end.herokuapp.com/' + item.image" />

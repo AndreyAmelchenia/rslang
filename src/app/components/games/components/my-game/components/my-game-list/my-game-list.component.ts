@@ -1,4 +1,3 @@
-import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -51,14 +50,16 @@ export class MyGameListComponent implements OnInit {
   maxTryCount = 4;
 
   dragPictureId: string;
+
   dropPictureId: string;
 
   sound = new Audio();
 
   scoreAudio = 'assets/sounds/score.mp3';
+
   tryAudio = 'assets/sounds/try.mp3';
 
-  disabled: boolean = true;
+  disabled = true;
 
   constructor(
     private myGameService: MyGameService,
@@ -103,53 +104,32 @@ export class MyGameListComponent implements OnInit {
   }
 
   drop(event, dropPictureId: string) {
-    console.log(this.countImageArrayLength);
-    console.log(this.wordsPerPageDivinedCountIndex);
-
     this.dropPictureId = dropPictureId;
-    this.checkCountImageArrayLength();
-   if (this.dragPictureId !== dropPictureId) {
+
+    if (this.dragPictureId !== dropPictureId) {
       this.unsolvedWords.add(event.item.data);
       this.playSoundTry();
       this.tryCount += 1;
+      if (this.tryCount > this.maxTryCount) {
+        this.tryCount = 5;
+        this.openDialog();
+      }
     } else {
-      console.log('yes drag ' + this.dragPictureId + ' drop ' + this.dropPictureId);
       const elem = event.container.element.nativeElement.querySelector('.inside');
       elem.appendChild(event.item.element.nativeElement);
       this.solvedWords.add(event.item.data.word);
       this.playSoundScore();
       this.countImageArrayLength += 1;
       this.score += this.scorePerDividedWord;
-    } 
+      this.checkCountImageArrayLength();
+    }
   }
-
-  dropped(event) {
-    if (this.tryCount === this.maxTryCount) {
-      this.tryCount = 5;
-      this.openDialog();
-  }
-}
 
   checkCountImageArrayLength() {
-    if (this.countImageArrayLength === this.wordsPerPageDivinedCountIndex) {
+    if (this.countImageArrayLength > this.wordsPerPageDivinedCountIndex) {
       this.onChangeWords();
     }
   }
-  /*
-    const dropWordId = event.item.data._id;
-    if (this.countImageArrayLength === this.wordsPerPageDivinedCountIndex) {
-      this.onChangeWords();
-    } else if (event.previousContainer === event.container) {
-      moveItemInArray(this.myGamesArray, event.previousIndex, event.currentIndex);
-    } else if (dropWordId === this.dragPictureId) {
-      const elem = event.container.element.nativeElement.querySelector('.inside');
-      elem.appendChild(event.item.element.nativeElement);
-      this.solvedWords.add(event.item.data.word);
-      //this.playSound(this.scoreAudio);
-      this.playSoundScore();
-      this.countImageArrayLength += 1;
-      this.score += this.scorePerDividedWord;
-    } */
 
   started(event, dragPictureId: string) {
     this.dragPictureId = dragPictureId;
@@ -158,30 +138,6 @@ export class MyGameListComponent implements OnInit {
   noReturnPredicate() {
     return false;
   }
-
-  //enterPredicate(drag: CdkDrag<Word>, drop: CdkDropList<Word>) {
-  //  return drag.data._id === drop.data._id;
-  //}
-  /*
-  dropped(event) {
-    if (this.tryCount === this.maxTryCount) {
-      this.tryCount = 5;
-      this.openDialog();
-    } else if (event.isPointerOverContainer === false) {
-      this.unsolvedWords.add(event.item.data);
-      //this.playSound(this.tryAudio);
-      this.playSoundTry();
-      this.tryCount += 1;
-    }
-  }
-  */
-  /*
-  playSound(soundName: string) {
-    this.sound.src = soundName;
-    this.sound.load();
-    this.sound.play();
-  }
-*/
 
   playSoundScore() {
     this.sound.src = 'assets/sounds/score.mp3';
@@ -206,8 +162,6 @@ export class MyGameListComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
+    dialogRef.afterClosed().subscribe();
   }
 }
