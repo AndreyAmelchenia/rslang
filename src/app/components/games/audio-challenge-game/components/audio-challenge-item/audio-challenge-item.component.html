@@ -9,12 +9,8 @@
         <button mat-card-avatar mat-mini-fab (click)="playWordAudio()">
           <i class="material-icons">volume_up</i>
         </button>
-        <mat-card-title *ngIf="wordState.isTranslationChoosed">
-          {{wordState.currentWord.word}}
-        </mat-card-title>
-        <mat-card-subtitle *ngIf="wordState.isTranslationChoosed">
-          {{wordState.currentWord.transcription}}
-        </mat-card-subtitle>
+        <h3 *ngIf="wordState.isTranslationChoosed">{{wordState.currentWord.word}}</h3>
+        <h3 *ngIf="wordState.isTranslationChoosed">{{wordState.currentWord.transcription}}</h3>
       </mat-card-header>
       <div class="img-card-container">
         <img

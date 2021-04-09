@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { AppState } from 'src/app/redux/app.state';
-import { selectWords } from 'src/app/redux/selectors/words.seletor';
+import { selectGameList } from 'src/app/redux/selectors/listGame.selectors';
 import { Word } from 'src/app/common/models/word.model';
 import { AudioChallengeState, AudioChallengeWord } from '../models/game-adio-challenge.model';
 import { GAME_LENGHT, initialAudioChallengeState } from '../constants/audio-challenge.constants';
@@ -44,7 +44,7 @@ export class AudioChallengeGameService {
   }
 
   getWords() {
-    this.store.select(selectWords).subscribe((words) => {
+    this.store.select(selectGameList()).subscribe((words) => {
       this.setGameState({
         wordsInGame: words,
       });
@@ -65,7 +65,7 @@ export class AudioChallengeGameService {
       currentWord,
       isTranslationChoosed: false,
     });
-    if (resultList.length === GAME_LENGHT) {
+    if (resultList.length === GAME_LENGHT || !nextWord) {
       this.gameEnd();
     }
   }
@@ -76,6 +76,9 @@ export class AudioChallengeGameService {
   }
 
   createTranslationTask(wordArg: Word): string[] {
+    if (!wordArg) {
+      return [];
+    }
     const { _id: id } = wordArg;
 
     const filterFunction = (word: Word) => {
@@ -102,7 +105,6 @@ export class AudioChallengeGameService {
     }
 
     const resultListNew = [...resultList, { word: currentWord, result: resultUnswer }];
-
     this.setGameState({
       resultList: resultListNew,
       isTranslationChoosed: true,

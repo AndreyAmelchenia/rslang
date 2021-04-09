@@ -8,12 +8,10 @@ export interface AudioChallengeState {
   }[];
   isGameStarted: boolean;
   currentWord: AudioChallengeWord;
-  audio: HTMLAudioElement;
   isTranslationChoosed: boolean;
   maxRightAnswers: number;
   previousMaxAnswers: number;
   isGameEnded: boolean;
-  isSoundOn: boolean;
 }
 
 export interface AudioChallengeWord extends Word {
