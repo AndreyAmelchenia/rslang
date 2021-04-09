@@ -34,11 +34,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { MatDialogModule } from '@angular/material/dialog';
-import { FormsModule } from '@angular/forms';
+
 @NgModule({
   exports: [
     FormsModule,
+    ReactiveFormsModule,
     CdkTreeModule,
     MatAutocompleteModule,
     MatButtonModule,
@@ -74,7 +77,7 @@ import { FormsModule } from '@angular/forms';
     MatSlideToggleModule,
     MatSliderModule,
     MatProgressBarModule,
-    MatDialogModule
+    MatDialogModule,
   ],
 })
 export class AngularMaterialModule {}

@@ -16,7 +16,7 @@ export class AboutUsService {
       'Serhiyenia',
       'Mentor',
       'string',
-      '#',
+      'https://github.com/Pulya10c',
     ),
     new AboutUs(
       2,
