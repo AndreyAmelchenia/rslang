@@ -39,11 +39,13 @@ export class DictionaryEffects {
   restoreWord$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ActionType.restoreWord),
-      tap((word) => this.store.dispatch(syncWords(word))),
       concatLatestFrom(() => this.store.select(userSelector)),
+      tap(([word, user]: [word: Word, user: IUser]) =>
+        this.store.dispatch(syncWords({ word, user })),
+      ),
       switchMap(([action, userData]: [action: any, userData: IUser]) =>
         this.dictionaryService.restoreWord(action.word, userData).pipe(
-          tap((res) => console.log(res)),
+          tap((res) => console.log('dictionary', res)),
           map((word) => dictionaryActions.restoreWordSuccess({ word })),
           catchError((error) => of(dictionaryActions.updateWordsFailure({ error }))),
         ),

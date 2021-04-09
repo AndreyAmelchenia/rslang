@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { IHttpAnswer, Word } from '../../common/models/word.model';
 import { ActionType } from '../models/dictionaryAction.models';
+import { IUser } from '../models/user.models';
 
 export const updateWords = createAction(ActionType.updateWords);
 
@@ -23,6 +24,6 @@ export const restoreWordSuccess = createAction(
   props<{ word: IHttpAnswer }>(),
 );
 
-export const syncWords = createAction(ActionType.syncWord, props<{ word: Word }>());
+export const syncWords = createAction(ActionType.syncWord, props<{ word: Word; user: IUser }>());
 
 export const restoreWordFailure = createAction(ActionType.restoreWordFailure, props<any>());

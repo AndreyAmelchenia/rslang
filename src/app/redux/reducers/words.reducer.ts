@@ -66,32 +66,32 @@ export const booksReducer = createReducer(
     ];
   }),
 
-  on(syncWords, (state, { word }) => {
-    const currentWord: Word = {
-      ...word,
-      userWord: {
-        ...word.userWord,
-        difficulty: 'easy',
-      },
-    };
-    // if (state[0].paginatedResults.filter((item) => item._id !== word._id))
-    //   return [
-    //     {
-    //       ...state[0],
-    //       // paginatedResults: [
-    //       //   ...[...state[0].paginatedResults, { ...currentWord }].sort((a, b) => {
-    //       //     if (a._id > b._id) {
-    //       //       return 1;
-    //       //     }
-    //       //     if (a._id < b._id) {
-    //       //       return -1;
-    //       //     }
-    //       //     return 0;
-    //       //   }),
-    //       // ],
-    //       paginatedResults: [{ ...currentWord }, ...state[0].paginatedResults],
-    //     },
-    //   ];
-    return [{ ...state[0], paginatedResults: [{ ...currentWord }, ...state[0].paginatedResults] }];
-  }),
+  // on(syncWords, (state, { word }) => {
+  //   const currentWord: Word = {
+  //     ...word,
+  //     userWord: {
+  //       ...word.userWord,
+  //       difficulty: 'easy',
+  //     },
+  //   };
+  //   // if (state[0].paginatedResults.filter((item) => item._id !== word._id))
+  //   //   return [
+  //   //     {
+  //   //       ...state[0],
+  //   //       // paginatedResults: [
+  //   //       //   ...[...state[0].paginatedResults, { ...currentWord }].sort((a, b) => {
+  //   //       //     if (a._id > b._id) {
+  //   //       //       return 1;
+  //   //       //     }
+  //   //       //     if (a._id < b._id) {
+  //   //       //       return -1;
+  //   //       //     }
+  //   //       //     return 0;
+  //   //       //   }),
+  //   //       // ],
+  //   //       paginatedResults: [{ ...currentWord }, ...state[0].paginatedResults],
+  //   //     },
+  //   //   ];
+  //   return [{ ...state[0], paginatedResults: [{ ...currentWord }, ...state[0].paginatedResults] }];
+  // }),
 );

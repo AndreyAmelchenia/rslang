@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType, concatLatestFrom } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
@@ -20,6 +20,7 @@ import {
 import {
   selectBoolLengthWordsByGroup,
   selectBoolLengthWordsByGroupAndDeleted,
+  selectWords,
 } from '../selectors/words.selector';
 
 @Injectable()
@@ -104,7 +105,9 @@ export class WordsEffects {
     () => {
       return this.actions$.pipe(
         ofType(syncWords),
-        tap((res) => console.log(res)),
+        concatLatestFrom(() => this.store.select(selectWords)),
+        tap((res) => console.log('syncwirds effect', res)),
+        tap((res) => this.wordsService.addWordToResult(res)),
       );
     },
     { dispatch: false },
