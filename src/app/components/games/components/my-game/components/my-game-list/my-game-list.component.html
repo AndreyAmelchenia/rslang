@@ -15,6 +15,7 @@
           [cdkDragData]="item"
           (cdkDragStarted)="started($event, item?._id)"
         >
+          <div *cdkDragPlaceholder></div>
           <p class="imgblock">
             <img [src]="'https://andey-rslang-back-end.herokuapp.com/' + item.image" />
             <span>{{item.wordTranslate}}</span>
