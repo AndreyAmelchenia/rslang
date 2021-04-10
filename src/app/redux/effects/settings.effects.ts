@@ -1,4 +1,4 @@
-import { map, mergeMap, tap } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 
@@ -17,9 +17,6 @@ export class SettingsEffects {
           .saveSettings(payload)
           .pipe(map((response: Settings) => settingsActions.setSettings({ response }))),
       ),
-      tap(() => {
-        console.log('settings set');
-      }),
     ),
   );
 

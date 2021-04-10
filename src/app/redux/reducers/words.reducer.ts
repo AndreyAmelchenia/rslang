@@ -1,8 +1,12 @@
 import { createReducer, on } from '@ngrx/store';
 import { AggregatedWords, AggregatedWordsRedux } from 'src/app/common/models/aggregatedWords.model';
 import { Word } from '../../common/models/word.model';
-import { syncWords } from '../actions/dictionary.actions';
-import { AddDifficultyWords, BackWord, retrievedWordsList } from '../actions/words.actions';
+import {
+  AddDifficultyWords,
+  addWords,
+  BackWord,
+  retrievedWordsList,
+} from '../actions/words.actions';
 
 export const wordsFeatureKey = 'words';
 
@@ -66,32 +70,14 @@ export const booksReducer = createReducer(
     ];
   }),
 
-  // on(syncWords, (state, { word }) => {
-  //   const currentWord: Word = {
-  //     ...word,
-  //     userWord: {
-  //       ...word.userWord,
-  //       difficulty: 'easy',
-  //     },
-  //   };
-  //   // if (state[0].paginatedResults.filter((item) => item._id !== word._id))
-  //   //   return [
-  //   //     {
-  //   //       ...state[0],
-  //   //       // paginatedResults: [
-  //   //       //   ...[...state[0].paginatedResults, { ...currentWord }].sort((a, b) => {
-  //   //       //     if (a._id > b._id) {
-  //   //       //       return 1;
-  //   //       //     }
-  //   //       //     if (a._id < b._id) {
-  //   //       //       return -1;
-  //   //       //     }
-  //   //       //     return 0;
-  //   //       //   }),
-  //   //       // ],
-  //   //       paginatedResults: [{ ...currentWord }, ...state[0].paginatedResults],
-  //   //     },
-  //   //   ];
-  //   return [{ ...state[0], paginatedResults: [{ ...currentWord }, ...state[0].paginatedResults] }];
-  // }),
+  on(addWords, (state, { word }) => {
+    const currentWord: Word = {
+      ...word,
+      userWord: {
+        ...word.userWord,
+        difficulty: 'easy',
+      },
+    };
+    return [{ ...state[0], paginatedResults: [currentWord, ...state[0].paginatedResults] }];
+  }),
 );

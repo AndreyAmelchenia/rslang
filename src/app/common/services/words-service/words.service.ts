@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { URL_BACK_SERVER } from 'src/app/shared/constants/url-constants';
-import { AddDifficultyWords } from 'src/app/redux/actions/words.actions';
+import { AddDifficultyWords, addWords } from 'src/app/redux/actions/words.actions';
 import { filter } from '../../../shared/constants/http-constans';
 import { AggregatedWords } from '../../models/aggregatedWords.model';
 import { DifficultyWord, AggregatedWordsToGet } from '../../models/requests.model';
@@ -85,14 +85,14 @@ export class WordsService {
       .pipe(map(() => ({ wordId, difficulty, newWord })));
   }
 
-  addWordToResult([{ user, word }, state]) {
-    console.log('service args', user, word, state);
-    const wordId = word.word._id;
+  addWordToResult(word, user, paginatedResults) {
+    const wordId = word._id;
     const difficulty = 'easy';
-    const currentWord = state[0].paginatedResults.filter((item) => item._id === wordId);
-    console.log('currentWord', currentWord);
+    const currentWord = paginatedResults.filter((item) => item._id === wordId);
     if (currentWord.length !== 0) {
       this.store.dispatch(AddDifficultyWords({ wordId, difficulty, newWord: false }));
-    } 
+    } else {
+      this.store.dispatch(addWords({ word }));
+    }
   }
 }

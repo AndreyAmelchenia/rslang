@@ -127,8 +127,6 @@ export class CardsTabComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log(this.gameList);
-
     this.data = this.store.select(selectWordsByGroup(this.group)).pipe(
       map((words) => {
         this.lengthBase = words[0].paginatedResults.length;

@@ -106,8 +106,9 @@ export class WordsEffects {
       return this.actions$.pipe(
         ofType(syncWords),
         concatLatestFrom(() => this.store.select(selectWords)),
-        tap((res) => console.log('syncwirds effect', res)),
-        tap((res) => this.wordsService.addWordToResult(res)),
+        tap(([{ word, user }, [{ paginatedResults }]]) =>
+          this.wordsService.addWordToResult(word, user, paginatedResults),
+        ),
       );
     },
     { dispatch: false },

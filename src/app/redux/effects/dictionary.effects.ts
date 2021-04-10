@@ -5,7 +5,6 @@ import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { ICurrentWords } from '../../common/models/aggregatedWords.model';
-import { Word } from '../../common/models/word.model';
 import { DictionaryService } from '../../common/services/dictionary.service';
 
 import { SessionService } from '../../common/services/storage/session.service';
@@ -40,12 +39,11 @@ export class DictionaryEffects {
     this.actions$.pipe(
       ofType(ActionType.restoreWord),
       concatLatestFrom(() => this.store.select(userSelector)),
-      tap(([word, user]: [word: Word, user: IUser]) =>
-        this.store.dispatch(syncWords({ word, user })),
+      tap(([actionWord, user]: [actionWord: any, user: any]) =>
+        this.store.dispatch(syncWords({ word: actionWord.word, user })),
       ),
       switchMap(([action, userData]: [action: any, userData: IUser]) =>
         this.dictionaryService.restoreWord(action.word, userData).pipe(
-          tap((res) => console.log('dictionary', res)),
           map((word) => dictionaryActions.restoreWordSuccess({ word })),
           catchError((error) => of(dictionaryActions.updateWordsFailure({ error }))),
         ),

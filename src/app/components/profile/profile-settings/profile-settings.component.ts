@@ -52,11 +52,6 @@ export class ProfileSettingsComponent {
         displayHandlingButtons,
       },
     };
-
-    // this.settingsService.saveSettings(payload).subscribe((response) => {
-    //   this.data = response;
-    //   console.log(this.data);
-    // });
     this.store.dispatch(saveSettings({ payload }));
   }
 }
