@@ -25,7 +25,7 @@ export class GameListEffects {
       mergeMap(({ group, page, wordsPerPage }) => {
         return this.store.select(wordsDictionary).pipe(
           mergeMap((words) => {
-            if (words.length === 20) return of({ type: ArticlesActionsGameList.BackWord });
+            if (words.length === 60) return of({ type: ArticlesActionsGameList.BackWord });
             return of(this.userSession.getItem('user')).pipe(
               mergeMap(({ userId }) => {
                 return this.wordsService
@@ -37,7 +37,7 @@ export class GameListEffects {
                   })
                   .pipe(
                     mergeMap((wordsAdd) => {
-                      if (wordsAdd[0].paginatedResults.length === 20) {
+                      if (wordsAdd[0].paginatedResults.length === 60) {
                         return of(gameWordsList({ Words: wordsAdd[0].paginatedResults }));
                       }
                       return this.wordsService
