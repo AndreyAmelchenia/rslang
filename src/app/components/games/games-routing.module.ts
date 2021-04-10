@@ -20,7 +20,7 @@ const routes: Routes = [
         component: GamesSprintMainComponent,
       },
       {
-        path: 'Audio',
+        path: 'audio',
         loadChildren: () =>
           import('./audio-challenge-game/audio-challenge-game.module').then(
             (m) => m.AudioChallengeGameModule,

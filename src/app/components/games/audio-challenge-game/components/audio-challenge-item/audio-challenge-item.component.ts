@@ -20,7 +20,7 @@ export class AudioChallengeItemComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     const { wordState } = changes;
-    if (wordState.currentValue.currentWord.audio) {
+    if (wordState.currentValue.currentWord.audio && wordState.currentValue.isGameStarted) {
       this.playWordAudio();
     }
   }

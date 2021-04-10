@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { AudioChallengeGameService } from '../../services/audio-challenge-game.service';
 
@@ -7,7 +7,7 @@ import { AudioChallengeGameService } from '../../services/audio-challenge-game.s
   templateUrl: './audio-challenge-game.component.html',
   styleUrls: ['./audio-challenge-game.component.scss'],
 })
-export class AudioChallengeGameComponent implements OnInit {
+export class AudioChallengeGameComponent implements OnInit, OnDestroy {
   wordState;
 
   constructor(private audioChallengeGameService: AudioChallengeGameService) {}
@@ -18,5 +18,9 @@ export class AudioChallengeGameComponent implements OnInit {
 
   newGame() {
     this.audioChallengeGameService.gameStart();
+  }
+
+  ngOnDestroy(): void {
+    this.audioChallengeGameService.closeGame();
   }
 }
