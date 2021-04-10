@@ -1,4 +1,3 @@
-import { CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -7,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { Word } from 'src/app/common/models/word.model';
 import { AppState } from 'src/app/redux/app.state';
 import { selectGameList } from 'src/app/redux/selectors/listGame.selectors';
+import { StatisticGame } from '../../game-statistic.model';
 
 import { MyGameService } from '../../services/my-game.service';
 import { DialogTotalGameComponent } from '../dialog-total-game/dialog-total-game.component';
@@ -38,7 +38,7 @@ export class MyGameListComponent implements OnInit {
 
   wordsCount = 0;
 
-  amount = 10;
+  amount = 20;
 
   countImageArrayLength = 0;
 
@@ -52,11 +52,23 @@ export class MyGameListComponent implements OnInit {
 
   dragPictureId: string;
 
+  dropPictureId: string;
+
   sound = new Audio();
 
   scoreAudio = 'assets/sounds/score.mp3';
 
   tryAudio = 'assets/sounds/try.mp3';
+
+  disabled = true;
+
+  statistic: StatisticGame;
+
+  countGoodAnswer = 0;
+
+  bestSeries = [];
+
+  countAllTries = 0;
 
   constructor(
     private myGameService: MyGameService,
@@ -70,6 +82,7 @@ export class MyGameListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.tryCount = 0;
     this.solvedWords = new Set<Word>();
     this.unsolvedWords = new Set<Word>();
     this.onNewWords();
@@ -87,9 +100,6 @@ export class MyGameListComponent implements OnInit {
     this.wordsArray.sort(() => Math.random() - 0.5);
     if (this.myGamesArray.length === 0) {
       this.onNewWords();
-      if (this.changedGameList.length !== 0) {
-        this.onChangeWords();
-      }
     }
   }
 
@@ -98,23 +108,42 @@ export class MyGameListComponent implements OnInit {
     this.changedGameList = randomWords.slice(this.wordsCount, this.wordsCount + this.amount);
     this.wordsCount += this.amount;
     if (this.changedGameList.length === 0) {
+      this.getStatistic();
       this.openDialog();
     }
   }
 
-  drop(event: CdkDragDrop<Word>) {
-    const dropWordId = event.item.data._id;
-    if (this.countImageArrayLength === this.wordsPerPageDivinedCountIndex) {
-      this.onChangeWords();
-    } else if (event.previousContainer === event.container) {
-      moveItemInArray(this.myGamesArray, event.previousIndex, event.currentIndex);
-    } else if (dropWordId === this.dragPictureId) {
+  drop(event, dropPictureId: string) {
+    this.dropPictureId = dropPictureId;
+
+    if (this.dragPictureId !== dropPictureId) {
+      this.unsolvedWords.add(event.item.data);
+      this.playSoundTry();
+      this.tryCount += 1;
+      this.countAllTries += 1;
+      this.countGoodAnswer = 0;
+      if (this.tryCount > this.maxTryCount) {
+        this.tryCount = 5;
+        this.getStatistic();
+        this.openDialog();
+      }
+    } else {
       const elem = event.container.element.nativeElement.querySelector('.inside');
       elem.appendChild(event.item.element.nativeElement);
       this.solvedWords.add(event.item.data.word);
-      this.playSound(this.scoreAudio);
+      this.playSoundScore();
       this.countImageArrayLength += 1;
       this.score += this.scorePerDividedWord;
+      this.checkCountImageArrayLength();
+      this.countGoodAnswer += 1;
+      this.countAllTries += 1;
+      this.bestSeries.push(this.countGoodAnswer);
+    }
+  }
+
+  checkCountImageArrayLength() {
+    if (this.countImageArrayLength > this.wordsPerPageDivinedCountIndex) {
+      this.onChangeWords();
     }
   }
 
@@ -126,24 +155,30 @@ export class MyGameListComponent implements OnInit {
     return false;
   }
 
-  enterPredicate(drag: CdkDrag<Word>, drop: CdkDropList<Word>) {
-    return drag.data._id === drop.data._id;
-  }
-
-  dropped(event) {
-    if (this.tryCount === this.maxTryCount) {
-      this.openDialog();
-    } else if (event.isPointerOverContainer === false) {
-      this.unsolvedWords.add(event.item.data);
-      this.playSound(this.tryAudio);
-      this.tryCount += 1;
-    }
-  }
-
-  playSound(soundName: string) {
-    this.sound.src = soundName;
+  playSoundScore() {
+    this.sound.src = 'assets/sounds/score.mp3';
     this.sound.load();
     this.sound.play();
+  }
+
+  playSoundTry() {
+    this.sound.src = 'assets/sounds/try.mp3';
+    this.sound.load();
+    this.sound.play();
+  }
+
+  getStatistic() {
+    // eslint-disable-next-line no-return-assign
+    return (this.statistic = new StatisticGame(
+      this.solvedWords.size,
+      this.countAllTries,
+      this.solvedWords.size,
+      this.getMaxOfBestAnsers(this.bestSeries),
+    ));
+  }
+
+  getMaxOfBestAnsers(bestSeries) {
+    return Math.max.apply(null, bestSeries);
   }
 
   openDialog() {
@@ -155,10 +190,9 @@ export class MyGameListComponent implements OnInit {
         try: this.tryCount,
         unsolved: [...this.unsolvedWords],
       },
+      disableClose: true,
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
+    dialogRef.afterClosed().subscribe();
   }
 }

@@ -15,14 +15,18 @@ export const selectFeatureWords = (state: AppState): ReadonlyArray<Word> => [
 export const selectWords = createSelector(selectFeature, (state: AggregatedWordsRedux[]) => state);
 
 export const selectWordsByGroup = (group: number) =>
-  createSelector(selectFeature, (state: AggregatedWordsRedux[]) => [
-    {
-      ...state[0],
-      paginatedResults: state[0].paginatedResults.filter(
-        (el) => el.group === group && el.userWord?.difficulty !== 'deleted',
-      ),
-    },
-  ]);
+  createSelector(selectFeature, (state: AggregatedWordsRedux[]) => {
+    // console.log(state);
+
+    return [
+      {
+        ...state[0],
+        paginatedResults: state[0].paginatedResults.filter(
+          (el) => el.group === group && el.userWord?.difficulty !== 'deleted',
+        ),
+      },
+    ];
+  });
 
 export const selectBoolLengthWordsByGroup = (group: number, page: number, wordsPerPage: number) =>
   createSelector(

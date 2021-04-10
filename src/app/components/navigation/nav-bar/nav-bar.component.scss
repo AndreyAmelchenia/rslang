@@ -39,3 +39,14 @@
 .greet {
   padding: 10px;
 }
+.avatar{
+  width: 60px;
+  border-radius: 50%;
+  background-size: cover;
+}
+
+.block_user{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
