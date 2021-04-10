@@ -1,17 +1,17 @@
 <div class="savannah" [class.is-dark]="!play">
   <app-game-savannah-head
-    *ngIf="play && !statictics"
+    *ngIf="play && !openStatistics"
     [gameSavannahStatus]="gameSavannahStatus"
     (changeStatus)="changeGameSavannahStatus($event)"
     (restartGame)="restartGame()"
   ></app-game-savannah-head>
   <div class="savannah__body">
     <app-game-savannah-start-banner
-      *ngIf="!play && !statictics && paused"
+      *ngIf="!play && !openStatistics && paused"
       (startGame)="startGame()"
     ></app-game-savannah-start-banner>
     <app-game-savannah-list
-      *ngIf="play && !statictics && !paused"
+      *ngIf="play && !openStatistics && !paused"
       [currentWord]="currentWord"
       [answers]="answers"
       [answer]="getAnswer()"
@@ -19,7 +19,7 @@
       (checked)="checkAnswer($event)"
     ></app-game-savannah-list>
     <app-game-savannah-statictics
-      *ngIf="statictics && !play"
+      *ngIf="openStatistics && !play"
       [words]="words"
       (repeatGame)="restartGame()"
     ></app-game-savannah-statictics>

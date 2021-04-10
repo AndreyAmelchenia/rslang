@@ -1,6 +1,12 @@
 import { createReducer, on } from '@ngrx/store';
 import { AggregatedWords, AggregatedWordsRedux } from 'src/app/common/models/aggregatedWords.model';
-import { AddDifficultyWords, BackWord, retrievedWordsList } from '../actions/words.actions';
+import { Word } from '../../common/models/word.model';
+import {
+  AddDifficultyWords,
+  addWords,
+  BackWord,
+  retrievedWordsList,
+} from '../actions/words.actions';
 
 export const wordsFeatureKey = 'words';
 
@@ -62,5 +68,16 @@ export const booksReducer = createReducer(
         ],
       },
     ];
+  }),
+
+  on(addWords, (state, { word }) => {
+    const currentWord: Word = {
+      ...word,
+      userWord: {
+        ...word.userWord,
+        difficulty: 'easy',
+      },
+    };
+    return [{ ...state[0], paginatedResults: [currentWord, ...state[0].paginatedResults] }];
   }),
 );

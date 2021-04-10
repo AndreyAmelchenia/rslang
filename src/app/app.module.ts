@@ -13,11 +13,13 @@ import { AboutUsService } from './components/aboutUs/services/about-us.service';
 import { GamesModule } from './components/games/games.module';
 import { ProfileModule } from './components/profile/profile.module';
 import { CardsModule } from './components/cards/cards.module';
+import { StartPageModule } from './components/start-page/start-page.module';
 import { MyGameModule } from './components/games/components/my-game/my-game.module';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    StartPageModule,
     NavigationModule,
     AboutUsModule,
     GamesModule,

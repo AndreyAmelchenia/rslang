@@ -14,8 +14,8 @@
           *ngFor="let item of imagesArray"
           [cdkDragData]="item"
           (cdkDragStarted)="started($event, item?._id)"
-          (cdkDragDropped)="dropped($event)"
         >
+          <div *cdkDragPlaceholder></div>
           <p class="imgblock">
             <img [src]="'https://andey-rslang-back-end.herokuapp.com/' + item.image" />
             <span>{{item.wordTranslate}}</span>
@@ -30,10 +30,9 @@
           cdkDropList
           class="item-list"
           [cdkDropListData]="item"
-          (cdkDropListDropped)="drop($event)"
-          [cdkDropListEnterPredicate]="enterPredicate"
+          (cdkDropListDropped)="drop($event, item?._id)"
         >
-          <div cdkDrag class="item-box" [cdkDragDisabled]="true">
+          <div cdkDrag class="item-box" [cdkDragDisabled]="disabled">
             {{item.word | uppercase}}
             <div class="inside"></div>
           </div>
@@ -57,4 +56,3 @@
     </div>
   </div>
 </div>
-<button mat-raised-button (click)="openDialog()">Open</button>

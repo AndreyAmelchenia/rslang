@@ -18,6 +18,7 @@ import { LoadWords } from 'src/app/redux/actions/words.actions';
 import { GamesService } from 'src/app/common/services/games.service';
 import { GameModel } from 'src/app/common/models/games.model';
 import { gameWordsList } from 'src/app/redux/actions/listGame.actions';
+
 @Component({
   selector: 'app-cards-tab',
   templateUrl: './cards-tab.component.html',
@@ -118,7 +119,7 @@ export class CardsTabComponent implements OnInit, AfterViewInit {
     this.gameList = data;
     if (
       this.lengthBase !== 0 &&
-      this.lengthBase - 30 <= this.paginator.pageIndex * this.paginator.pageSize &&
+      this.lengthBase - 30 <= (this.paginator.pageIndex + 1) * this.paginator.pageSize &&
       this.lengthBase < this.length
     ) {
       this.store.dispatch(
@@ -130,8 +131,6 @@ export class CardsTabComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log(this.gameList);
-
     this.data = this.store.select(selectWordsByGroup(this.group)).pipe(
       map((words) => {
         this.lengthBase = words[0].paginatedResults.length;

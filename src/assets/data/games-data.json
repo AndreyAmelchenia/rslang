@@ -1,17 +1,17 @@
 [
   {
     "id": 1,
-    "name": "Savanna",
+    "name": "savanna",
     "img": "./assets/images/savanna.png"
   },
   {
     "id": 2,
-    "name": "Sprint",
+    "name": "sprint",
     "img": "./assets/images/sprint.png"
   },  
   {
     "id": 3,
-    "name": "Audio",
+    "name": "audio",
     "img": "./assets/images/audio.png"
   },
   {

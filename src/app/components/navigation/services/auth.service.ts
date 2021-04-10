@@ -20,12 +20,12 @@ export class AuthService {
     private store: Store,
   ) {}
 
-  registerUser(user: IHttpUser): Observable<IUser> {
-    return this.http.post<IHttpUser>(this.registerUrl, user);
+  registerUser(user: FormData): Observable<IUser> {
+    return this.http.post<IUser>(this.registerUrl, user);
   }
 
   loginUser(user: IHttpUser): Observable<IUser> {
-    return this.http.post<IHttpUser>(this.loginUrl, user);
+    return this.http.post<IUser>(this.loginUrl, user);
   }
 
   logout() {
