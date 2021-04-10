@@ -20,17 +20,6 @@
       >{{ item }}</span
     >
   </div>
-  <!-- <div class="savannah__settings-level">
-    <mat-select [formControl]="gameLevels" required>
-      <mat-option>--</mat-option>
-      <mat-option *ngFor="let level of levels" [value]="level">
-        {{level.name}}
-      </mat-option>
-    </mat-select>
-    <select matNativeControl required [formControl]="gameLevels">
-      <option *ngFor="let level of levels" [value]="level">{{level.name}}</option>
-    </select>
-  </div> -->
 </div>
 <div class="savannah__progress">
   <div *ngFor="let heart of attempts; let i = index" class="savannah__progress-heart">

@@ -6,6 +6,7 @@ import {
   EventEmitter,
   OnInit,
 } from '@angular/core';
+import { URL_BACK_SERVER } from 'src/app/shared/constants/url-constants';
 import { GameSavannahWord } from '../../game-savannah/game-savannah.component';
 
 @Component({
@@ -60,15 +61,11 @@ export class GameSavannahStaticticsComponent implements OnInit {
 
   playAudio(i: number) {
     this.play = true;
-    this.audio = new Audio(`https://andey-rslang-back-end.herokuapp.com/${this.words[i].audio}`);
+    this.audio = new Audio(`${URL_BACK_SERVER.URL_BACK + this.words[i].audio}`);
 
-    this.audioExample = new Audio(
-      `https://andey-rslang-back-end.herokuapp.com/${this.words[i].audioExample}`,
-    );
+    this.audioExample = new Audio(`${URL_BACK_SERVER.URL_BACK + this.words[i].audioExample}`);
 
-    this.audioMeaning = new Audio(
-      `https://andey-rslang-back-end.herokuapp.com/${this.words[i].audioMeaning}`,
-    );
+    this.audioMeaning = new Audio(`${URL_BACK_SERVER.URL_BACK + this.words[i].audioMeaning}`);
     [this.audio, this.audioExample, this.audioMeaning].forEach((el, index, arr) => {
       el.addEventListener('ended', () => arr[index + 1] && arr[index + 1].play());
     });
