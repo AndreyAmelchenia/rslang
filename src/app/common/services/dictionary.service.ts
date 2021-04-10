@@ -82,12 +82,11 @@ export class DictionaryService {
   }
 
   updateUrl(id): string {
-    const currentUrl = `${URL_BACK_SERVER.URL_BACK}users/${id}/aggregatedWords?group=${
+    return `${URL_BACK_SERVER.URL_BACK}users/${id}/aggregatedWords?group=${
       this.urlOptions.group
     }&page=${this.urlOptions.page}&wordsPerPage=${this.urlOptions.wordsPerPage}&filter=${
       this.filter[this.urlOptions.section]
     }`;
-    return currentUrl;
   }
 
   getWords(userData: IUser): Observable<ICurrentWords> {
