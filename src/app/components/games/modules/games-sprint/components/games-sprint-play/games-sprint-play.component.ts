@@ -59,7 +59,7 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
 
   countDown;
 
-  counter = 60;
+  counter = 5;
 
   audio = new Audio('assets/sounds/tick.mp3');
 
@@ -89,12 +89,10 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
     console.log('onDestroy');
     this.score = 0;
     this.deltaInScore = 10;
-    this.pauseAudio();
     this.play = false;
     this.end = true;
     if(this.countDown) {
       this.countDown.unsubscribe();
-      this.countDown = null;
    }
   }
 
@@ -103,9 +101,7 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
       this.playAudio();
       // eslint-disable-next-line no-return-assign
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      if (this.counter) {
-        this.counter > 0 ? (this.counter -= 1) : this.stopGame();
-      }      
+      this.counter > 0 ? (this.counter -= 1) : this.stopGame();
     });
     console.log('onStart');
     this.start = true;
@@ -203,10 +199,7 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
     this.pauseAudio();
     this.play = false;
     this.end = true;
-  //  if(this.countDown) {
-      this.countDown.unsubscribe();
-      this.countDown = null;
-  //  }
+    this.countDown.unsubscribe();
     this.responseEndGame = {
       game: 'Sprint',
       bestSeries: Math.max(...this.countTrueSeries),
@@ -214,10 +207,6 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   }
 
   goBack(): void {
-       if(this.countDown) {
-        this.countDown.unsubscribe();
-        this.countDown = null;
-      }
     this.location.back();
   }
 }
