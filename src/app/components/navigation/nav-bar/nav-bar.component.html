@@ -38,12 +38,17 @@
       <ng-template [ngIf]="isAuth$|async" [ngIfThen]="loginBlock" [ngIfElse]="log"> </ng-template>
       <ng-template #log>
         <a [routerLink]="[path.Registration]" class="link">Register</a>
-        <a routerLink="/login" class="link">Sign In</a>
+        <a routerLink="/" class="link">Sign In</a>
       </ng-template>
       <ng-template #loginBlock>
-        <div>
-          <span class="greet">Hello, {{(user$|async).name}}</span
-          ><button mat-button (click)="onLogout()">LogOut</button>
+        <div class="block_user">
+          <img
+            *ngIf="(user$|async).photo"
+            class="avatar"
+            [src]="'https://andey-rslang-back-end.herokuapp.com/' + (user$|async).photo"
+          />
+          <span class="greet">Hello, {{(user$|async).name}}</span>
+          <button mat-raised-button color="accent" (click)="onLogout()">LogOut</button>
         </div>
       </ng-template>
     </mat-toolbar>

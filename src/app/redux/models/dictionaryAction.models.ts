@@ -6,6 +6,7 @@ export enum ActionType {
   restoreWord = '[Dictionary] restore word',
   restoreWordSuccess = '[Dictionary] restore word success',
   restoreWordFailure = '[Dictionary] restore word failure',
+  syncWord = '[Dictionary] sync words',
 }
 
 export interface IDictionaryOptions {

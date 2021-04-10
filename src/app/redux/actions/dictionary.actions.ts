@@ -23,4 +23,9 @@ export const restoreWordSuccess = createAction(
   props<{ word: IHttpAnswer }>(),
 );
 
+export const syncWords = createAction(
+  ActionType.syncWord,
+  props<{ word: Word; user: IHttpAnswer }>(),
+);
+
 export const restoreWordFailure = createAction(ActionType.restoreWordFailure, props<any>());
