@@ -8,6 +8,7 @@ import { AuthEffects } from './effects/auth.effects';
 import { DictionaryEffects } from './effects/dictionary.effects';
 import { GameListEffects } from './effects/listGame.effect';
 import { SettingsEffects } from './effects/settings.effects';
+import { StatisticsEffects } from './effects/stats.effects';
 import { WordsEffects } from './effects/words.effects';
 import { authFeatureKey, authReducer } from './reducers/auth.reducers';
 import { dictionaryFeatureKey, dictionaryReducer } from './reducers/dictionary.reducers';
@@ -27,6 +28,7 @@ import { wordsFeatureKey, booksReducer } from './reducers/words.reducer';
       DictionaryEffects,
       SettingsEffects,
       GameListEffects,
+      StatisticsEffects,
     ]),
     StoreModule.forFeature(wordsFeatureKey, booksReducer),
     StoreModule.forFeature(expectationFeatureKey, expectationReducer),

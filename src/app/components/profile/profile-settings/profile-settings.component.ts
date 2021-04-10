@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Settings } from 'src/app/common/models/settings.model';
+import { ISettings } from 'src/app/common/models/settings.model';
 import { saveSettings } from 'src/app/redux/actions/settings.actions';
 import { AppState } from 'src/app/redux/app.state';
 import { selectSettings } from 'src/app/redux/selectors/settings.selector';
@@ -12,7 +12,7 @@ import { selectSettings } from 'src/app/redux/selectors/settings.selector';
   styleUrls: ['./profile-settings.component.scss'],
 })
 export class ProfileSettingsComponent {
-  settings: Settings;
+  settings: ISettings;
 
   formGroup: FormGroup;
 

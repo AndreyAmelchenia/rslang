@@ -1,3 +1,10 @@
+export interface IResponse {
+  learnedWords: number;
+  optional: {
+    data: string;
+  };
+}
+
 export interface IStats {
   shortTerm: IDailyStats;
   longTerm: Array<IDay>;
@@ -9,6 +16,7 @@ export interface IDay {
 }
 
 export interface IDailyStats {
+  date: number;
   savanna: IGame;
   sprint: IGame;
   audio: IGame;

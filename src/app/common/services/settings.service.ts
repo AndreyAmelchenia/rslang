@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 
 import { URL_BACK_SERVER } from 'src/app/shared/constants/url-constants';
 import { AppState } from 'src/app/redux/app.state';
-import { Settings } from '../models/settings.model';
+import { ISettings } from '../models/settings.model';
 import { SessionService } from './storage/session.service';
 
 const { URL_BACK } = URL_BACK_SERVER;
@@ -25,15 +25,15 @@ export class SettingsService {
     private store: Store<AppState>,
   ) {}
 
-  getSettings(): Observable<Settings> {
+  getSettings(): Observable<ISettings> {
     return this.http
-      .get<Settings>(`${URL_BACK}users/${this.userSession.getItem('user').userId}/settings`)
+      .get<ISettings>(`${URL_BACK}users/${this.userSession.getItem('user').userId}/settings`)
       .pipe(map((settings) => settings));
   }
 
-  saveSettings(data: Settings): Observable<Settings> {
+  saveSettings(data: ISettings): Observable<ISettings> {
     return this.http
-      .put<Settings>(`${URL_BACK}users/${this.userSession.getItem('user').userId}/settings`, data)
+      .put<ISettings>(`${URL_BACK}users/${this.userSession.getItem('user').userId}/settings`, data)
       .pipe(map((settings) => settings));
   }
 

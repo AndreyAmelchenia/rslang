@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
 
@@ -11,7 +11,7 @@ import { graphType } from 'src/app/shared/constants/stats-constants';
   templateUrl: './profile-chart.component.html',
   styleUrls: ['./profile-chart.component.scss'],
 })
-export class ProfileChartComponent implements OnChanges, OnInit {
+export class ProfileChartComponent implements OnChanges {
   @Input() checkedStyle: string;
 
   @Input() longData: IDay[];
@@ -35,19 +35,19 @@ export class ProfileChartComponent implements OnChanges, OnInit {
     },
   ];
 
-  ngOnInit() {
+  ngOnChanges() {
+    this.barChartLabels = [];
     this.longData.forEach((el) => {
       this.barChartLabels.push(formatDate(el.date, 'mediumDate', 'en-US'));
     });
-  }
 
-  ngOnChanges() {
     this.barChartData[0].data = [];
     if (this.checkedStyle === graphType.daily) {
       this.longData.forEach((el) => {
         this.barChartData[0].data.push(el.learned);
       });
     }
+
     if (this.checkedStyle === graphType.total) {
       this.longData.reduce((acc, el) => {
         this.barChartData[0].data.push(el.learned + acc);

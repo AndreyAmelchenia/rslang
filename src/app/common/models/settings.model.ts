@@ -1,4 +1,4 @@
-export interface Settings {
+export interface ISettings {
   wordsPerDay: number;
   optional: {
     displayTranslation: boolean;

@@ -1,7 +1,14 @@
 import { createAction, props } from '@ngrx/store';
-import { IStats } from '../../common/models/stats.model';
+import { IDay, IDailyStats } from '../../common/models/stats.model';
+import { StatisticsActionsType } from '../models/stats.model';
 
-export const setStats = createAction(
-  '[User Page/Stats] Set Statistics',
-  props<{ payload: IStats }>(),
+export const setStatistics = createAction(
+  StatisticsActionsType.SetStats,
+  props<{ shortTerm: IDailyStats; longTerm: Array<IDay> }>(),
 );
+export const saveStatistics = createAction(
+  StatisticsActionsType.SaveStats,
+  props<{ shortTerm: IDailyStats; longTerm: Array<IDay> }>(),
+);
+export const getStatistics = createAction(StatisticsActionsType.GetStats);
+export const resetStatistics = createAction(StatisticsActionsType.ResetStats);
