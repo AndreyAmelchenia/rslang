@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
 import { AboutUs } from '../../models/about-us.model';
@@ -11,7 +10,7 @@ import { AboutUsService } from '../../services/about-us.service';
   styleUrls: ['./about-us-list.component.scss'],
 })
 export class AboutUsListComponent implements OnInit {
-  aboutUs: Observable<AboutUs[]>;
+  aboutUs: AboutUs[];
 
   cols = 2;
 
@@ -26,7 +25,9 @@ export class AboutUsListComponent implements OnInit {
   }
 
   getAboutUsTeam() {
-    this.aboutUs = this.aboutUsService.getTeam();
+    this.aboutUsService.getTeam().subscribe((team) => {
+      this.aboutUs = team;
+    });
   }
 
   colsChange() {

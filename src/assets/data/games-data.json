@@ -1,19 +1,19 @@
 [
   {
     "id": 1,
-    "name": "Savanna",
+    "name": "savanna",
     "nameRU": "Саванна",
     "img": "./assets/images/savanna.png"
   },
   {
     "id": 2,
-    "name": "Sprint",
+    "name": "sprint",
     "nameRU": "Спринт",
     "img": "./assets/images/sprint.png"
   },  
   {
     "id": 3,
-    "name": "Audio",
+    "name": "audio",
     "nameRU": "Аудиовызов",
     "img": "./assets/images/audio.png"
   },

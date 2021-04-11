@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { Word } from 'src/app/common/models/word.model';
 import { AppState } from 'src/app/redux/app.state';
 import { selectGameList } from 'src/app/redux/selectors/listGame.selectors';
+import { StatisticGame } from '../../game-statistic.model';
 
 import { MyGameService } from '../../services/my-game.service';
 import { DialogTotalGameComponent } from '../dialog-total-game/dialog-total-game.component';
@@ -61,6 +62,14 @@ export class MyGameListComponent implements OnInit {
 
   disabled = true;
 
+  statistic: StatisticGame;
+
+  countGoodAnswer = 0;
+
+  bestSeries = [];
+
+  countAllTries = 0;
+
   constructor(
     private myGameService: MyGameService,
     private router: Router,
@@ -99,6 +108,7 @@ export class MyGameListComponent implements OnInit {
     this.changedGameList = randomWords.slice(this.wordsCount, this.wordsCount + this.amount);
     this.wordsCount += this.amount;
     if (this.changedGameList.length === 0) {
+      this.getStatistic();
       this.openDialog();
     }
   }
@@ -110,8 +120,11 @@ export class MyGameListComponent implements OnInit {
       this.unsolvedWords.add(event.item.data);
       this.playSoundTry();
       this.tryCount += 1;
+      this.countAllTries += 1;
+      this.countGoodAnswer = 0;
       if (this.tryCount > this.maxTryCount) {
         this.tryCount = 5;
+        this.getStatistic();
         this.openDialog();
       }
     } else {
@@ -122,6 +135,9 @@ export class MyGameListComponent implements OnInit {
       this.countImageArrayLength += 1;
       this.score += this.scorePerDividedWord;
       this.checkCountImageArrayLength();
+      this.countGoodAnswer += 1;
+      this.countAllTries += 1;
+      this.bestSeries.push(this.countGoodAnswer);
     }
   }
 
@@ -151,6 +167,20 @@ export class MyGameListComponent implements OnInit {
     this.sound.play();
   }
 
+  getStatistic() {
+    // eslint-disable-next-line no-return-assign
+    return (this.statistic = new StatisticGame(
+      this.solvedWords.size,
+      this.countAllTries,
+      this.solvedWords.size,
+      this.getMaxOfBestAnsers(this.bestSeries),
+    ));
+  }
+
+  getMaxOfBestAnsers(bestSeries) {
+    return Math.max.apply(null, bestSeries);
+  }
+
   openDialog() {
     const dialogRef = this.dialog.open(DialogTotalGameComponent, {
       width: '80%',
@@ -160,6 +190,7 @@ export class MyGameListComponent implements OnInit {
         try: this.tryCount,
         unsolved: [...this.unsolvedWords],
       },
+      disableClose: true,
     });
 
     dialogRef.afterClosed().subscribe();
