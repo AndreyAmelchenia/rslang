@@ -22,7 +22,10 @@ const routes: Routes = [
       },
       {
         path: 'audio',
-        component: AboutUsListComponent,
+        loadChildren: () =>
+          import('./audio-challenge-game/audio-challenge-game.module').then(
+            (m) => m.AudioChallengeGameModule,
+          ),
       },
       {
         path: 'savanna',
