@@ -1,0 +1,59 @@
+<mat-grid-list [cols]="(isAuth$|async) ? 9 : 7" rowHeight="43vh">
+  <mat-grid-tile
+    [colspan]="(colsAndRows|async).one.col"
+    [rowspan]="(colsAndRows|async).one.row"
+    [style.background]="'lightblue'"
+  >
+    <div class="content">
+      <h1 class="mat-display-1">Изучай английский язык вместе с RS Lang!</h1>
+      <h3>
+        Используя наше приложение вы легко и быстро улучшите свой словарный запас. На сайте вы
+        можете выбирать различные уровни сложности, что позволит шаг за шагом повышать свой уровень
+        английского языка. Также для наших пользователей доступны увлекательные мини-игры,
+        предназначенные для изучения и повторения слов.
+      </h3>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile
+    *ngIf="isAuth$|async"
+    [colspan]="(colsAndRows|async).two.col"
+    [rowspan]="(colsAndRows|async).two.row"
+    [style.background]="'lightgreen'"
+    ><app-login></app-login
+  ></mat-grid-tile>
+  <mat-grid-tile
+    [colspan]="(colsAndRows|async).three.col"
+    [rowspan]="(colsAndRows|async).three.row"
+    [style.background]="'lightpink'"
+  >
+    <div class="team">
+      <h1>Наша команда</h1>
+      <div class="block_img">
+        <button
+          mat-icon-button
+          aria-label="Example icon button with a menu icon"
+          (click)="nextItem(this.index-1)"
+        >
+          <mat-icon>arrow_back_ios </mat-icon>
+        </button>
+        <img class="team" [src]="(aboutUsItem|async).url + '.png'" alt="" />
+        <button
+          mat-icon-button
+          aria-label="Example icon button with a menu icon"
+          (click)="nextItem(this.index+1)"
+        >
+          <mat-icon> arrow_forward_ios </mat-icon>
+        </button>
+      </div>
+      <h2>{{(aboutUsItem|async).name + ' ' + (aboutUsItem|async).surname}}</h2>
+      <h3>{{(aboutUsItem|async).role}}</h3>
+    </div>
+  </mat-grid-tile>
+  <mat-grid-tile
+    [colspan]="(colsAndRows|async).four.col"
+    [rowspan]="(colsAndRows|async).four.row"
+    [style.background]="'#DDBDF1'"
+  >
+    <iframe [src]="safeURL" frameborder="0" allowfullscreen></iframe>
+  </mat-grid-tile>
+</mat-grid-list>

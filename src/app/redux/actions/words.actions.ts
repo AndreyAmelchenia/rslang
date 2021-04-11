@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { AggregatedWords } from 'src/app/common/models/aggregatedWords.model';
+import { Word } from '../../common/models/word.model';
 
 export enum ArticlesActions {
   LoadWords = '[Words Page] Load Words',
@@ -9,6 +10,7 @@ export enum ArticlesActions {
   BackWord = '[Back Word] Back Word',
   AddDifficulty = '[Add difficulty] Add difficulty',
   LoadDifficulty = '[Load difficulty] Add difficulty to back',
+  addWords = '[Words Page] add words to paginateResult',
 }
 
 export const retrievedWordsList = createAction(
@@ -48,4 +50,6 @@ export const LoadDifficultyWords = createAction(
     newWord: boolean;
   }>(),
 );
+
+export const addWords = createAction(ArticlesActions.addWords, props<{ word: Word }>());
 export const BackWord = createAction(ArticlesActions.BackWord);
