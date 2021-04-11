@@ -65,7 +65,7 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
 
   countDown;
 
-  counter = 20;
+  counter = 60;
 
   audio = new Audio('assets/sounds/tick.mp3');
 

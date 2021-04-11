@@ -15,18 +15,18 @@ const routes: Routes = [
         component: GamesListComponent,
       },
       {
-        path: 'Sprint',
+        path: 'sprint',
         loadChildren: () =>
           import('./modules/games-sprint/games-sprint-routing.module').then(
             (m) => m.GamesSprintRoutingModule,
           ),
       },
       {
-        path: 'Audio',
+        path: 'audio',
         component: AboutUsListComponent,
       },
       {
-        path: 'Savanna',
+        path: 'savanna',
         component: AboutUsListComponent,
       },
       {
