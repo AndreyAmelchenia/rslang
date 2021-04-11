@@ -13,9 +13,11 @@ mat-card {
 
   img {
     width: 50%;
+    margin-top: 0 !important;
   
     @media (max-width: 600px) {
       width: 40%;
+      margin-top: 0 !important;
     }
   }
 }
