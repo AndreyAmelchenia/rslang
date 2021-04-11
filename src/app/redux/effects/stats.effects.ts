@@ -15,7 +15,7 @@ export class StatisticsEffects {
       mergeMap((payload) =>
         this.statsService
           .saveStatistics(payload)
-          .pipe(map((response: IStats) => statisticsActions.setStatistics({ ...response }))),
+          .pipe(map((response: IStats) => statisticsActions.setStatistics(response))),
       ),
     ),
   );

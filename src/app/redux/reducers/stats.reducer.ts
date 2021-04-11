@@ -12,7 +12,7 @@ export const initialState: IStats = {
     savanna: { learned: 0, tries: 0, right: 0, series: 0 },
     sprint: { learned: 0, tries: 0, right: 0, series: 0 },
   },
-  longTerm: [],
+  longTerm: [{ date: Date.now(), learned: 0 }],
 };
 
 export const statsReducer = createReducer(

@@ -11,7 +11,7 @@ export interface IStats {
 }
 
 export interface IDay {
-  date: Date;
+  date: number;
   learned: number;
 }
 
@@ -23,7 +23,7 @@ export interface IDailyStats {
   myGame: IGame;
 }
 
-interface IGame {
+export interface IGame {
   learned: number;
   tries: number;
   right: number;

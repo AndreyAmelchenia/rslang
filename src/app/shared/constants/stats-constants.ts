@@ -1,4 +1,4 @@
 export const graphType = {
-  daily: 'Every day',
-  total: 'Total growing',
+  daily: 'Количество изученных слов за каждый день изучения',
+  total: 'Нарастающий итог за все время обучения',
 };

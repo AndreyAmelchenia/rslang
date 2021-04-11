@@ -1,4 +1,8 @@
-import { getStatistics, resetStatistics } from 'src/app/redux/actions/stats.actions';
+import {
+  getStatistics,
+  resetStatistics,
+  saveStatistics,
+} from 'src/app/redux/actions/stats.actions';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -8,10 +12,34 @@ import { map } from 'rxjs/operators';
 
 import { URL_BACK_SERVER } from 'src/app/shared/constants/url-constants';
 import { AppState } from 'src/app/redux/app.state';
+import { selectStats } from 'src/app/redux/selectors/stats.selector';
 import { SessionService } from './storage/session.service';
-import { IResponse, IStats } from '../models/stats.model';
+import { IDay, IGame, IResponse, IStats } from '../models/stats.model';
 
 const { URL_BACK } = URL_BACK_SERVER;
+
+const addLastGameResults = (
+  learned: number,
+  currentDate: number,
+  longTermStats: IDay[],
+): IDay[] => {
+  const lastItem: IDay = longTermStats[longTermStats.length - 1];
+
+  if (
+    new Date(currentDate).toDateString() ===
+    new Date(longTermStats[longTermStats.length - 1].date).toDateString()
+  ) {
+    const arr = longTermStats.slice(0, -1);
+    arr.push({
+      date: lastItem.date,
+      learned: lastItem.learned + learned,
+    });
+    return arr;
+  }
+  const arr = longTermStats.slice();
+  arr.push({ date: currentDate, learned });
+  return arr;
+};
 
 @Injectable({
   providedIn: 'root',
@@ -48,5 +76,31 @@ export class StatsService {
 
   resetStatistics() {
     this.store.dispatch(resetStatistics());
+  }
+
+  saveMyGameStats(stats: IGame) {
+    let data: IStats;
+    this.store.select(selectStats).subscribe((statistics) => {
+      data = statistics;
+    });
+
+    this.store.dispatch(
+      saveStatistics({
+        ...data,
+        shortTerm: {
+          ...data.shortTerm,
+          myGame: {
+            learned: data.shortTerm.myGame.learned + stats.learned,
+            tries: data.shortTerm.myGame.tries + stats.tries,
+            right: data.shortTerm.myGame.learned + stats.right,
+            series:
+              data.shortTerm.myGame.series < stats.series
+                ? stats.series
+                : data.shortTerm.myGame.series,
+          },
+        },
+        longTerm: addLastGameResults(stats.learned, data.shortTerm.date, data.longTerm),
+      }),
+    );
   }
 }
