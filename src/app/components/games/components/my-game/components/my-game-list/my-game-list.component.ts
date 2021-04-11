@@ -110,6 +110,9 @@ export class MyGameListComponent implements OnInit {
     this.changedGameList = randomWords.slice(this.wordsCount, this.wordsCount + this.amount);
     this.wordsCount += this.amount;
     if (this.changedGameList.length === 0) {
+      this.countGoodAnswer += 1;
+      this.bestSeries.push(this.countGoodAnswer);
+      this.countAllTries += 1;
       this.getStatistic();
       this.openDialog();
     }
@@ -123,9 +126,11 @@ export class MyGameListComponent implements OnInit {
       this.playSoundTry();
       this.tryCount += 1;
       this.countAllTries += 1;
-      this.countGoodAnswer = 0;
       if (this.tryCount > this.maxTryCount) {
         this.tryCount = 5;
+        if (this.bestSeries.length === 0) {
+          this.bestSeries.push(0);
+        }
         this.getStatistic();
         this.openDialog();
       }
