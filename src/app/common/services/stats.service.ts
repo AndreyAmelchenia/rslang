@@ -41,9 +41,17 @@ const addLastGameResults = (
   return arr;
 };
 
-@Injectable({
-  providedIn: 'root',
-})
+const addShortResults = (data: IStats, stats: IGame): IGame => {
+  return {
+    learned: data.shortTerm.myGame.learned + stats.learned,
+    tries: data.shortTerm.myGame.tries + stats.tries,
+    right: data.shortTerm.myGame.learned + stats.right,
+    series:
+      data.shortTerm.myGame.series < stats.series ? stats.series : data.shortTerm.myGame.series,
+  };
+};
+
+@Injectable({ providedIn: 'root' })
 export class StatsService {
   userId: string;
 
@@ -78,7 +86,7 @@ export class StatsService {
     this.store.dispatch(resetStatistics());
   }
 
-  saveMyGameStats(stats: IGame) {
+  setLastGameStats(stats: IGame, game: string) {
     let data: IStats;
     this.store.select(selectStats).subscribe((statistics) => {
       data = statistics;
@@ -86,21 +94,28 @@ export class StatsService {
 
     this.store.dispatch(
       saveStatistics({
-        ...data,
         shortTerm: {
           ...data.shortTerm,
-          myGame: {
-            learned: data.shortTerm.myGame.learned + stats.learned,
-            tries: data.shortTerm.myGame.tries + stats.tries,
-            right: data.shortTerm.myGame.learned + stats.right,
-            series:
-              data.shortTerm.myGame.series < stats.series
-                ? stats.series
-                : data.shortTerm.myGame.series,
-          },
+          [game]: addShortResults(data, stats),
         },
         longTerm: addLastGameResults(stats.learned, data.shortTerm.date, data.longTerm),
       }),
     );
+  }
+
+  saveAudioStats(stats: IGame) {
+    this.setLastGameStats(stats, 'audio');
+  }
+
+  saveMyGameStats(stats: IGame) {
+    this.setLastGameStats(stats, 'myGame');
+  }
+
+  saveSavannaStats(stats: IGame) {
+    this.setLastGameStats(stats, 'savanna');
+  }
+
+  saveSprintStats(stats: IGame) {
+    this.setLastGameStats(stats, 'sprint');
   }
 }
