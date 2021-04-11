@@ -2,21 +2,25 @@
   {
     "id": 1,
     "name": "Savanna",
+    "nameRU": "Саванна",
     "img": "./assets/images/savanna.png"
   },
   {
     "id": 2,
     "name": "Sprint",
+    "nameRU": "Спринт",
     "img": "./assets/images/sprint.png"
   },  
   {
     "id": 3,
     "name": "Audio",
+    "nameRU": "Аудиовызов",
     "img": "./assets/images/audio.png"
   },
   {
     "id": 4,
     "name": "my-game", 
+    "nameRU": "Своя игра",
     "img": "./assets/images/game.png" 
   }
 ]
