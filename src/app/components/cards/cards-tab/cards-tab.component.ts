@@ -107,7 +107,10 @@ export class CardsTabComponent implements OnInit, AfterViewInit {
           words = data;
           this.gameList = data;
         });
-        return this.getPagedData([...(words || [])]);
+        const res = this.getPagedData([...(words || [])]);
+        console.log(res);
+
+        return res;
       }),
     );
   }
