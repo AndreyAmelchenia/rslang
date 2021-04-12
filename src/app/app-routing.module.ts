@@ -12,8 +12,13 @@ import { StartPageComponent } from './components/start-page/start-page/start-pag
 const appRoutes: Routes = [
   { path: Path.Empty, redirectTo: Path.Empty, pathMatch: 'full', component: StartPageComponent },
   { path: Path.AboutUs, component: AboutUsListComponent },
-  { path: Path.Cards, component: CardsListComponent },
-  // { path: Path.Profile, component: ProfileComponent },
+  {
+    path: Path.Cards,
+    loadChildren: () => import('./components/cards/cards.module').then((m) => m.CardsModule),
+    canActivate: [LoginGuard],
+    canLoad: [LoginGuard],
+  },
+  // { path: Path.Cards, component: CardsListComponent },
   {
     path: Path.Profile,
     loadChildren: () => import('./components/profile/profile.module').then((m) => m.ProfileModule),
