@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from '../../../../shared/shared.module';
 
 import { GamesRoutingModule } from '../../games-routing.module';
 import { AngularMaterialModule } from '../../../../shared/material/material.module';
@@ -21,14 +22,9 @@ import { GamesSprintRoutingModule } from './games-sprint-routing.module';
     CommonModule,
     HttpClientModule,
     AngularMaterialModule,
-    GamesRoutingModule,
+    // GamesRoutingModule,
     GamesSprintRoutingModule,
-  ],
-  exports: [
-    GamesSprintMainComponent,
-    GamesSprintPlayComponent,
-    GamesSprintCardComponent,
-    GamesSprintEndComponent,
+    SharedModule,
   ],
 })
 export class GamesSprintModule {}

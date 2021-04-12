@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { AudioChallengeGameService } from '../../services/audio-challenge-game.service';
+import { AudioChallengeGameService } from '../../sevices/audio-challenge-game.service';
 
 @Component({
   selector: 'app-audio-challenge-game-manage',
