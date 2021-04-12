@@ -9,7 +9,6 @@ import { SharedModule } from './shared/shared.module';
 import { NavigationModule } from './components/navigation/navigation.module';
 import { AboutUsModule } from './components/aboutUs/modules/about-us.module';
 import { AboutUsService } from './components/aboutUs/services/about-us.service';
-import { ProfileModule } from './components/profile/profile.module';
 import { CardsModule } from './components/cards/cards.module';
 import { StartPageModule } from './components/start-page/start-page.module';
 
@@ -24,7 +23,6 @@ import { StartPageModule } from './components/start-page/start-page.module';
     BrowserAnimationsModule,
     SharedModule,
     ReduxModule,
-    ProfileModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },
