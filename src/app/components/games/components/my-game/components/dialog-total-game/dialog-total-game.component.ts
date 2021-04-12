@@ -11,7 +11,7 @@ export class DialogTotalGameComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router) {}
 
   dialogPlayAgainClick() {
-    this.router.navigate(['/my-game']);
+    this.router.navigate(['games/my-game']);
   }
 
   dialogExitClick() {

@@ -7,6 +7,8 @@ import { LoginComponent } from './components/start-page/login/login.component';
 import { RegistrationComponent } from './components/navigation/registration/registration.component';
 import { Path } from './shared/models/router.model';
 
+import { LoginGuard } from './common/guards/login.guard';
+
 import { AboutUsListComponent } from './components/aboutUs/components/about-us-list/about-us-list.component';
 import { GamesRoutingModule } from './components/games/games-routing.module';
 import { StartPageComponent } from './components/start-page/start-page/start-page.component';
@@ -16,13 +18,25 @@ const appRoutes: Routes = [
   { path: Path.AboutUs, component: AboutUsListComponent },
   { path: Path.Cards, component: CardsListComponent },
   { path: Path.Profile, component: ProfileComponent },
-  {
+  /* {
     path: Path.Games,
     loadChildren: () => GamesRoutingModule,
+  }, */
+  {
+    path: Path.Games,
+    loadChildren: () => import('./components/games/games.module').then((m) => m.GamesModule),
+    canActivate: [LoginGuard],
+    canLoad: [LoginGuard],
   },
   { path: Path.Login, component: LoginComponent },
   { path: Path.Registration, component: RegistrationComponent },
-  { path: Path.Dictionary, component: DictionaryComponent },
+  {
+    path: Path.Dictionary,
+    loadChildren: () =>
+      import('./components/dictionary/dictionary.module').then((m) => m.DictionaryModule),
+    canActivate: [LoginGuard],
+    canLoad: [LoginGuard],
+  },
 ];
 
 @NgModule({

@@ -114,6 +114,7 @@ export class CardsTabComponent implements OnInit, AfterViewInit {
 
   private getPagedData(data: Word[]) {
     this.gameList = data;
+    console.log(this.gameList);
     if (
       this.lengthBase !== 0 &&
       this.lengthBase - 30 <= (this.paginator.pageIndex + 1) * this.paginator.pageSize &&

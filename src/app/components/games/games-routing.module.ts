@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginGuard } from '../../common/guards/login.guard';
 
 import { GamesListComponent } from './components/games-list/games-list.component';
 import { AboutUsListComponent } from '../aboutUs/components/about-us-list/about-us-list.component';
@@ -29,11 +30,10 @@ const routes: Routes = [
       },
       {
         path: 'my-game',
-        component: MyGameStartComponent,
-      },
-      {
-        path: 'my-game-start',
-        component: MyGameListComponent,
+        loadChildren: () =>
+          import('./components/my-game/my-game.module').then((m) => m.MyGameModule),
+        canActivate: [LoginGuard],
+        canLoad: [LoginGuard],
       },
     ],
   },
