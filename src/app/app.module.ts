@@ -9,7 +9,6 @@ import { SharedModule } from './shared/shared.module';
 import { NavigationModule } from './components/navigation/navigation.module';
 import { AboutUsModule } from './components/aboutUs/modules/about-us.module';
 import { AboutUsService } from './components/aboutUs/services/about-us.service';
-import { CardsModule } from './components/cards/cards.module';
 import { StartPageModule } from './components/start-page/start-page.module';
 
 @NgModule({
@@ -18,7 +17,6 @@ import { StartPageModule } from './components/start-page/start-page.module';
     StartPageModule,
     NavigationModule,
     AboutUsModule,
-    CardsModule,
     BrowserModule,
     BrowserAnimationsModule,
     SharedModule,

@@ -1,8 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CardsListComponent } from 'src/app/components/cards/cards-list/cards-list.component';
-import { ProfileComponent } from 'src/app/components/profile/profile/profile.component';
-import { LoginComponent } from './components/start-page/login/login.component';
 import { RegistrationComponent } from './components/navigation/registration/registration.component';
 import { Path } from './shared/models/router.model';
 import { LoginGuard } from './common/guards/login.guard';
@@ -18,7 +15,6 @@ const appRoutes: Routes = [
     canActivate: [LoginGuard],
     canLoad: [LoginGuard],
   },
-  // { path: Path.Cards, component: CardsListComponent },
   {
     path: Path.Profile,
     loadChildren: () => import('./components/profile/profile.module').then((m) => m.ProfileModule),
