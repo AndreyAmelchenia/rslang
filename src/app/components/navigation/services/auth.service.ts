@@ -39,6 +39,11 @@ export class AuthService {
     }
   }
 
+  authGuard(): boolean {
+    const user: IUser | null = this.getUser();
+    return !!user;
+  }
+
   getUser(): IUser {
     return this.sessionService.getItem('user') || '';
   }

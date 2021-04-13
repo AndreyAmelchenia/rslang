@@ -29,6 +29,14 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
 
   words: Word[] = [];
 
+  wordsAll: Word[] = [];
+
+  wordsCorrect: string[] = [];
+
+  wordsInCorrect: string[] = [];
+
+  wordsUniquePlayed = new Set();
+
   wordsInCard: Word[] = [];
 
   wordsNew: Word[] = [];
@@ -47,11 +55,9 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
 
   deltaInScore = DataConstants.deltaInScore;
 
-  response: {} = {};
-
   responseEndGame: {} = {};
 
-  countWords = 0;
+  countTries = 0;
 
   countTrue = 0;
 
@@ -69,28 +75,30 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
 
   start = false;
 
-  a;
-
   constructor(
     private gamesSprintService: GamesSprintService,
     public generatorShuffleArrayService: GeneratorShuffleArrayService,
     private elem: ElementRef,
-    private router: Router,
     private location: Location,
     private store: Store<AppState>,
   ) {}
 
   ngOnInit() {
     this.store.select(selectGameList()).subscribe((words) => {
-      this.words = words;
+      this.wordsAll = words;
+      this.words = this.wordsAll.slice();
       this.setDifferentWordAndTranslation();
     });
   }
 
   ngOnDestroy() {
-    this.countDown = null;
     this.score = 0;
     this.deltaInScore = 10;
+    this.play = false;
+    this.end = true;
+    if(this.countDown) {
+      this.countDown.unsubscribe();
+   }
   }
 
   onStart() {
@@ -109,15 +117,20 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   }
 
   pauseAudio() {
-    this.audio.pause();
-    this.audio.currentTime = 0;
+    this.audio.play().then(() => {
+      this.audio.pause();
+      this.audio.currentTime = 0;
+    });
   }
 
   setWord() {
+    if(this.words.length < 3) {
+      this.words = this.wordsAll.slice();
+    }
     this.wordsInCard = this.setRandomWord(this.words.length, wordsQuantityPerCard).map(
       (number) => this.words[number],
     );
-    this.wordsNew = this.words.filter((word) => !this.wordsInCard.includes(word));
+    this.words = this.words.filter((word) => !this.wordsInCard.includes(word));
     if (this.wordsInCard.length === 1) {
       [this.wordInCard] = this.wordsInCard;
     }
@@ -133,8 +146,8 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
 
   setDifferentWordAndTranslation() {
     this.setWord();
-    this.translations = this.setRandomWord(this.wordsNew.length, wordsQuantityPerCard).map(
-      (number) => this.wordsNew[number],
+    this.translations = this.setRandomWord(this.words.length, wordsQuantityPerCard).map(
+      (number) => this.words[number],
     );
     if (this.translations.length === 1) {
       [this.translation] = this.translations;
@@ -153,17 +166,15 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
     if (ifAgree) {
       this.mistake = !this.mistake;
     }
-    this.response = {
-      _id: this.wordInCard._id,
-      mistake: this.mistake,
-      game: 'Sprint',
-    };
-    this.countWords += 1;
+    this.countTries += 1;
+    this.wordsUniquePlayed.add(this.wordInCard);
     if (!this.mistake) {
+      this.wordsCorrect.push(this.wordInCard.word);
       this.countTrue += 1;
       this.countScore();
       this.elem.nativeElement.querySelectorAll('.score')[0].style.color = CssConstants.colorGreen;
     } else {
+      this.wordsInCorrect.push(this.wordInCard.word);
       this.countTrueSeries.push(this.countTrue);
       this.countTrue = 0;
       this.elem.nativeElement.querySelectorAll('.score')[0].style.color = CssConstants.colorRed;
@@ -173,7 +184,7 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
       DataConstants.wordsPerMinute,
       DataConstants.trueWordsPerMinute,
     );
-    if (randomNumbers.includes(this.countWords)) {
+    if (randomNumbers.includes(this.countTries)) {
       this.setSameWordAndTranslation();
     } else {
       this.setDifferentWordAndTranslation();
@@ -191,13 +202,19 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
     this.pauseAudio();
     this.play = false;
     this.end = true;
+    this.countDown.unsubscribe();
     this.responseEndGame = {
-      game: 'Sprint',
+      learned: this.wordsUniquePlayed.size,
+      tries: this.countTries,
+      right: this.countTrueSeries.reduce((accum, value) => accum + value, 0),
       bestSeries: Math.max(...this.countTrueSeries),
+      correct: this.wordsCorrect,
+      incorrect: this.wordsInCorrect,
     };
   }
 
   goBack(): void {
     this.location.back();
+    this.countDown.unsubscribe();
   }
 }

@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatListModule } from '@angular/material/list';
-import { MatGridListModule } from '@angular/material/grid-list';
-
+import { AngularMaterialModule } from 'src/app/shared/material/material.module';
 import { AboutUsComponent } from '../components/about-us/about-us.component';
 import { AboutUsListComponent } from '../components/about-us-list/about-us-list.component';
 import { AboutUsService } from '../services/about-us.service';
@@ -16,13 +13,7 @@ const aboutUsRoutes: Routes = [
 
 @NgModule({
   declarations: [AboutUsComponent, AboutUsListComponent],
-  imports: [
-    CommonModule,
-    MatCardModule,
-    MatListModule,
-    MatGridListModule,
-    RouterModule.forChild(aboutUsRoutes),
-  ],
+  imports: [CommonModule, AngularMaterialModule, RouterModule.forChild(aboutUsRoutes)],
   exports: [AboutUsComponent],
   providers: [AboutUsService],
 })

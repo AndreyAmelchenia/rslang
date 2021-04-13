@@ -1,11 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginGuard } from '../../common/guards/login.guard';
 
 import { GamesListComponent } from './components/games-list/games-list.component';
-import { AboutUsListComponent } from '../aboutUs/components/about-us-list/about-us-list.component';
-import { GamesSprintMainComponent } from './modules/games-sprint/components/games-sprint-main/games-sprint-main.component';
-import { MyGameStartComponent } from './components/my-game/components/my-game-start/my-game-start.component';
-import { MyGameListComponent } from './components/my-game/components/my-game-list/my-game-list.component';
 
 const routes: Routes = [
   {
@@ -17,26 +14,32 @@ const routes: Routes = [
       },
       {
         path: 'sprint',
-        component: GamesSprintMainComponent,
+        loadChildren: () =>
+          import('./modules/games-sprint/games-sprint.module').then((m) => m.GamesSprintModule),
+        canActivate: [LoginGuard],
+        canLoad: [LoginGuard],
       },
       {
         path: 'audio',
         loadChildren: () =>
-          import('./audio-challenge-game/audio-challenge-game.module').then(
+          import('./modules/audio-challenge-game/audio-challenge-game.module').then(
             (m) => m.AudioChallengeGameModule,
           ),
+        canActivate: [LoginGuard],
+        canLoad: [LoginGuard],
       },
       {
         path: 'savanna',
-        component: AboutUsListComponent,
+        loadChildren: () =>
+          import('./modules/game-savannah/game-savannah.module').then((m) => m.GameSavannahModule),
+        canActivate: [LoginGuard],
+        canLoad: [LoginGuard],
       },
       {
         path: 'my-game',
-        component: MyGameStartComponent,
-      },
-      {
-        path: 'my-game-start',
-        component: MyGameListComponent,
+        loadChildren: () => import('./modules/my-game/my-game.module').then((m) => m.MyGameModule),
+        canActivate: [LoginGuard],
+        canLoad: [LoginGuard],
       },
     ],
   },
