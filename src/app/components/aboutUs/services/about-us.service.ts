@@ -15,7 +15,7 @@ export class AboutUsService {
       'Aleh',
       'Serhiyenia',
       'Mentor',
-      'string',
+      'Консультации, координация и поддержка команды.',
       'https://github.com/Pulya10c',
     ),
     new AboutUs(
@@ -24,7 +24,7 @@ export class AboutUsService {
       'Andrey',
       'Amelchenia',
       'Team-lead',
-      'string',
+      'Реализовал бэкенд проекта, электронный учебник, стартовую страницу.',
       'https://github.com/andreyamelchenia',
     ),
     new AboutUs(
@@ -33,7 +33,7 @@ export class AboutUsService {
       'Sergei',
       'Talai',
       'Software Engineer',
-      'string',
+      'Создатель игры "Саваннна".',
       'https://github.com/tsaminsk',
     ),
     new AboutUs(
@@ -42,7 +42,7 @@ export class AboutUsService {
       'Evgeniy',
       'Vasilko',
       'Software Engineer',
-      'string',
+      'Реализовал форму входа пользователей на сайт, словарь.',
       'https://github.com/shadezp',
     ),
     new AboutUs(
@@ -51,7 +51,7 @@ export class AboutUsService {
       'Maria',
       'Riazanova',
       'Software Engineer',
-      'string',
+      'Реализовала страницу с играми. Создатель игры "Спринт".',
       'https://github.com/mariariazanova',
     ),
     new AboutUs(
@@ -60,7 +60,7 @@ export class AboutUsService {
       'Maksim',
       'Stankevich',
       'Software Engineer',
-      'string',
+      'Создатель игры "Аудиовызов".',
       'https://github.com/803142',
     ),
     new AboutUs(
@@ -69,7 +69,7 @@ export class AboutUsService {
       'Nikolay',
       'Nikityuk',
       'Software Engineer',
-      'string',
+      'Реализовал навигацию по сайту. Создатель системы подсчета статистики.',
       'https://github.com/micolka',
     ),
     new AboutUs(
@@ -78,7 +78,7 @@ export class AboutUsService {
       'Elena',
       'Dobrovskaya',
       'Software Engineer',
-      'string',
+      'Реализовала страницу "О команде". Создатель игры "Моя игра".',
       'https://github.com/dobrovskayaelena',
     ),
   ];

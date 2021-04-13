@@ -215,5 +215,6 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
 
   goBack(): void {
     this.location.back();
+    this.countDown.unsubscribe();
   }
 }

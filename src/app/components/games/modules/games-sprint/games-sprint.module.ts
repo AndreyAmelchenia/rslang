@@ -1,6 +1,7 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from '../../../../shared/shared.module';
 
 import { GamesRoutingModule } from '../../games-routing.module';
 import { AngularMaterialModule } from '../../../../shared/material/material.module';
@@ -9,7 +10,6 @@ import { GamesSprintCardComponent } from './components/games-sprint-card/games-s
 import { GamesSprintMainComponent } from './components/games-sprint-main/games-sprint-main.component';
 import { GamesSprintEndComponent } from './components/games-sprint-end/games-sprint-end.component';
 import { GamesSprintRoutingModule } from './games-sprint-routing.module';
-import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -22,16 +22,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CommonModule,
     HttpClientModule,
     AngularMaterialModule,
-    SharedModule,
-    GamesRoutingModule,
+    // GamesRoutingModule,
     GamesSprintRoutingModule,
+    SharedModule,
   ],
-  exports: [
-    GamesSprintMainComponent,
-    GamesSprintPlayComponent,
-    GamesSprintCardComponent,
-    GamesSprintEndComponent,
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class GamesSprintModule {}
