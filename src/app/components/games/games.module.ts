@@ -9,9 +9,7 @@ import { GamesRoutingModule } from './games-routing.module';
 import { GameSavannahModule } from './modules/game-savannah/game-savannah.module';
 import { GameSavannahService } from './modules/game-savannah/services/game-savannah.service';
 import { GamesSprintModule } from './modules/games-sprint/games-sprint.module';
-
 import { AudioChallengeGameModule } from './audio-challenge-game/audio-challenge-game.module';
-
 @NgModule({
   declarations: [GamesListComponent, GamesItemComponent],
   imports: [
