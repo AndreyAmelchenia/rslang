@@ -18,7 +18,7 @@ export class WordsService {
 
   getWords(): Observable<Word[]> {
     return this.http
-      .get<Word[]>(`${URL_BACK_SERVER}words?group=5&page=10`)
+      .get<Word[]>(`${URL_BACK_SERVER.URL_BACK}words?group=5&page=10`)
       .pipe(map((words) => words));
   }
 

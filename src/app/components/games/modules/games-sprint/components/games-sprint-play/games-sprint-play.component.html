@@ -1,11 +1,9 @@
 <div class="content">
   <div *ngIf="play">
-    <h2>You'll have just 60 seconds!</h2>
+    <h2>Время игры 60 секунд!</h2>
     <mat-card-actions>
-      <button mat-raised-button color="accent" class="start-button" (click)="onStart()">
-        Press if you are ready
-      </button>
-      <button mat-raised-button color="primary" (click)="goBack()">Return back</button>
+      <button mat-raised-button color="accent" class="start-button" (click)="onStart()">Старт</button>
+      <button mat-raised-button color="primary" (click)="goBack()">Назад</button>
     </mat-card-actions>
     <div class="icons">
       <div class="flex">
@@ -24,15 +22,11 @@
       ></app-games-sprint-card>
     </div>
     <mat-card-actions>
-      <button mat-raised-button color="warn" [disabled]="!start" (click)="onAgree(false)">
-        FALSE
-      </button>
-      <button mat-raised-button color="primary" [disabled]="!start" (click)="onAgree(true)">
-        TRUE
-      </button>
+      <button mat-raised-button color="warn" [disabled]="!start" (click)="onAgree(false)">НЕВЕРНО</button>
+      <button mat-raised-button color="primary" [disabled]="!start" (click)="onAgree(true)">ВЕРНО</button>
     </mat-card-actions>
   </div>
   <div *ngIf="end">
-    <app-games-sprint-end [score]="score" [countWords]="countWords"></app-games-sprint-end>
+    <app-games-sprint-end [score]="score" [countWords]="countTries"></app-games-sprint-end>
   </div>
 </div>
