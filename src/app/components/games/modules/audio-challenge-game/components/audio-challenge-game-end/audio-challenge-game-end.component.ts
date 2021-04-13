@@ -2,9 +2,9 @@ import { Component, Input, OnChanges, OnDestroy, ViewChild } from '@angular/core
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { API_URL } from '../../constants/audio-challenge.constants';
+import { API_URL } from '../../constans/audio-challenge.constants';
 import { AudioChallengeState } from '../../models/game-adio-challenge.model';
-import { AudioChallengeGameService } from '../../services/audio-challenge-game.service';
+import { AudioChallengeGameService } from '../../sevices/audio-challenge-game.service';
 
 export interface PeriodicElement {
   name: string;

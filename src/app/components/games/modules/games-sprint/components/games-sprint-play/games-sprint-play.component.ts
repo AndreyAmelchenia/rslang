@@ -88,6 +88,7 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.pauseAudio();
     this.countDown = null;
     this.score = 0;
     this.deltaInScore = 10;
@@ -109,8 +110,7 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   }
 
   pauseAudio() {
-    this.audio.pause();
-    this.audio.currentTime = 0;
+    this.countDown.unsubscribe();
   }
 
   setWord() {
@@ -199,5 +199,6 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
 
   goBack(): void {
     this.location.back();
+    this.countDown.unsubscribe();
   }
 }

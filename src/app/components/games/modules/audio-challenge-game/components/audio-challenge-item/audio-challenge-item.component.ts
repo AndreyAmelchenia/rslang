@@ -1,7 +1,7 @@
 import { Component, HostListener, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { API_URL, GAME_LENGHT } from '../../constants/audio-challenge.constants';
+import { API_URL, GAME_LENGHT } from '../../constans/audio-challenge.constants';
 import { AudioChallengeState } from '../../models/game-adio-challenge.model';
-import { AudioChallengeGameService } from '../../services/audio-challenge-game.service';
+import { AudioChallengeGameService } from '../../sevices/audio-challenge-game.service';
 
 @Component({
   selector: 'app-audio-challenge-item',

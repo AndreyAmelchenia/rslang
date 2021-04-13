@@ -10,6 +10,6 @@ export class MyGameStartComponent {
   constructor(private router: Router) {}
 
   onStartGame() {
-    this.router.navigate(['/my-game-start']);
+    this.router.navigate(['games/my-game/my-game-start']);
   }
 }
