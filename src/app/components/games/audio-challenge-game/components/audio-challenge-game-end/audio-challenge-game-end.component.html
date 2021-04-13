@@ -1,0 +1,39 @@
+<div *ngIf="wordState.isGameEnded" class="end-game-manage">
+  <button mat-stroked-button color="primary" (click)="playAgain()">Ещё раз сыграть</button>
+  <a mat-stroked-button color="primary" [routerLink]="'/games/'">Закончить игру</a>
+</div>
+<table
+  mat-table
+  [dataSource]="dataSource"
+  matSort
+  class="mat-elevation-z8 audio-game-container"
+  [hidden]="!wordState.isGameEnded"
+>
+  <caption class="mat-title">
+    Ваш результат:
+  </caption>
+  <ng-container matColumnDef="word">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Word</th>
+    <td mat-cell *matCellDef="let element">{{element.word}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="result">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>result</th>
+    <td mat-cell *matCellDef="let element">
+      <span class="material-icons" *ngIf="element.result"> thumb_up_off_alt </span>
+      <span class="material-icons" *ngIf="!element.result"> thumb_down_on_alt </span>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="audio">
+    <th mat-header-cell *matHeaderCellDef>audio</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-mini-fab (click)="playWordAudio(element.audio)">
+        <i class="material-icons">volume_up</i>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

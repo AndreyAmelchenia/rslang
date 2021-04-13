@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { GamesListComponent } from './components/games-list/games-list.component';
 import { AboutUsListComponent } from '../aboutUs/components/about-us-list/about-us-list.component';
+import { GameSavannahComponent } from './modules/game-savannah/game-savannah/game-savannah.component';
 import { GamesSprintMainComponent } from './modules/games-sprint/components/games-sprint-main/games-sprint-main.component';
 import { MyGameStartComponent } from './components/my-game/components/my-game-start/my-game-start.component';
 import { MyGameListComponent } from './components/my-game/components/my-game-list/my-game-list.component';
@@ -24,11 +25,14 @@ const routes: Routes = [
       },
       {
         path: 'audio',
-        component: AboutUsListComponent,
+        loadChildren: () =>
+          import('./audio-challenge-game/audio-challenge-game.module').then(
+            (m) => m.AudioChallengeGameModule,
+          ),
       },
       {
         path: 'savanna',
-        component: AboutUsListComponent,
+        component: GameSavannahComponent,
       },
       {
         path: 'my-game',
