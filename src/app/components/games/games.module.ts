@@ -10,8 +10,11 @@ import { GameSavannahModule } from './modules/game-savannah/game-savannah.module
 import { GameSavannahService } from './modules/game-savannah/services/game-savannah.service';
 import { GamesSprintModule } from './modules/games-sprint/games-sprint.module';
 import { AudioChallengeGameModule } from './audio-challenge-game/audio-challenge-game.module';
+
+import { GamesSettingsComponent } from './components/games-settings/games-settings.component';
+
 @NgModule({
-  declarations: [GamesListComponent, GamesItemComponent],
+  declarations: [GamesListComponent, GamesItemComponent, GamesSettingsComponent],
   imports: [
     CommonModule,
     HttpClientModule,
