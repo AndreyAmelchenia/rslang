@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, Input, OnChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
 
@@ -10,6 +10,7 @@ import { graphType } from 'src/app/shared/constants/stats-constants';
   selector: 'app-profile-chart',
   templateUrl: './profile-chart.component.html',
   styleUrls: ['./profile-chart.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileChartComponent implements OnChanges {
   @Input() checkedStyle: string;

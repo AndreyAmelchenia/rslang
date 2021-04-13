@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ISettings } from 'src/app/common/models/settings.model';
@@ -11,21 +11,23 @@ import { selectSettings } from 'src/app/redux/selectors/settings.selector';
   templateUrl: './profile-settings.component.html',
   styleUrls: ['./profile-settings.component.scss'],
 })
-export class ProfileSettingsComponent {
+export class ProfileSettingsComponent implements OnInit {
   settings: ISettings;
 
   formGroup: FormGroup;
 
   wordsPerDay: number;
 
-  constructor(private store: Store<AppState>, formBuilder: FormBuilder) {
+  constructor(private store: Store<AppState>, private formBuilder: FormBuilder) {}
+
+  ngOnInit() {
     this.store.select(selectSettings).subscribe((settings) => {
       this.settings = settings;
     });
 
     this.wordsPerDay = this.settings.wordsPerDay;
 
-    this.formGroup = formBuilder.group({
+    this.formGroup = this.formBuilder.group({
       wordsPerDay: this.settings.wordsPerDay,
       displayTranslation: this.settings.optional.displayTranslation,
       displayHandlingButtons: this.settings.optional.displayHandlingButtons,

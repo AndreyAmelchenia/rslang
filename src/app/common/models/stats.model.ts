@@ -7,7 +7,7 @@ export interface IResponse {
 
 export interface IStats {
   shortTerm: IDailyStats;
-  longTerm: Array<IDay>;
+  longTerm: IDay[];
 }
 
 export interface IDay {

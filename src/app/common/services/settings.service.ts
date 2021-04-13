@@ -1,4 +1,3 @@
-import { getSettings, resetSettings } from 'src/app/redux/actions/settings.actions';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -6,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { getSettings, resetSettings } from 'src/app/redux/actions/settings.actions';
 import { URL_BACK_SERVER } from 'src/app/shared/constants/url-constants';
 import { AppState } from 'src/app/redux/app.state';
 import { ISettings } from '../models/settings.model';

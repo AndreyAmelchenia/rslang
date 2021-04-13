@@ -175,13 +175,12 @@ export class MyGameListComponent implements OnInit {
   }
 
   getStatistic() {
-    this.statistic = new StatisticGame(
-      this.solvedWords.size,
-      this.countAllTries,
-      this.solvedWords.size,
-      this.getMaxOfBestAnsers(this.bestSeries),
-    );
-    this.statsService.saveMyGameStats(this.statistic);
+    this.statsService.saveMyGameStats({
+      learned: this.solvedWords.size,
+      tries: this.countAllTries,
+      right: this.solvedWords.size,
+      series: this.getMaxOfBestAnsers(this.bestSeries),
+    });
   }
 
   getMaxOfBestAnsers(bestSeries) {
