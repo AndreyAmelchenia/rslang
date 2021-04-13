@@ -7,6 +7,7 @@ import { GameSavannahHeadComponent } from './components/game-savannah-head/game-
 import { GameSavannahStartBannerComponent } from './components/game-savannah-start-banner/game-savannah-start-banner.component';
 import { GameSavannahListComponent } from './components/game-savannah-list/game-savannah-list.component';
 import { GameSavannahStaticticsComponent } from './components/game-savannah-statictics/game-savannah-statictics.component';
+import { GameSavannahDialogComponent } from './components/game-savannah-dialog/game-savannah-dialog.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
     GameSavannahStartBannerComponent,
     GameSavannahListComponent,
     GameSavannahStaticticsComponent,
+    GameSavannahDialogComponent,
   ],
   imports: [CommonModule, SharedModule, RouterModule.forChild(routes)],
   exports: [RouterModule],

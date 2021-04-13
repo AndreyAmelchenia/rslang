@@ -14,11 +14,9 @@
     </p>
     <p>1. Кликните по нему мышью;</p>
     <p>2. Используйте клавиши 1, 2, 3, 4.</p>
+    <p>3. Перед началом игры выберите язык:</p>
   </div>
-</div>
-<div class="savannah__lang">
-  <div class="savannah__lang-title">Выберите язык:</div>
-  <div class="savannah__settings-lang">
+  <div class="savannah__lang">
     <span
       *ngFor="let item of langs"
       [class.is-active]="gameSavannahStatus.currentLang === item"

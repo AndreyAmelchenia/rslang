@@ -4,9 +4,11 @@ import { Subscription } from 'rxjs';
 import { selectGameList } from 'src/app/redux/selectors/listGame.selectors';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/redux/app.state';
+import { MatDialog } from '@angular/material/dialog';
 import { GameSavannahLangs } from '../models/game-savannah-langs.enum';
 import { GameSavannahStatus } from '../models/game-savannah-status.model';
 import { GameSavannahService } from '../services/game-savannah.service';
+import { GameSavannahDialogComponent } from '../components/game-savannah-dialog/game-savannah-dialog.component';
 
 export interface GameSavannahWord extends Word {
   statistics?: boolean;
@@ -53,7 +55,11 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
 
   currentSeries = 0;
 
-  constructor(private gameSavannahService: GameSavannahService, private store: Store<AppState>) {}
+  constructor(
+    private gameSavannahService: GameSavannahService,
+    private store: Store<AppState>,
+    public dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.store.select(selectGameList()).subscribe((words) => {
@@ -105,6 +111,8 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
   }
 
   restartGame(): void {
+    this.openDialog();
+    // debugger;
     this.gameSavannahStatus.errors = 0;
     this.gameSavannahStatus.progressError = '0%';
     this.gameSavannahStatus.currentCounts = 0;
@@ -118,6 +126,17 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
       this.paused = false;
       clearTimeout(timerId);
     }, 0);
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(GameSavannahDialogComponent, {
+      width: '450px',
+      height: 'auto',
+      data: {},
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((data) => console.log('Dialog output:', data));
   }
 
   playWord(id: number): void {
