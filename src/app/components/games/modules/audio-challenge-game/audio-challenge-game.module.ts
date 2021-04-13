@@ -9,6 +9,7 @@ import { AudioChallengeGameRoutingModule } from './audio-challenge-game-routing.
 import { AudioChallengeGameManageComponent } from './components/audio-challenge-game-manage/audio-challenge-game-manage.component';
 import { AudioChallengeGameStartComponent } from './components/audio-challenge-game-start/audio-challenge-game-start.component';
 import { AudioChallengeGameEndComponent } from './components/audio-challenge-game-end/audio-challenge-game-end.component';
+import { FullScreenForGamesComponent } from '../../components/full-screen-for-games/full-screen-for-games.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { AudioChallengeGameEndComponent } from './components/audio-challenge-gam
     AudioChallengeGameManageComponent,
     AudioChallengeGameStartComponent,
     AudioChallengeGameEndComponent,
+    FullScreenForGamesComponent,
   ],
   imports: [CommonModule, AudioChallengeGameRoutingModule, SharedModule, MatSortModule],
 })
