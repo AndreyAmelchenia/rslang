@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     if (this.userSession.getItem('user')) {
-      this.store.dispatch(LoadListGame({ group: 3, page: 0, wordsPerPage: 20 }));
+      this.store.dispatch(LoadListGame({ group: 3, page: 0, wordsPerPage: 60 }));
     }
   }
 }

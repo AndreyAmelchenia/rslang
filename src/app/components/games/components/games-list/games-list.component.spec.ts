@@ -12,11 +12,13 @@ const testGames: GameModel[] = [
   {
     id: 11,
     name: 'Name1',
+    nameRU: 'Игра1',
     img: 'img1.png',
   },
   {
     id: 12,
     name: 'Name2',
+    nameRU: 'Игра1',
     img: 'img2.png',
   },
 ];

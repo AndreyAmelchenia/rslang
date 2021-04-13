@@ -8,6 +8,7 @@ import { GameModel } from '../../../../common/models/games.model';
 const testGame: GameModel = {
   id: 1,
   name: 'test name',
+  nameRU: 'Игра1',
   description: 'test description',
   img: 'test img',
 };

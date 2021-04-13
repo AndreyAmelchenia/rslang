@@ -1,13 +1,16 @@
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { StoreModule } from '@ngrx/store';
 
 import { Word } from '../../models/word.model';
 import { WordsService } from './words.service';
 
 const testWords: Word[] = [
   {
-    id: 'id1',
+    _id: 'id1',
+    page: 1,
+    group: 1,
     word: 'word1',
     image: 'img1',
     audio: 'audio1',
@@ -19,9 +22,18 @@ const testWords: Word[] = [
     wordTranslate: 'wordTranslate1',
     textMeaningTranslate: 'textMeaningTranslate1',
     textExampleTranslate: 'textExampleTranslate1',
+    userWord: {
+    difficulty: 'easy',
+      optional: {
+        repeat: 1,
+        failCount: 0,
+      },
+    },
   },
   {
-    id: 'id2',
+    _id: 'id2',
+    page: 2,
+    group: 2,
     word: 'word2',
     image: 'img2',
     audio: 'audio2',
@@ -33,6 +45,13 @@ const testWords: Word[] = [
     wordTranslate: 'wordTranslate2',
     textMeaningTranslate: 'textMeaningTranslate2',
     textExampleTranslate: 'textExampleTranslate2',
+    userWord: {
+      difficulty: 'hard',
+        optional: {
+          repeat: 2,
+          failCount: 1,
+        },
+      },
   },
 ];
 
@@ -44,10 +63,15 @@ describe('WordsService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule, HttpClientTestingModule],
+      imports: [HttpClientModule, HttpClientTestingModule, StoreModule.forRoot({})],
+      providers: [WordsService],
     });
     service = TestBed.inject(WordsService);
     httpMock = TestBed.inject(HttpTestingController);
+  });
+
+  afterEach(() => {
+    httpMock.verify();
   });
 
   it('should be created', () => {
@@ -60,12 +84,12 @@ describe('WordsService', () => {
     });
 
     const req = httpMock.expectOne(
-      'https://andey-rslang-back-end.herokuapp.com/words?group=1&page=1',
+      'https://andey-rslang-back-end.herokuapp.com/words?group=5&page=10',
     );
     expect(req.request.method).toEqual('GET');
     req.flush(testWords);
 
-    httpMock.verify();
+  //  httpMock.verify();
   });
 
   it('should return empty array', () => {
@@ -74,11 +98,11 @@ describe('WordsService', () => {
     });
 
     const req = httpMock.expectOne(
-      'https://andey-rslang-back-end.herokuapp.com/words?group=1&page=1',
+      'https://andey-rslang-back-end.herokuapp.com/words?group=5&page=10',
     );
     expect(req.request.method).toEqual('GET');
     req.flush([]);
 
-    httpMock.verify();
+ //   httpMock.verify();
   });
 });
