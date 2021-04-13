@@ -8,7 +8,9 @@
   <div class="savannah__body">
     <app-game-savannah-start-banner
       *ngIf="!play && !openStatistics && paused"
+      [gameSavannahStatus]="gameSavannahStatus"
       (startGame)="startGame()"
+      (changeLang)="changeLang($event)"
     ></app-game-savannah-start-banner>
     <app-game-savannah-list
       *ngIf="play && !openStatistics && !paused"

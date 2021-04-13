@@ -70,39 +70,6 @@
     }
   }
 
-  &__settings-lang {
-    display: flex;
-    font-size: 0;
-    margin: 1px 0 0;
-    border-radius: 4px;
-    overflow: hidden;
-
-    span {
-      display: inline-block;
-      padding: 7px;
-      font-size: 20px;
-      color: #fff;
-      text-transform: uppercase;
-      background-color: #666;
-      transition: background-color 0.3s ease-in-out;
-      cursor: pointer;
-
-      &:hover {
-        background-color: #777;
-      }
-
-      &.is-active {
-        background-color: #3F51B5;
-        pointer-events: none;
-      }
-    }
-  }
-
-  // &__settings-level {
-  //   font-size: 30px;
-  //   color: #fff;
-  // }
-
   &__progress {
     position: relative;
     display: flex;

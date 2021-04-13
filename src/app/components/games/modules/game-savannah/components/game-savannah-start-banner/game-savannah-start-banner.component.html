@@ -16,6 +16,17 @@
     <p>2. Используйте клавиши 1, 2, 3, 4.</p>
   </div>
 </div>
+<div class="savannah__lang">
+  <div class="savannah__lang-title">Выберите язык:</div>
+  <div class="savannah__settings-lang">
+    <span
+      *ngFor="let item of langs"
+      [class.is-active]="gameSavannahStatus.currentLang === item"
+      (click)="changeCurrentLang(item)"
+      >{{ item }}</span
+    >
+  </div>
+</div>
 <div class="savannah__button-wrapper">
   <button class="savannah__button--start" (click)="startGameEmmiter()">
     <mat-icon>flag</mat-icon>
