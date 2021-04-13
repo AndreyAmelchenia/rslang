@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginGuard } from '../../common/guards/login.guard';
 
 import { GamesListComponent } from './components/games-list/games-list.component';
-import { GamesSprintMainComponent } from './modules/games-sprint/components/games-sprint-main/games-sprint-main.component';
 
 const routes: Routes = [
   {
