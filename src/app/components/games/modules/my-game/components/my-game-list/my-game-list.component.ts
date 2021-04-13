@@ -178,11 +178,11 @@ export class MyGameListComponent implements OnInit {
       this.solvedWords.size,
       this.countAllTries,
       this.solvedWords.size,
-      this.getMaxOfBestAnsers(this.bestSeries),
+      this.getMaxOfBestAnswers(this.bestSeries),
     ));
   }
 
-  getMaxOfBestAnsers(bestSeries) {
+  getMaxOfBestAnswers(bestSeries) {
     return Math.max.apply(null, bestSeries);
   }
 
