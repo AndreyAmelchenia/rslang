@@ -8,6 +8,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { AboutUsComponent } from '../components/about-us/about-us.component';
 import { AboutUsListComponent } from '../components/about-us-list/about-us-list.component';
 import { AboutUsService } from '../services/about-us.service';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 const aboutUsRoutes: Routes = [
   { path: '', redirectTo: 'about-us', pathMatch: 'full' },
@@ -18,6 +19,7 @@ const aboutUsRoutes: Routes = [
   declarations: [AboutUsComponent, AboutUsListComponent],
   imports: [
     CommonModule,
+    SharedModule,
     MatCardModule,
     MatListModule,
     MatGridListModule,

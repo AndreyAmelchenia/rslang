@@ -7,6 +7,7 @@ import { GamesListComponent } from './components/games-list/games-list.component
 import { GamesItemComponent } from './components/games-item/games-item.component';
 import { GamesRoutingModule } from './games-routing.module';
 import { GamesSprintModule } from './modules/games-sprint/games-sprint.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [GamesListComponent, GamesItemComponent],
@@ -14,6 +15,7 @@ import { GamesSprintModule } from './modules/games-sprint/games-sprint.module';
     CommonModule,
     HttpClientModule,
     AngularMaterialModule,
+    SharedModule,
     GamesSprintModule,
     GamesRoutingModule,
   ],

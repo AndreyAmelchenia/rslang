@@ -9,6 +9,7 @@ import { AngularMaterialModule } from 'src/app/shared/material/material.module';
 import { MyGameStartComponent } from './components/my-game-start/my-game-start.component';
 import { MyGameListComponent } from './components/my-game-list/my-game-list.component';
 import { DialogTotalGameComponent } from './components/dialog-total-game/dialog-total-game.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -18,8 +19,8 @@ import { DialogTotalGameComponent } from './components/dialog-total-game/dialog-
     DialogTotalGameComponent,
   ],
   entryComponents: [DialogTotalGameComponent],
-  imports: [CommonModule, HttpClientModule, DragDropModule, MatCardModule, AngularMaterialModule],
+  imports: [CommonModule, HttpClientModule, DragDropModule, MatCardModule, AngularMaterialModule, SharedModule],
   exports: [MyGameListComponent, MyGameStartComponent],
-  providers: [],
+  providers: [], 
 })
 export class MyGameModule {}
