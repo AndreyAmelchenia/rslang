@@ -6,7 +6,7 @@ import { AppState } from 'src/app/redux/app.state';
 import { selectGameList } from 'src/app/redux/selectors/listGame.selectors';
 import { Word } from 'src/app/common/models/word.model';
 import { AudioChallengeState, AudioChallengeWord } from '../models/game-adio-challenge.model';
-import { GAME_LENGHT, initialAudioChallengeState } from '../constants/audio-challenge.constants';
+import { GAME_LENGHT, initialAudioChallengeState } from '../constans/audio-challenge.constants';
 
 @Injectable({
   providedIn: 'root',
