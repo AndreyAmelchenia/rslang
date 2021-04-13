@@ -22,8 +22,9 @@
       ></app-games-sprint-card>
     </div>
     <mat-card-actions>
-      <button mat-raised-button color="warn" [disabled]="!start" (click)="onAgree(false)">НЕВЕРНО</button>
-      <button mat-raised-button color="primary" [disabled]="!start" (click)="onAgree(true)">ВЕРНО</button>
+      <button mat-raised-button color="warn" [disabled]="!start" (click)="onAgree(false)" [@changeButton]="isHideFalse ? 'hide' : 'show'">НЕВЕРНО</button>
+      <button mat-raised-button color="primary" [disabled]="!start" (click)="onAgree(true)" [@changeButton]="isHideTrue ? 'hide' : 'show'">ВЕРНО</button><br>
+      <button mat-raised-button class="help-button" [disabled]="(countHelp>=3 || !start) ? true : false" (click)="onHelp()">Подсказка</button>
     </mat-card-actions>
   </div>
   <div *ngIf="end">
