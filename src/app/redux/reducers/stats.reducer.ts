@@ -1,25 +1,22 @@
 import { createReducer, on } from '@ngrx/store';
-import { setStats } from '../actions/stats.actions';
-import { Stats } from '../../common/models/stats.model';
+import { setStatistics, resetStatistics } from '../actions/stats.actions';
+import { IStats } from '../../common/models/stats.model';
 
 export const statsFeatureKey = 'stats';
 
-export const initialState: Stats = {
-  totalLearned: 1100,
-  totalRightPercent: 87,
-  longestSeries: {
-    savanna: 10,
-    audio: 15,
-    sprint: 3,
-    myGame: 0,
+export const initialState: IStats = {
+  shortTerm: {
+    date: Date.now(),
+    audio: { learned: 0, tries: 0, right: 0, series: 0 },
+    myGame: { learned: 0, tries: 0, right: 0, series: 0 },
+    savanna: { learned: 0, tries: 0, right: 0, series: 0 },
+    sprint: { learned: 0, tries: 0, right: 0, series: 0 },
   },
-  dailyStatus: {
-    learned: 20,
-    rightPercent: 66,
-  },
+  longTerm: [{ date: Date.now(), learned: 0 }],
 };
 
 export const statsReducer = createReducer(
   initialState,
-  on(setStats, (state, { payload }) => ({ ...payload })),
+  on(setStatistics, (state, { shortTerm, longTerm }) => ({ shortTerm, longTerm })),
+  on(resetStatistics, () => initialState),
 );

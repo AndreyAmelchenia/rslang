@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Settings } from 'src/app/common/models/settings.model';
-import { SettingsService } from 'src/app/common/services/settings.service';
+import { ISettings } from 'src/app/common/models/settings.model';
 import { saveSettings } from 'src/app/redux/actions/settings.actions';
 import { AppState } from 'src/app/redux/app.state';
 import { selectSettings } from 'src/app/redux/selectors/settings.selector';
@@ -12,27 +11,23 @@ import { selectSettings } from 'src/app/redux/selectors/settings.selector';
   templateUrl: './profile-settings.component.html',
   styleUrls: ['./profile-settings.component.scss'],
 })
-export class ProfileSettingsComponent {
-  settings: Settings;
-
-  data: any;
+export class ProfileSettingsComponent implements OnInit {
+  settings: ISettings;
 
   formGroup: FormGroup;
 
   wordsPerDay: number;
 
-  constructor(
-    private store: Store<AppState>,
-    private settingsService: SettingsService,
-    formBuilder: FormBuilder,
-  ) {
+  constructor(private store: Store<AppState>, private formBuilder: FormBuilder) {}
+
+  ngOnInit() {
     this.store.select(selectSettings).subscribe((settings) => {
       this.settings = settings;
     });
 
     this.wordsPerDay = this.settings.wordsPerDay;
 
-    this.formGroup = formBuilder.group({
+    this.formGroup = this.formBuilder.group({
       wordsPerDay: this.settings.wordsPerDay,
       displayTranslation: this.settings.optional.displayTranslation,
       displayHandlingButtons: this.settings.optional.displayHandlingButtons,
@@ -52,10 +47,6 @@ export class ProfileSettingsComponent {
         displayHandlingButtons,
       },
     };
-    // this.settingsService.saveSettings(payload).subscribe((response) => {
-    //   this.data = response;
-    //   console.log(this.data);
-    // });
     this.store.dispatch(saveSettings({ payload }));
   }
 }

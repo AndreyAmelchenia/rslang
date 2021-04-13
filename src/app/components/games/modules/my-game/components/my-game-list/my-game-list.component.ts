@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { Word } from 'src/app/common/models/word.model';
+import { StatsService } from 'src/app/common/services/stats.service';
 import { AppState } from 'src/app/redux/app.state';
 import { selectGameList } from 'src/app/redux/selectors/listGame.selectors';
 import { StatisticGame } from '../../game-statistic.model';
@@ -75,6 +76,7 @@ export class MyGameListComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private store: Store<AppState>,
+    private statsService: StatsService,
   ) {
     this.store.select(selectGameList()).subscribe((gameList) => {
       this.words = gameList;
@@ -173,13 +175,12 @@ export class MyGameListComponent implements OnInit {
   }
 
   getStatistic() {
-    // eslint-disable-next-line no-return-assign
-    return (this.statistic = new StatisticGame(
-      this.solvedWords.size,
-      this.countAllTries,
-      this.solvedWords.size,
-      this.getMaxOfBestAnswers(this.bestSeries),
-    ));
+    this.statsService.saveMyGameStats({
+      learned: this.solvedWords.size,
+      tries: this.countAllTries,
+      right: this.solvedWords.size,
+      series: this.getMaxOfBestAnswers(this.bestSeries),
+    });
   }
 
   getMaxOfBestAnswers(bestSeries) {
