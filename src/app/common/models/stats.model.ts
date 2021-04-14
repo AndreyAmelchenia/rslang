@@ -1,14 +1,31 @@
-export interface Stats {
-  totalLearned: number;
-  totalRightPercent: number;
-  longestSeries: {
-    savanna: number;
-    sprint: number;
-    audio: number;
-    myGame: number;
+export interface IResponse {
+  learnedWords: number;
+  optional: {
+    data: string;
   };
-  dailyStatus: {
-    learned: number;
-    rightPercent: number;
-  };
+}
+
+export interface IStats {
+  shortTerm: IDailyStats;
+  longTerm: IDay[];
+}
+
+export interface IDay {
+  date: number;
+  learned: number;
+}
+
+export interface IDailyStats {
+  date: number;
+  savanna: IGame;
+  sprint: IGame;
+  audio: IGame;
+  myGame: IGame;
+}
+
+export interface IGame {
+  learned: number;
+  tries: number;
+  right: number;
+  series: number;
 }
