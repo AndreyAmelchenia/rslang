@@ -39,14 +39,30 @@
 .greet {
   padding: 10px;
 }
-.avatar{
+.avatar {
   width: 60px;
   border-radius: 50%;
   background-size: cover;
 }
 
-.block_user{
+.block_user {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.modal {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 5;
+}
+
+.spinner {
+  align-self: center;
+  margin: 0 auto;
 }
