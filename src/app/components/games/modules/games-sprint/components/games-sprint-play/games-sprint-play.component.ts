@@ -11,11 +11,28 @@ import { AppState } from 'src/app/redux/app.state';
 import { CssConstants } from '../../../../../../shared/constants/css-constants';
 import { DataConstants } from '../../../../../../shared/constants/data-constants';
 import { GamesSprintService } from '../../services/games-sprint.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 const wordsQuantityPerCard = 1;
 
 @Component({
   selector: 'app-games-sprint-play',
+  animations: [
+    trigger('changeButton', [
+      state('hide', style({
+        opacity: 0,
+      })),
+      state('show', style({
+        opacity: 1,
+      })),
+      transition('hide => show', [
+        animate('1s')
+      ]),
+      transition('show => hide', [
+        animate('0.5s')
+      ]),
+    ]),
+  ],
   templateUrl: './games-sprint-play.component.html',
   styleUrls: ['./games-sprint-play.component.scss'],
   providers: [GamesSprintService],
@@ -65,6 +82,8 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
 
   countDown;
 
+  countHelp = 0;
+
   counter = 60;
 
   audio = new Audio('assets/sounds/tick.mp3');
@@ -74,6 +93,10 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   play = true;
 
   start = false;
+
+  isHideFalse = false;
+
+  isHideTrue = false;
 
   constructor(
     private gamesSprintService: GamesSprintService,
@@ -189,6 +212,8 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
     } else {
       this.setDifferentWordAndTranslation();
     }
+    this.isHideFalse = false;
+    this.isHideTrue = false;
   }
 
   countScore() {
@@ -196,6 +221,19 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
       this.deltaInScore *= 2;
     }
     this.score += this.deltaInScore;
+  }
+
+  onHelp() {
+    this.mistake = this.gamesSprintService.compareWordAndTranslation(
+      this.wordInCard,
+      this.translation,
+    );
+    if (this.mistake && this.countHelp < 3) {
+      this.isHideFalse = !this.isHideFalse;
+    } else if (this.countHelp < 3) {
+      this.isHideTrue = !this.isHideTrue;
+    } 
+    this.countHelp += 1;
   }
 
   stopGame() {
@@ -214,7 +252,6 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   }
 
   goBack(): void {
-    this.location.back();
-    this.countDown.unsubscribe();
+    this.location.back(); 
   }
 }
