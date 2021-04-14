@@ -14,7 +14,7 @@ export class FullScreenForGamesComponent implements OnInit, OnDestroy {
   constructor(@Inject(DOCUMENT) private document: any, private myElement: ElementRef) {}
 
   ngOnInit(): void {
-    this.checkScreenMode();
+    this.checkFullScreenMode();
     this.elem = this.myElement.nativeElement.parentElement;
   }
 
@@ -28,15 +28,15 @@ export class FullScreenForGamesComponent implements OnInit, OnDestroy {
   @HostListener('document:webkitfullscreenchange', ['$event'])
   @HostListener('document:mozfullscreenchange', ['$event'])
   @HostListener('document:MSFullscreenChange', ['$event'])
-  fullscreenmodes() {
-    this.checkScreenMode();
+  fullscreenmodes(): void {
+    this.checkFullScreenMode();
   }
 
-  checkScreenMode() {
+  checkFullScreenMode(): void {
     this.isFullScreen = Boolean(document.fullscreenElement);
   }
 
-  changeScreen() {
+  changeFullScreenState(): void {
     if (!this.isFullScreen) {
       this.elem.requestFullscreen();
     } else {
