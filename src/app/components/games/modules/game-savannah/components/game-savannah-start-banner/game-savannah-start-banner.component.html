@@ -23,6 +23,11 @@
       (click)="changeCurrentLang(item)"
       >{{ item }}</span
     >
+    <mat-icon
+      class="savannah__lang-arrow"
+      [class.is-reverse]="gameSavannahStatus.currentLang === 'en'"
+      >keyboard_backspace</mat-icon
+    >
   </div>
 </div>
 <div class="savannah__button-wrapper">

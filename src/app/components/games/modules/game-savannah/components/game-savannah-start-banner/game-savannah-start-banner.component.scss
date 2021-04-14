@@ -64,17 +64,19 @@
   }
 
   &__lang {
+    position: relative;
     display: flex;
-    width: 130px;
+    justify-content: space-between;
+    width: 170px;
     font-size: 0;
     margin: 0 auto;
-    border-radius: 4px;
     overflow: hidden;
 
     span {
       display: inline-block;
       padding: 7px 20px;
       font-size: 20px;
+      border-radius: 4px;
       color: #fff;
       text-transform: uppercase;
       background-color: #666;
@@ -89,6 +91,18 @@
         background-color: #3F51B5;
         pointer-events: none;
       }
+    }
+  }
+
+  &__lang-arrow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    transition: transform 0.15s ease-in-out;
+
+    &.is-reverse {
+      transform: translate3d(-50%, -50%, 0) scaleX(-1);
     }
   }
 

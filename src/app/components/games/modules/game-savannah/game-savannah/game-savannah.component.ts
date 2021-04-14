@@ -76,7 +76,8 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
   }
 
   ngOnDestroy(): void {
-    this.restartGame();
+    this.setDefaultData();
+    // this.restartGame();
     this.clearTimer();
     this.subscription.unsubscribe();
     this.words.forEach((el) => {
@@ -107,13 +108,16 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
     this.gameSavannahService.updateGameStatus(data);
   }
 
-  startGame(): void {
+  setDefaultData(): void {
     this.play = true;
     this.openStatistics = false;
     this.paused = false;
+  }
+
+  startGame(): void {
     this.gameSavannahStatus.wordsCount = this.words.length;
     this.gameSavannahService.updateGameStatus(this.gameSavannahStatus);
-    this.play = true;
+    this.setDefaultData();
     this.playWord(0);
   }
 
