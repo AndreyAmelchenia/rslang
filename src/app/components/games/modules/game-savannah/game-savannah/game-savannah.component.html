@@ -3,7 +3,7 @@
     *ngIf="play && !openStatistics"
     [gameSavannahStatus]="gameSavannahStatus"
     (changeStatus)="changeGameSavannahStatus($event)"
-    (restartGame)="restartGame()"
+    (restartGame)="openRestartGameDialog()"
   ></app-game-savannah-head>
   <div class="savannah__body">
     <app-game-savannah-start-banner
@@ -17,13 +17,14 @@
       [currentWord]="currentWord"
       [answers]="answers"
       [answer]="getAnswer()"
+      [isPaused]="isPaused"
       [time]="'--time: ' + animationTime + 's'"
       (checked)="checkAnswer($event)"
     ></app-game-savannah-list>
-    <app-game-savannah-statictics
+    <app-game-savannah-statistics
       *ngIf="openStatistics && !play"
       [words]="words"
       (repeatGame)="restartGame()"
-    ></app-game-savannah-statictics>
+    ></app-game-savannah-statistics>
   </div>
 </div>

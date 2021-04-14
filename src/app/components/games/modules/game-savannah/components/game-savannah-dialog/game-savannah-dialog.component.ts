@@ -13,10 +13,10 @@ export class GameSavannahDialogComponent {
   ) {}
 
   dialogPlayClick() {
-    this.dialogRef.close(false);
+    this.dialogRef.close();
   }
 
   dialogRestartClick() {
-    this.dialogRef.close(true);
+    this.data.callBackTrue();
   }
 }

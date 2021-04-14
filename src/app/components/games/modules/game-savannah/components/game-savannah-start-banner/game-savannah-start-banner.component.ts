@@ -17,7 +17,7 @@ export class GameSavannahStartBannerComponent {
 
   langs: string[] = Object.keys(GameSavannahLangs).map((key) => GameSavannahLangs[key]);
 
-  startGameEmmiter(): void {
+  startGameEmitter(): void {
     this.startGame.emit();
   }
 

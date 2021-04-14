@@ -46,6 +46,10 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
 
   animationTime = 5;
 
+  isPaused = false;
+
+  startTime: number;
+
   gameSavannahStatistic = {
     learned: 0,
     trues: 0,
@@ -104,6 +108,9 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
   }
 
   startGame(): void {
+    this.play = true;
+    this.openStatistics = false;
+    this.paused = false;
     this.gameSavannahStatus.wordsCount = this.words.length;
     this.gameSavannahService.updateGameStatus(this.gameSavannahStatus);
     this.play = true;
@@ -111,8 +118,6 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
   }
 
   restartGame(): void {
-    this.openDialog();
-    // debugger;
     this.gameSavannahStatus.errors = 0;
     this.gameSavannahStatus.progressError = '0%';
     this.gameSavannahStatus.currentCounts = 0;
@@ -120,23 +125,27 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
     this.gameSavannahService.updateGameStatus(this.gameSavannahStatus);
     this.play = false;
     this.openStatistics = false;
-    this.words = this.shufle(this.words);
-    const timerId = setTimeout(() => {
-      this.startGame();
-      this.paused = false;
-      clearTimeout(timerId);
-    }, 0);
+    this.paused = true;
+    this.words = this.shuffle(this.words);
   }
 
-  openDialog() {
+  openRestartGameDialog(): void {
+    this.isPaused = true;
+    this.clearTimer();
+    const delta = Date.now() - this.startTime;
     const dialogRef = this.dialog.open(GameSavannahDialogComponent, {
       width: '450px',
       height: 'auto',
-      data: {},
+      data: {
+        callBackTrue: () => this.restartGame(),
+      },
       disableClose: true,
     });
 
-    dialogRef.afterClosed().subscribe((data) => console.log('Dialog output:', data));
+    dialogRef.afterClosed().subscribe(() => {
+      this.isPaused = false;
+      this.startTimer(delta + 1000);
+    });
   }
 
   playWord(id: number): void {
@@ -148,14 +157,19 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
       this.paused = false;
       this.currentWordId = id;
       this.currentWord = this.words[id][this.langKey()];
-      this.answers = this.setAnswersWrods(id);
-      this.timerId = setTimeout(() => {
-        this.checkAnswer('');
-      }, (this.animationTime + 2) * 1000);
+      this.answers = this.setAnswersWords(id);
+      this.startTimer();
     }
   }
 
-  setAnswersWrods(id: number): string[] {
+  startTimer(time = (this.animationTime + 2) * 1000): void {
+    this.startTime = Date.now();
+    this.timerId = setTimeout(() => {
+      this.checkAnswer('');
+    }, time);
+  }
+
+  setAnswersWords(id: number): string[] {
     const res = [this.words[id][this.answersKey()]];
     while (res.length < 4) {
       const ind = this.getRandomInt(this.words.length);
@@ -163,7 +177,7 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
         res.push(this.words[ind][this.answersKey()]);
       }
     }
-    return this.shufle(res);
+    return this.shuffle(res);
   }
 
   getAnswer(): string {
@@ -230,7 +244,7 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
     return this.gameSavannahStatus.currentLang === 'ru' ? 'word' : 'wordTranslate';
   }
 
-  private shufle(arr: any[]): any[] {
+  private shuffle(arr: any[]): any[] {
     const res = [...arr];
     let j;
     for (let i = res.length - 1; i > 0; i -= 1) {
