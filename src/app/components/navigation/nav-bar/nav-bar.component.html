@@ -14,18 +14,18 @@
       </button>
     </div>
     <mat-nav-list (click)="drawer.toggle()">
-      <a mat-list-item [routerLink]="this.path.Empty">Start Page</a>
-      <a mat-list-item [routerLink]="this.path.Cards">Cards</a>
-      <a mat-list-item [routerLink]="this.path.Games">Games List</a>
-      <a mat-list-item [routerLink]="this.path.Dictionary">Dictionary</a>
+      <a mat-list-item [routerLink]="this.path.Empty">Стартовая страница</a>
+      <a mat-list-item [routerLink]="this.path.Cards">Учебник</a>
+      <a mat-list-item [routerLink]="this.path.Games">Список игр</a>
+      <a mat-list-item [routerLink]="this.path.Dictionary">Словарь</a>
       <a
         mat-list-item
         [routerLink]="this.path.Profile"
         href="#"
         [disabled]="(isAuth$ | async) === false"
-        >Profile</a
+        >Статистика</a
       >
-      <a mat-list-item [routerLink]="this.path.AboutUs">About Us</a>
+      <a mat-list-item [routerLink]="this.path.AboutUs">Про нас</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content class="sidenav-content">
@@ -37,8 +37,8 @@
       <div class="space"></div>
       <ng-template [ngIf]="isAuth$|async" [ngIfThen]="loginBlock" [ngIfElse]="log"> </ng-template>
       <ng-template #log>
-        <a [routerLink]="[path.Registration]" class="link">Register</a>
-        <a routerLink="/" class="link">Sign In</a>
+        <a [routerLink]="[path.Registration]" class="link">Регистрация</a>
+        <a routerLink="/" class="link">Войти</a>
       </ng-template>
       <ng-template #loginBlock>
         <div class="block_user">
@@ -47,8 +47,8 @@
             class="avatar"
             [src]="'https://andey-rslang-back-end.herokuapp.com/' + (user$|async).photo"
           />
-          <span class="greet">Hello, {{(user$|async).name}}</span>
-          <button mat-raised-button color="accent" (click)="onLogout()">LogOut</button>
+          <span class="greet">Привет, {{(user$|async).name}}</span>
+          <button mat-raised-button color="accent" (click)="onLogout()">Выход</button>
         </div>
       </ng-template>
     </mat-toolbar>
