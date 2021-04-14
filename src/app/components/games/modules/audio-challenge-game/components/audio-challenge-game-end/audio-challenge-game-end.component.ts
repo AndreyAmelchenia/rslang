@@ -31,10 +31,10 @@ export class AudioChallengeGameEndComponent implements OnChanges, OnDestroy {
   constructor(private audioChallengeGameService: AudioChallengeGameService) {}
 
   ngOnChanges(): void {
-    const arrrray = [...this.wordState?.resultList].map((item) => {
+    const resultArray = [...this.wordState?.resultList].map((item) => {
       return { ...item.word, result: item.result };
     });
-    this.dataSource = new MatTableDataSource(arrrray);
+    this.dataSource = new MatTableDataSource(resultArray);
     this.dataSource.sort = this.sort;
   }
 
