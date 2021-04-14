@@ -7,11 +7,13 @@ const testGames = [
   {
     id: 11,
     name: 'Name1',
+    nameRU: 'Игра1',
     img: 'img1.png',
   },
   {
     id: 12,
     name: 'Name2',
+    nameRU: 'Игра2',
     img: 'img2.png',
   },
 ];

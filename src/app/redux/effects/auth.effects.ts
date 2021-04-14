@@ -4,12 +4,13 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, switchMap, tap } from 'rxjs/operators';
 
+import { StatsService } from 'src/app/common/services/stats.service';
+import { SettingsService } from 'src/app/common/services/settings.service';
+import { SessionService } from 'src/app/common/services/storage/session.service';
 import * as authActions from '../actions/auth.actions';
 import { ActionType } from '../models/authAction.models';
-
-import { AuthService } from '../../components/navigation/services/auth.service';
 import { IUser } from '../models/user.models';
-import { SessionService } from '../../common/services/storage/session.service';
+import { AuthService } from '../../components/navigation/services/auth.service';
 
 @Injectable()
 export class AuthEffects {
@@ -41,6 +42,8 @@ export class AuthEffects {
         ofType(ActionType.LogInSuccess),
         tap((action: any) => {
           this.sessionService.setItem('user', action.user);
+          this.settingsService.getSettingsFromServer();
+          this.statsService.getStatisticsFromServer();
           if (!action.start) {
             this.router.navigateByUrl('/');
           }
@@ -80,6 +83,8 @@ export class AuthEffects {
         ofType(ActionType.LogOut),
         tap(() => {
           this.sessionService.removeItem('user');
+          this.settingsService.resetSettings();
+          this.statsService.resetStatistics();
           this.router.navigateByUrl('/');
         }),
       ),
@@ -100,5 +105,7 @@ export class AuthEffects {
     private authService: AuthService,
     private router: Router,
     private sessionService: SessionService,
+    private settingsService: SettingsService,
+    private statsService: StatsService,
   ) {}
 }

@@ -75,15 +75,17 @@ export class RegistrationComponent {
 
   getErrorEmailMessage() {
     if (this.userData.controls.email.hasError('required')) {
-      return 'You must enter a value';
+      return 'Поле не может быть пустым';
     }
-    return this.userData.controls.email.hasError('email') ? 'Not a valid email' : '';
+    return this.userData.controls.email.hasError('email') ? 'Не корректная почта' : '';
   }
 
   getErrorPasswordMessage() {
     if (this.userData.controls.password.hasError('required')) {
-      return 'You must enter a value';
+      return 'Поле не может быть пустым';
     }
-    return this.userData.controls.password.hasError('password') ? 'Not a valid password' : '';
+    return this.userData.controls.password.hasError('password')
+      ? 'В пароле должно быть минимум 8 символов, одна прописная, одна заглавная буква и один спец символ'
+      : '';
   }
 }
