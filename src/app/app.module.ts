@@ -10,6 +10,7 @@ import { NavigationModule } from './components/navigation/navigation.module';
 import { AboutUsModule } from './components/aboutUs/modules/about-us.module';
 import { AboutUsService } from './components/aboutUs/services/about-us.service';
 import { StartPageModule } from './components/start-page/start-page.module';
+import { HttpRequestInterceptor } from './common/interceptors/http-request-interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +25,7 @@ import { StartPageModule } from './components/start-page/start-page.module';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true },
     AboutUsService,
   ],
   bootstrap: [AppComponent],
