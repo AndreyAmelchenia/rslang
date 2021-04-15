@@ -52,7 +52,7 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
 
   gameSavannahStatistic = {
     learned: 0,
-    trues: 0,
+    tries: 0,
     right: 0,
     series: 0,
   };
@@ -89,7 +89,7 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
   }
 
   resetStatistics(): void {
-    ['learned', 'trues', 'right', 'series'].forEach((key) => {
+    ['learned', 'tries', 'right', 'series'].forEach((key) => {
       this.gameSavannahStatistic[key] = 0;
     });
     this.currentSeries = 0;
@@ -202,7 +202,7 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
   checkAnswer(answer: string) {
     if (this.timerId) {
       this.paused = true;
-      this.gameSavannahStatistic.trues += 1;
+      this.gameSavannahStatistic.tries += 1;
       if (answer !== this.getAnswer()) {
         this.setWordStatistic(false);
         this.gameSavannahStatus.errors += 1;
