@@ -7,14 +7,12 @@ import { AppState } from 'src/app/redux/app.state';
 import { MatDialog } from '@angular/material/dialog';
 import { StatsService } from 'src/app/common/services/stats.service';
 import { IGame } from 'src/app/common/models/stats.model';
+import { GameResult } from 'src/app/components/games/components/games-end/games-end.component';
+import { Router } from '@angular/router';
 import { GameSavannahLangs } from '../../models/game-savannah-langs.enum';
 import { GameSavannahStatus } from '../../models/game-savannah-status.model';
 import { GameSavannahService } from '../../services/game-savannah.service';
 import { GameSavannahDialogComponent } from '../game-savannah-dialog/game-savannah-dialog.component';
-
-export interface GameSavannahWord extends Word {
-  statistics?: boolean;
-}
 
 @Component({
   selector: 'app-game-savannah',
@@ -38,7 +36,9 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
 
   paused = true;
 
-  words: GameSavannahWord[] = [];
+  words: Word[] = [];
+
+  gameResult: GameResult[] = [];
 
   currentWord: string;
 
@@ -66,6 +66,7 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
     private store: Store<AppState>,
     public dialog: MatDialog,
     private statsService: StatsService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -79,14 +80,16 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
   }
 
   ngOnDestroy(): void {
+    this.setStatistics();
     this.setDefaultData();
-    // this.restartGame();
-    this.clearTimer();
     this.subscription.unsubscribe();
-    this.words.forEach((el) => {
-      if (el.statistics !== undefined) {
-        this.gameSavannahStatistic.learned += 1;
-      }
+  }
+
+  setStatistics(): void {
+    this.gameSavannahStatistic.learned = this.words.length;
+    this.gameSavannahStatistic.tries = this.gameResult.length;
+    this.gameResult.forEach((el) => {
+      if (el.result) this.gameSavannahStatistic.right += 1;
     });
     this.statsService.saveSavannaStats(this.gameSavannahStatistic);
   }
@@ -115,6 +118,7 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
     this.play = true;
     this.openStatistics = false;
     this.paused = false;
+    this.clearTimer();
   }
 
   startGame(): void {
@@ -122,6 +126,15 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
     this.gameSavannahService.updateGameStatus(this.gameSavannahStatus);
     this.setDefaultData();
     this.playWord(0);
+  }
+
+  submitResult(event: boolean): void {
+    if (event) {
+      this.setDefaultData();
+      this.restartGame();
+    } else {
+      this.router.navigate(['/games']);
+    }
   }
 
   restartGame(): void {
@@ -192,13 +205,18 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
   }
 
   setWordStatistic(data: boolean): void {
-    if (this.words[this.currentWordId].statistics === undefined) {
-      this.words[this.currentWordId] = {
-        ...this.words[this.currentWordId],
-        statistics: data,
-      };
+    if (!this.gameResult.some((el) => el.word === this.words[this.currentWordId].word)) {
+      this.gameResult.push({
+        word: this.words[this.currentWordId].word,
+        translate: this.words[this.currentWordId].wordTranslate,
+        result: data,
+        audio: this.words[this.currentWordId].audio,
+      });
     } else {
-      this.words[this.currentWordId].statistics = data;
+      const ind = this.gameResult.findIndex(
+        (el) => el.word === this.words[this.currentWordId].word,
+      );
+      this.gameResult[ind].result = data;
     }
   }
 
