@@ -14,6 +14,8 @@ export class GameSavannahListComponent implements OnInit, OnDestroy {
 
   @Input() time = '--time: 5s;';
 
+  @Input() isPaused = false;
+
   @Output() checked = new EventEmitter();
 
   current = '';

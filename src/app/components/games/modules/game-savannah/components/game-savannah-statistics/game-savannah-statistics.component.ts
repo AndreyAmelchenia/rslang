@@ -7,15 +7,15 @@ import {
   OnInit,
 } from '@angular/core';
 import { URL_BACK_SERVER } from 'src/app/shared/constants/url-constants';
-import { GameSavannahWord } from '../../game-savannah/game-savannah.component';
+import { GameSavannahWord } from '../game-savannah/game-savannah.component';
 
 @Component({
-  selector: 'app-game-savannah-statictics',
-  templateUrl: './game-savannah-statictics.component.html',
-  styleUrls: ['./game-savannah-statictics.component.scss'],
+  selector: 'app-game-savannah-statistics',
+  templateUrl: './game-savannah-statistics.component.html',
+  styleUrls: ['./game-savannah-statistics.component.scss'],
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GameSavannahStaticticsComponent implements OnInit {
+export class GameSavannahStatisticsComponent implements OnInit {
   @Input() words: GameSavannahWord[];
 
   @Output() repeatGame = new EventEmitter();
