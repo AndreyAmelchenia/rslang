@@ -41,6 +41,8 @@ export class MyGameListComponent implements OnInit {
 
   amount = 20;
 
+  amountTotalWords = 0;
+
   countImageArrayLength = 0;
 
   score = 0;
@@ -144,6 +146,11 @@ export class MyGameListComponent implements OnInit {
       this.countGoodAnswer += 1;
       this.countAllTries += 1;
       this.bestSeries.push(this.countGoodAnswer);
+      this.amountTotalWords += 1;
+      if (this.amountTotalWords === this.amount) {
+        this.getStatistic();
+        this.openDialog();
+      }
     }
   }
 

@@ -1,0 +1,36 @@
+<div class="content-settings">
+  <div class="card-words-amount">
+    <mat-card-content>
+      <label id="words-amount-radio-group-label">Выберите количество слов: </label>
+      <mat-radio-group aria-labelledby="words-amount-radio-group-label" class="radio-group">
+        <mat-radio-button
+          *ngFor="let amount of data.wordsAmountData"
+          [value]="amount"
+          class="radio-button"
+        >
+          {{ amount }}
+        </mat-radio-button>
+      </mat-radio-group>
+    </mat-card-content>
+  </div>
+  <div>
+    <mat-card-content>
+      <label id="level-radio-group-label">Выберите уровень: </label>
+      <mat-radio-group aria-labelledby="level-radio-group-label" class="radio-group">
+        <mat-radio-button
+          *ngFor="let level of data.levelChosen"
+          [value]="level"
+          class="radio-button"
+        >
+          {{ level }}
+        </mat-radio-button>
+      </mat-radio-group>
+    </mat-card-content>
+  </div>
+  <mat-card-actions>
+    <mat-checkbox>Больше не показывать</mat-checkbox>
+  </mat-card-actions>
+  <mat-card-actions class="confirm-button">
+    <button mat-raised-button color="primary" mat-dialog-close>Подтвердить</button>
+  </mat-card-actions>
+</div>
