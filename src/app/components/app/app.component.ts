@@ -9,6 +9,4 @@ import { AppState } from 'src/app/redux/app.state';
 })
 export class AppComponent {
   constructor(private store: Store<AppState>) {}
-
-  title = 'rslang';
 }
