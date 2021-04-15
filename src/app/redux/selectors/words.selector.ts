@@ -48,6 +48,8 @@ export const selectBoolLengthWordsByGroupAndDeleted = (
   );
 
 export const wordsInCards = createFeatureSelector(wordsFeatureKey);
+export const selectWordById = (wordId: string) =>
+  createSelector(selectFeatureWords, (words: Word[]) => words.find((el) => el._id === wordId));
 
 export const wordsInCardsArr = createSelector(
   wordsInCards,

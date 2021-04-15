@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { Word } from 'src/app/common/models/word.model';
+import { LoadStatWords } from 'src/app/redux/actions/words.actions';
 import { AppState } from 'src/app/redux/app.state';
 import { selectGameList } from 'src/app/redux/selectors/listGame.selectors';
 import { StatisticGame } from '../../game-statistic.model';
@@ -75,13 +76,14 @@ export class MyGameListComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private store: Store<AppState>,
-  ) {
-    this.store.select(selectGameList()).subscribe((gameList) => {
-      this.words = gameList;
-    });
-  }
+  ) {}
 
   ngOnInit() {
+    this.store.select(selectGameList()).subscribe((gameList) => {
+      console.log('2');
+
+      this.words = gameList;
+    });
     this.tryCount = 0;
     this.solvedWords = new Set<Word>();
     this.unsolvedWords = new Set<Word>();
@@ -118,7 +120,6 @@ export class MyGameListComponent implements OnInit {
 
   drop(event, dropPictureId: string) {
     this.dropPictureId = dropPictureId;
-
     if (this.dragPictureId !== dropPictureId) {
       this.unsolvedWords.add(event.item.data);
       this.playSoundTry();
@@ -137,6 +138,7 @@ export class MyGameListComponent implements OnInit {
       elem.appendChild(event.item.element.nativeElement);
       this.solvedWords.add(event.item.data.word);
       this.playSoundScore();
+
       this.countImageArrayLength += 1;
       this.score += this.scorePerDividedWord;
       this.checkCountImageArrayLength();

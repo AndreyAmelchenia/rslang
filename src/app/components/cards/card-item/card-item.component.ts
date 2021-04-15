@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Settings } from 'src/app/common/models/settings.model';
 import { Word } from 'src/app/common/models/word.model';
-import { LoadDifficultyWords } from 'src/app/redux/actions/words.actions';
+import { LoadDifficultyWords, LoadStatWords } from 'src/app/redux/actions/words.actions';
 import { AppState } from 'src/app/redux/app.state';
+import { selectSettings } from 'src/app/redux/selectors/settings.selector';
 
 @Component({
   selector: 'app-card-item',
@@ -23,7 +25,13 @@ export class CardItemComponent {
 
   play = false;
 
-  constructor(private store: Store<AppState>) {}
+  set: Settings;
+
+  constructor(private store: Store<AppState>) {
+    this.store.select(selectSettings).subscribe((set) => {
+      this.set = set;
+    });
+  }
 
   colorRGB(a = 0.3): string {
     return `rgba(${[...this.color, a].join()})`;
@@ -55,5 +63,14 @@ export class CardItemComponent {
     this.audio.pause();
     this.audioExample.pause();
     this.audioMeaning.pause();
+  }
+
+  click(word: Word, error: boolean) {
+    this.store.dispatch(
+      LoadStatWords({
+        word,
+        error,
+      }),
+    );
   }
 }
