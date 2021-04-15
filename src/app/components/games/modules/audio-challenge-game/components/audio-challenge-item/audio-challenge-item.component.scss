@@ -12,6 +12,15 @@ mat-list.mat-list.mat-list-base.list-horizontal {
   justify-content: space-around;
   mat-list-item {
     display: contents;
+    .correct {
+      color: darkgreen;
+    }
+  }
+}
+.answer {
+
+  .mat-focus-indicator.mat-button.mat-button-base.mat-button-disabled {
+    color: black;
   }
 }
 .item-container {
@@ -26,7 +35,7 @@ mat-list.mat-list.mat-list-base.list-horizontal {
 }
 .img-card-container {
   height: 234px;
-  // overflow: hidden;
+  overflow: hidden;
   background: url('../../../../../../../assets/images/qwest.png') center no-repeat;
 }
 .mat-card-image:first-child {

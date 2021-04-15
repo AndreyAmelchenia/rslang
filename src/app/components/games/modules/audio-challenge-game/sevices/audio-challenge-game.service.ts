@@ -5,8 +5,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { AppState } from 'src/app/redux/app.state';
 import { selectGameList } from 'src/app/redux/selectors/listGame.selectors';
 import { Word } from 'src/app/common/models/word.model';
+import { IGame } from 'src/app/common/models/stats.model';
 import { AudioChallengeState, AudioChallengeWord } from '../models/game-adio-challenge.model';
-import { GAME_LENGHT, initialAudioChallengeState } from '../constans/audio-challenge.constants';
+import { GAME_LENGTH, initialAudioChallengeState } from '../constants/audio-challenge.constants';
 
 @Injectable({
   providedIn: 'root',
@@ -65,14 +66,15 @@ export class AudioChallengeGameService {
       currentWord,
       isTranslationChoosed: false,
     });
-    if (resultList.length === GAME_LENGHT || !nextWord) {
+    if (resultList.length === GAME_LENGTH || !nextWord) {
+      this.formattedStatistic();
       this.gameEnd();
     }
   }
 
   createAudioChallengeWord(word: Word): AudioChallengeWord {
     const translationsArray = this.createTranslationTask(word);
-    return { ...word, translationsArray };
+    return { ...word, translationsArray, answer: -1 };
   }
 
   createTranslationTask(wordArg: Word): string[] {
@@ -95,19 +97,21 @@ export class AudioChallengeGameService {
   }
 
   makeTurn(index: number | undefined) {
-    let resultUnswer = false;
+    let resultAnswer = false;
     const { resultList, currentWord, isTranslationChoosed } = this.getCurrentState();
     if (isTranslationChoosed) {
       return;
     }
     if (index) {
-      resultUnswer = currentWord.wordTranslate === currentWord.translationsArray[index];
+      resultAnswer = currentWord.wordTranslate === currentWord.translationsArray[index];
+      currentWord.answer = index;
     }
 
-    const resultListNew = [...resultList, { word: currentWord, result: resultUnswer }];
+    const resultListNew = [...resultList, { word: currentWord, result: resultAnswer }];
     this.setGameState({
       resultList: resultListNew,
       isTranslationChoosed: true,
+      currentWord,
     });
   }
 
@@ -118,5 +122,17 @@ export class AudioChallengeGameService {
 
   closeGame() {
     this.setGameState(initialAudioChallengeState);
+  }
+
+  formattedStatistic() {
+    const { resultList: statistic } = this.getCurrentState();
+
+    const resultStat: IGame = {
+      learned: statistic.length,
+      tries: 100,
+      right: 75,
+      series: 10,
+    };
+    console.log(statistic, resultStat);
   }
 }
