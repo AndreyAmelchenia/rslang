@@ -108,8 +108,7 @@ export class CardsTabComponent implements OnInit, AfterViewInit {
           this.gameList = data;
         });
         const res = this.getPagedData([...(words || [])]);
-        console.log(res);
-
+        this.gameList = res;
         return res;
       }),
     );
@@ -117,7 +116,6 @@ export class CardsTabComponent implements OnInit, AfterViewInit {
 
   private getPagedData(data: Word[]) {
     this.gameList = data;
-    console.log(this.gameList);
     if (
       this.lengthBase !== 0 &&
       this.lengthBase - 30 <= (this.paginator.pageIndex + 1) * this.paginator.pageSize &&
@@ -128,6 +126,7 @@ export class CardsTabComponent implements OnInit, AfterViewInit {
       );
     }
     const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
+
     return data.splice(startIndex, this.paginator.pageSize);
   }
 

@@ -2,7 +2,6 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonsComponent } from '../components/buttons/buttons.component';
-// delete this test component
 import { StorageTestComponent } from '../common/services/storage/storage-test.component';
 import { AngularMaterialModule } from './material/material.module';
 

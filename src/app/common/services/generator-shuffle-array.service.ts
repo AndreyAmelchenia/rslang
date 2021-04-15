@@ -4,15 +4,10 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class GeneratorShuffleArrayService {
-  //  constructor() { }
-
   public shuffleArray(array: object[]): object[] {
     const arrayCopy = array;
-    // While there remain elements to shuffle
     while (arrayCopy.length) {
-      // Pick a remaining element…
       const arrayElement = Math.floor(Math.random() * (arrayCopy.length -= 1));
-      // And swap it with the current element.
       const anotherArrayElement = arrayCopy[arrayCopy.length];
       arrayCopy[array.length] = arrayCopy[arrayElement];
       arrayCopy[arrayElement] = anotherArrayElement;

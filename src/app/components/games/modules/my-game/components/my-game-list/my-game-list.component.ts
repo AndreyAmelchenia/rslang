@@ -79,13 +79,12 @@ export class MyGameListComponent implements OnInit {
     public dialog: MatDialog,
     private store: Store<AppState>,
     private statsService: StatsService,
-  ) {
+  ) {}
+
+  ngOnInit() {
     this.store.select(selectGameList()).subscribe((gameList) => {
       this.words = gameList;
     });
-  }
-
-  ngOnInit() {
     this.tryCount = 0;
     this.solvedWords = new Set<Word>();
     this.unsolvedWords = new Set<Word>();
@@ -122,7 +121,6 @@ export class MyGameListComponent implements OnInit {
 
   drop(event, dropPictureId: string) {
     this.dropPictureId = dropPictureId;
-
     if (this.dragPictureId !== dropPictureId) {
       this.unsolvedWords.add(event.item.data);
       this.playSoundTry();
@@ -141,6 +139,7 @@ export class MyGameListComponent implements OnInit {
       elem.appendChild(event.item.element.nativeElement);
       this.solvedWords.add(event.item.data.word);
       this.playSoundScore();
+
       this.countImageArrayLength += 1;
       this.score += this.scorePerDividedWord;
       this.checkCountImageArrayLength();
