@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Word } from 'src/app/common/models/word.model';
 import { Subscription } from 'rxjs';
+import { StatsService } from 'src/app/common/services/stats.service';
+import { IGame } from 'src/app/common/models/stats.model';
 import { GameSavannahLangs } from '../models/game-savannah-langs.enum';
 import { GameSavannahStatus } from '../models/game-savannah-status.model';
 import { GameSavannahService } from '../services/game-savannah.service';
@@ -9,13 +11,6 @@ import { GameSavannahService } from '../services/game-savannah.service';
 export interface GameSavannahWord extends Word {
   statistics?: boolean;
 }
-
-// export interface GameStatistic extends Word {
-//   learned: number;
-//   trues: number;
-//   right: number;
-//   series: number;
-// }
 
 @Component({
   selector: 'app-game-savannah',
@@ -49,16 +44,20 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
 
   animationTime = 5;
 
-  gameSavannahStatistic = {
+  gameSavannahStatistic: IGame = {
     learned: 0,
-    trues: 0,
+    tries: 0,
     right: 0,
     series: 0,
   };
 
   currentSeries = 0;
 
-  constructor(private gameSavannahService: GameSavannahService, private http: HttpClient) {
+  constructor(
+    private gameSavannahService: GameSavannahService,
+    private http: HttpClient,
+    private statsService: StatsService,
+  ) {
     this.http
       .get('assets/data/words.json')
       .subscribe((res: Word[]) => this.setWords(this.shufle(res)));
@@ -80,7 +79,7 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
         this.gameSavannahStatistic.learned += 1;
       }
     });
-    console.log('Game Savannah Statistic: ', this.gameSavannahStatistic);
+    this.statsService.saveSavannaStats(this.gameSavannahStatistic);
   }
 
   resetStatistics(): void {
@@ -156,7 +155,7 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
   checkAnswer(answer: string) {
     if (this.timerId) {
       this.paused = true;
-      this.gameSavannahStatistic.trues += 1;
+      this.gameSavannahStatistic.tries += 1;
       if (answer !== this.getAnswer()) {
         this.words[this.currentWordId].statistics = false;
         this.gameSavannahStatus.errors += 1;
@@ -169,11 +168,6 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
         if (this.currentSeries >= this.gameSavannahStatistic.series) {
           this.gameSavannahStatistic.series = this.currentSeries;
         }
-        console.log(
-          'this.currentSeries, this.gameSavannahStatistic.series',
-          this.currentSeries,
-          this.gameSavannahStatistic.series,
-        );
       }
       this.updateStatus();
       const timerId = setTimeout(() => {
