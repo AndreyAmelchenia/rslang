@@ -1,3 +1,4 @@
+<!--
 <div class="games-sprint-main">
   <mat-card class="main-field">
     <mat-card-content>
@@ -14,7 +15,31 @@
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button color="primary" (click)="goBack()">Назад</button>
-      <button mat-raised-button color="primary" routerLink="/games/sprint/play">Играть</button>
+      <button mat-raised-button color="primary" routerLink='/games/sprint/play'>Играть</button>
     </mat-card-actions>
   </mat-card>
+</div>
+-->
+
+<div class="game-start-content">
+  <div class="savannah__title">
+    <h1>Спринт</h1>
+  </div>
+  <div class="savannah__help">
+    <div class="savannah__help-title">Мини-игра «Спринт» - это тренировка для повторения слов.</div>
+    <div class="savannah__help-subtitle">
+      <p>
+        Перед вами игра "Спринт". Вы увидете карточку со словом на английском языке и перевод. Вам
+        нужно понять, соответствует ли перевод слову на английском. Если соответстует - жмите кнопку
+        "ВЕРНО"; если не соответствует - жмите кнопку "НЕВЕРНО". Спешите - у вас есть только 60
+        секунд! Угадывайте несколько слов подряд и получайте больше очков.
+      </p>
+    </div>
+  </div>
+  <div class="savannah__button-wrapper">
+    <button class="savannah__button--start" routerLink="/games/sprint/play">
+      <mat-icon>flag</mat-icon>
+      <span>Играть</span>
+    </button>
+  </div>
 </div>

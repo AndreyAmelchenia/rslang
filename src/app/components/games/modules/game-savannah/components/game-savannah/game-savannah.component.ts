@@ -5,10 +5,12 @@ import { selectGameList } from 'src/app/redux/selectors/listGame.selectors';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/redux/app.state';
 import { MatDialog } from '@angular/material/dialog';
-import { GameSavannahLangs } from '../models/game-savannah-langs.enum';
-import { GameSavannahStatus } from '../models/game-savannah-status.model';
-import { GameSavannahService } from '../services/game-savannah.service';
-import { GameSavannahDialogComponent } from '../components/game-savannah-dialog/game-savannah-dialog.component';
+import { StatsService } from 'src/app/common/services/stats.service';
+import { IGame } from 'src/app/common/models/stats.model';
+import { GameSavannahLangs } from '../../models/game-savannah-langs.enum';
+import { GameSavannahStatus } from '../../models/game-savannah-status.model';
+import { GameSavannahService } from '../../services/game-savannah.service';
+import { GameSavannahDialogComponent } from '../game-savannah-dialog/game-savannah-dialog.component';
 
 export interface GameSavannahWord extends Word {
   statistics?: boolean;
@@ -50,7 +52,7 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
 
   startTime: number;
 
-  gameSavannahStatistic = {
+  gameSavannahStatistic: IGame = {
     learned: 0,
     tries: 0,
     right: 0,
@@ -63,6 +65,7 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
     private gameSavannahService: GameSavannahService,
     private store: Store<AppState>,
     public dialog: MatDialog,
+    private statsService: StatsService,
   ) {}
 
   ngOnInit(): void {
@@ -85,7 +88,7 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
         this.gameSavannahStatistic.learned += 1;
       }
     });
-    console.log('Game Savannah Statistic: ', this.gameSavannahStatistic);
+    this.statsService.saveSavannaStats(this.gameSavannahStatistic);
   }
 
   resetStatistics(): void {

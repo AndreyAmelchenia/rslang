@@ -7,7 +7,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { URL_BACK_SERVER } from 'src/app/shared/constants/url-constants';
-import { GameSavannahWord } from '../../game-savannah/game-savannah.component';
+import { GameSavannahWord } from '../game-savannah/game-savannah.component';
 
 @Component({
   selector: 'app-game-savannah-statistics',

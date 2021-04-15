@@ -1,4 +1,4 @@
-<div class="game-start-view">
+<!-- <div class="game-start-view">
   <mat-card class="example-card">
     <mat-card-title> Welcome to my-game! </mat-card-title>
     <mat-card-content> This game will help you learn all the words in our App. </mat-card-content>
@@ -6,4 +6,28 @@
       <button mat-button (click)="onStartGame()">START</button>
     </mat-card-actions>
   </mat-card>
+</div>
+-->
+
+<div class="game-start-content">
+  <div class="savannah__title">
+    <h1>Своя игра</h1>
+  </div>
+  <div class="savannah__help">
+    <div class="savannah__help-title">
+      Мини-игра «Своя игра» - это тренировка восприятия изображения и правильности перевода.
+    </div>
+    <div class="savannah__help-subtitle">
+      <p>
+        После запуска игры вы должны сопоставить изображение со словом. Просто нажмите на
+        изображение и перетаскивайте его на выбранное вами слово.
+      </p>
+    </div>
+  </div>
+  <div class="savannah__button-wrapper">
+    <button class="savannah__button--start" (click)="onStartGame()">
+      <mat-icon>flag</mat-icon>
+      <span>Играть</span>
+    </button>
+  </div>
 </div>
