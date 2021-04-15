@@ -36,7 +36,7 @@ describe('AboutUsService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideMockStore({ initialState: { gameList: { gameListMock }} })],
+      providers: [provideMockStore({ initialState: { gameList: { gameListMock } } })],
     });
     service = TestBed.inject(AboutUsService);
     store = TestBed.inject(MockStore);

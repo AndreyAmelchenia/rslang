@@ -5,7 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: './games-settings.component.html',
   styleUrls: ['./games-settings.component.scss'],
 })
-export class GamesSettingsComponent {
-  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
-  constructor() {}
-}
+export class GamesSettingsComponent {}

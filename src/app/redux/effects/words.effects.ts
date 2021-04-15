@@ -6,7 +6,6 @@ import { map, mergeMap, tap } from 'rxjs/operators';
 import { SessionService } from 'src/app/common/services/storage/session.service';
 import { WordsService } from 'src/app/common/services/words-service/words.service';
 import { syncWords } from '../actions/dictionary.actions';
-import { expectationRequest } from '../actions/request.actions';
 
 import {
   AddDifficultyWords,
@@ -43,12 +42,10 @@ export class WordsEffects {
       }),
       mergeMap(({ group, page, wordsPerPage }) => {
         if (this.bool) return of({ type: ArticlesActions.BackWord });
-        if (!page) this.store.dispatch(expectationRequest({ expectation: false }));
         return of(this.userSession.getItem('user')).pipe(
           mergeMap(({ userId }) => {
             return this.wordsService.aggregatedWords({ group, page, userId, wordsPerPage }).pipe(
               map((word) => {
-                if (!page) this.store.dispatch(expectationRequest({ expectation: true }));
                 return retrievedWordsList({ Words: word });
               }),
             );
@@ -63,8 +60,6 @@ export class WordsEffects {
       ofType(LoadStatWords),
       mergeMap(({ word, error }) => {
         const { userId } = this.userSession.getItem('user');
-        console.log(userId);
-
         return this.wordsService
           .addStatWord({ word, userId, error })
           .pipe(map(() => AddStatWords({ wordId: word._id, error })));

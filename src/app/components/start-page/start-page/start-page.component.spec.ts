@@ -46,10 +46,10 @@ const wordsMock: AggregatedWordsRedux[] = [
             failCount: 2,
           },
         },
-      }
+      },
     ],
-  totalCount: [{ 0: 5, 1: 6, 2: 4, 3: 4, 4: 8, 5: 1 }],
-  }
+    totalCount: [{ 0: 5, 1: 6, 2: 4, 3: 4, 4: 8, 5: 1 }],
+  },
 ];
 
 describe('StartPageComponent', () => {
@@ -61,34 +61,37 @@ describe('StartPageComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [StartPageComponent],
       imports: [StoreModule.forRoot({})],
-      providers: [ provideMockStore({ selectors: [
-        {
-          selector: isLoginSelector,
-          value: true,
-        },
-        {
-          selector: selectWords,
-          value: wordsMock,
-        }
-      ] 
-    }) ],
-     // providers: [ provideMockStore({ initialState }) ],
+      providers: [
+        provideMockStore({
+          selectors: [
+            {
+              selector: isLoginSelector,
+              value: true,
+            },
+            {
+              selector: selectWords,
+              value: wordsMock,
+            },
+          ],
+        }),
+      ],
+      // providers: [ provideMockStore({ initialState }) ],
     }).compileComponents();
-   // store = TestBed.inject(MockStore);
-  //  store.setState({ isAuthenticated: true });
+    // store = TestBed.inject(MockStore);
+    //  store.setState({ isAuthenticated: true });
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(StartPageComponent);
-    
-  //  store.setState({ isAuthenticated: true });
+
+    //  store.setState({ isAuthenticated: true });
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it('should create', () => {
-   // store.setState({ isAuthenticated: true });
-  //  fixture.detectChanges();
+    // store.setState({ isAuthenticated: true });
+    //  fixture.detectChanges();
 
     expect(component).toBeTruthy();
   });

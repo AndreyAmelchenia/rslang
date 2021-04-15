@@ -16,8 +16,6 @@ export const selectWords = createSelector(selectFeature, (state: AggregatedWords
 
 export const selectWordsByGroup = (group: number) =>
   createSelector(selectFeature, (state: AggregatedWordsRedux[]) => {
-    // console.log(state);
-
     return [
       {
         ...state[0],

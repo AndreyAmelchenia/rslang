@@ -32,10 +32,10 @@ const wordsMock: AggregatedWordsRedux[] = [
             failCount: 2,
           },
         },
-      }
+      },
     ],
-  totalCount: [{ 0: 5, 1: 6, 2: 4, 3: 4, 4: 8, 5: 1 }],
-  }
+    totalCount: [{ 0: 5, 1: 6, 2: 4, 3: 4, 4: 8, 5: 1 }],
+  },
 ];
 
 describe('DialogTotalGameComponent', () => {
@@ -48,9 +48,9 @@ describe('DialogTotalGameComponent', () => {
       declarations: [DialogTotalGameComponent],
       imports: [RouterTestingModule, StoreModule.forRoot({})],
       providers: [
-        provideMockStore({ initialState: { words: { wordsMock }} }),
+        provideMockStore({ initialState: { words: { wordsMock } } }),
         { provide: MAT_DIALOG_DATA, useValue: {} },
-        { provide: MatDialogRef, useValue: {} }
+        { provide: MatDialogRef, useValue: {} },
       ],
     }).compileComponents();
     store = TestBed.inject(MockStore);

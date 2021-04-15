@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Settings } from 'src/app/common/models/settings.model';
+import { ISettings } from 'src/app/common/models/settings.model';
 import { Word } from 'src/app/common/models/word.model';
 import { LoadDifficultyWords, LoadStatWords } from 'src/app/redux/actions/words.actions';
 import { AppState } from 'src/app/redux/app.state';
@@ -25,7 +25,7 @@ export class CardItemComponent {
 
   play = false;
 
-  set: Settings;
+  set: ISettings;
 
   constructor(private store: Store<AppState>) {
     this.store.select(selectSettings).subscribe((set) => {
