@@ -1,0 +1,26 @@
+<!-- <div *ngIf="!wordState.isGameStarted" class="audio-start-container">
+  <button mat-raised-button color="primary" (click)="newGame()">Начать новую игру</button>
+</div>
+-->
+
+<div *ngIf="!wordState.isGameStarted" class="audio-start-container">
+  <div class="savannah__title">
+    <h1>Аудиовызов</h1>
+  </div>
+  <div class="savannah__help">
+    <div class="savannah__help-title">
+      Мини-игра «Аудиовызов» - это тренировка, развивающая восприятие английского языка на слух.
+    </div>
+    <div class="savannah__help-subtitle">
+      <p>
+        После того, как вы услышите слово на английском языке необходимо выбрать правильный перевод.
+      </p>
+    </div>
+  </div>
+  <div class="savannah__button-wrapper">
+    <button class="savannah__button--start" (click)="newGame()">
+      <mat-icon>flag</mat-icon>
+      <span>Играть</span>
+    </button>
+  </div>
+</div>

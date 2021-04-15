@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { delay, map, shareReplay } from 'rxjs/operators';
+import { LoadingService } from 'src/app/common/services/spinner.service';
 import { Path } from '../../../shared/models/router.model';
 import { isAuth, logout } from '../../../redux/actions/auth.actions';
 import { IUser } from '../../../redux/models/user.models';
@@ -19,11 +20,17 @@ export class NavBarComponent implements OnInit {
     shareReplay(),
   );
 
+  loading = false;
+
   isAuth$: Observable<boolean>;
 
   user$: Observable<IUser>;
 
-  constructor(private breakpointObserver: BreakpointObserver, private store: Store) {}
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private store: Store,
+    private loadingService: LoadingService,
+  ) {}
 
   path = null;
 
@@ -36,5 +43,14 @@ export class NavBarComponent implements OnInit {
     this.isAuth$ = this.store.select(isLoginSelector);
     this.user$ = this.store.select(userSelector);
     this.store.dispatch(isAuth());
+    this.listenToLoading();
+  }
+
+  listenToLoading(): void {
+    this.loadingService.loadingSub
+      .pipe(delay(0)) // This prevents a ExpressionChangedAfterItHasBeenCheckedError for subsequent requests
+      .subscribe((loading) => {
+        this.loading = loading;
+      });
   }
 }

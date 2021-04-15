@@ -1,6 +1,6 @@
 import { AggregatedWordsRedux, ICurrentWords } from '../common/models/aggregatedWords.model';
-import { Settings } from '../common/models/settings.model';
-import { Stats } from '../common/models/stats.model';
+import { ISettings } from '../common/models/settings.model';
+import { IStats } from '../common/models/stats.model';
 import { Word } from '../common/models/word.model';
 import { ILoginState } from './models/loginState.models';
 
@@ -9,7 +9,7 @@ export interface AppState {
   expectation: boolean;
   login: ILoginState;
   dictionary: ICurrentWords;
-  settings: Settings;
-  stats: Stats;
+  settings: ISettings;
+  stats: IStats;
   gameList: Word[];
 }

@@ -3,18 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './components/app/app.component';
-import { DictionaryModule } from './components/dictionary/dictionary.module';
 import { TokenInterceptorService } from './components/navigation/services/token-interceptor.service';
 import { ReduxModule } from './redux/redux.module';
 import { SharedModule } from './shared/shared.module';
 import { NavigationModule } from './components/navigation/navigation.module';
 import { AboutUsModule } from './components/aboutUs/modules/about-us.module';
 import { AboutUsService } from './components/aboutUs/services/about-us.service';
-import { GamesModule } from './components/games/games.module';
-import { ProfileModule } from './components/profile/profile.module';
-import { CardsModule } from './components/cards/cards.module';
 import { StartPageModule } from './components/start-page/start-page.module';
-import { MyGameModule } from './components/games/components/my-game/my-game.module';
+import { HttpRequestInterceptor } from './common/interceptors/http-request-interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,18 +18,14 @@ import { MyGameModule } from './components/games/components/my-game/my-game.modu
     StartPageModule,
     NavigationModule,
     AboutUsModule,
-    GamesModule,
-    CardsModule,
     BrowserModule,
     BrowserAnimationsModule,
     SharedModule,
     ReduxModule,
-    ProfileModule,
-    MyGameModule,
-    DictionaryModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true },
     AboutUsService,
   ],
   bootstrap: [AppComponent],
