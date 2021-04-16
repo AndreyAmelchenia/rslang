@@ -13,6 +13,14 @@
     padding: 30vh 0 0;
   }
 
+  &.is-paused {
+
+    .gs-list__current,
+    .gs-list__answers {
+      animation-play-state: paused;
+    }
+  }
+
   &__current {
     font-size: 49px;
     opacity: 0;
