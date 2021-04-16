@@ -11,13 +11,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Word } from 'src/app/common/models/word.model';
 import { URL_BACK_SERVER } from 'src/app/shared/constants/url-constants';
-
-export interface GameResult {
-  word: string;
-  translate: string;
-  result: boolean;
-  audio: string;
-}
+import { GameResult } from '../../models/games.result.model';
 
 @Component({
   selector: 'app-games-end',

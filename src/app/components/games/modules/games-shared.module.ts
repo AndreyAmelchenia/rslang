@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatSortModule } from '@angular/material/sort';
 import { AngularMaterialModule } from 'src/app/shared/material/material.module';
@@ -7,8 +8,9 @@ import { GamesStartBannerComponent } from '../components/games-start-banner/game
 
 @NgModule({
   declarations: [FullScreenForGamesComponent, GamesEndComponent, GamesStartBannerComponent],
-  imports: [AngularMaterialModule, MatSortModule],
+  imports: [CommonModule, AngularMaterialModule, MatSortModule],
   exports: [
+    CommonModule,
     FullScreenForGamesComponent,
     GamesEndComponent,
     AngularMaterialModule,

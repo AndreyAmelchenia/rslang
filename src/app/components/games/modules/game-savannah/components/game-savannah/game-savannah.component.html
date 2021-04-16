@@ -8,14 +8,23 @@
   <div class="savannah__body">
     <app-games-start-banner
       *ngIf="!play && !openStatistics && paused"
+      [banner]="banner"
       (startGame)="startGame()"
-    ></app-games-start-banner>
-    <!-- <app-game-savannah-start-banner
-      *ngIf="!play && !openStatistics && paused"
-      [gameSavannahStatus]="gameSavannahStatus"
-      (startGame)="startGame()"
-      (changeLang)="changeLang($event)"
-    ></app-game-savannah-start-banner> -->
+    >
+      <div class="savannah__lang">
+        <span
+          *ngFor="let item of langs"
+          [class.is-active]="gameSavannahStatus.currentLang === item"
+          (click)="changeLang(item)"
+          >{{ item }}</span
+        >
+        <mat-icon
+          class="savannah__lang-arrow"
+          [class.is-reverse]="gameSavannahStatus.currentLang === 'en'"
+          >keyboard_backspace
+        </mat-icon>
+      </div>
+    </app-games-start-banner>
     <app-game-savannah-list
       *ngIf="play && !openStatistics && !paused"
       [currentWord]="currentWord"
@@ -31,11 +40,6 @@
       [gameResult]="gameResult"
       (submitResult)="submitResult($event)"
     ></app-games-end>
-    <!-- <app-game-savannah-statistics
-      *ngIf="openStatistics && !play"
-      [words]="words"
-      (repeatGame)="restartGame()"
-    ></app-game-savannah-statistics> -->
   </div>
 </div>
 

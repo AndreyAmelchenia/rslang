@@ -7,12 +7,25 @@ import { AppState } from 'src/app/redux/app.state';
 import { MatDialog } from '@angular/material/dialog';
 import { StatsService } from 'src/app/common/services/stats.service';
 import { IGame } from 'src/app/common/models/stats.model';
-import { GameResult } from 'src/app/components/games/components/games-end/games-end.component';
 import { Router } from '@angular/router';
+import { GamesBannerData } from 'src/app/components/games/models/games-start-banner.model';
+import { GameResult } from 'src/app/components/games/models/games.result.model';
 import { GameSavannahLangs } from '../../models/game-savannah-langs.enum';
 import { GameSavannahStatus } from '../../models/game-savannah-status.model';
 import { GameSavannahService } from '../../services/game-savannah.service';
 import { GameSavannahDialogComponent } from '../game-savannah-dialog/game-savannah-dialog.component';
+
+const bannerData: GamesBannerData = {
+  title: 'Саванна',
+  subtitle:
+    'Мини-игра «Саванна» - это тренировка по переводу пассивного изученного словаря в активную стадию.',
+  description: [
+    'После запуска игры вы увидите падающее слово на английском (или русском, если режим игры RU-> EN) и четыре варианта перевода. Выбрать правильный ответ можно двумя способами:',
+    '1. Кликните по нему мышью;',
+    '2. Используйте клавиши 1, 2, 3, 4.',
+    '3. Выберите режим игры:',
+  ],
+};
 
 @Component({
   selector: 'app-game-savannah',
@@ -21,6 +34,8 @@ import { GameSavannahDialogComponent } from '../game-savannah-dialog/game-savann
 })
 export class GameSavannahComponent implements OnDestroy, OnInit {
   private timerId: ReturnType<typeof setTimeout>;
+
+  langs: string[] = Object.keys(GameSavannahLangs).map((key) => GameSavannahLangs[key]);
 
   subscription!: Subscription;
 
@@ -60,6 +75,8 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
   };
 
   currentSeries = 0;
+
+  banner: GamesBannerData = bannerData;
 
   constructor(
     private gameSavannahService: GameSavannahService,
@@ -110,14 +127,18 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
     this.restartGame();
   }
 
-  changeLang(data: GameSavannahStatus): void {
-    this.gameSavannahService.updateGameStatus(data);
+  changeLang(key: string): void {
+    this.gameSavannahStatus.currentLang = GameSavannahLangs[key];
+    this.gameSavannahService.updateGameStatus(this.gameSavannahStatus);
   }
 
   setDefaultData(): void {
     this.play = true;
     this.openStatistics = false;
     this.paused = false;
+    console.log(this.play, this.openStatistics, this.paused);
+
+    debugger;
     this.clearTimer();
   }
 

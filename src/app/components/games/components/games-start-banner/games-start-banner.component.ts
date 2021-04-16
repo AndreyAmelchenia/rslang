@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { GamesBannerData } from '../../models/games-start-banner.model';
 
 @Component({
   selector: 'app-games-start-banner',
@@ -7,5 +8,11 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GamesStartBannerComponent {
-  @Input() langs: string[] = [];
+  @Input() banner: GamesBannerData;
+
+  @Output() startGame = new EventEmitter();
+
+  start(): void {
+    this.startGame.emit();
+  }
 }
