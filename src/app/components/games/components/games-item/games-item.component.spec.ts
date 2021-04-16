@@ -2,9 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { GamesItemComponent } from './games-item.component';
 import { GameModel } from '../../../../common/models/games.model';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 const testGame: GameModel = {
   id: 1,
@@ -22,7 +22,7 @@ describe('GamesItemComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [GamesItemComponent],
       imports: [HttpClientModule, RouterTestingModule],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   });
 

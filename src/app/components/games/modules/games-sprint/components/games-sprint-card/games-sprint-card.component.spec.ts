@@ -10,7 +10,7 @@ describe('GamesSprintCardComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [GamesSprintCardComponent],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   });
 

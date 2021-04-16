@@ -90,6 +90,11 @@ const initialState: AppState = {
     optional: {
       displayTranslation: true,
       displayHandlingButtons: true,
+      setGame: {
+        groupAmount: 5,
+        groupLevel: 4,
+        hideRequired: true,
+      },
     },
     id: 8,
   },
@@ -129,8 +134,8 @@ const initialState: AppState = {
       {
         date: 20210414,
         learned: 50,
-      }
-    ],   
+      },
+    ],
   },
   gameList: [
     {
@@ -167,9 +172,14 @@ describe('CardsTabComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CardsTabComponent],
-      imports: [HttpClientModule, MatPaginatorModule, NoopAnimationsModule, StoreModule.forRoot({})],
-      providers: [provideMockStore({ initialState: { words: { wordsMock }} })],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+      imports: [
+        HttpClientModule,
+        MatPaginatorModule,
+        NoopAnimationsModule,
+        StoreModule.forRoot({}),
+      ],
+      providers: [provideMockStore({ initialState: { words: { wordsMock } } })],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
     store = TestBed.inject(MockStore);
     store.setState({});
