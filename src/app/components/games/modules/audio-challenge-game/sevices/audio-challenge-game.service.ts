@@ -102,7 +102,7 @@ export class AudioChallengeGameService {
     if (isTranslationChoosed) {
       return;
     }
-    if (index) {
+    if (index >= 0) {
       resultAnswer = currentWord.wordTranslate === currentWord.translationsArray[index];
       currentWord.answer = index;
     }
@@ -150,11 +150,5 @@ export class AudioChallengeGameService {
       },
     );
     console.log(resultState);
-    // const resultStat: IGame = {
-    //   learned: statistic.length,
-    //   tries: 100,
-    //   right: 75,
-    //   series: 10,
-    // };
   }
 }

@@ -34,12 +34,17 @@
       >
         <mat-list-item [ngClass]="{'answer': wordState.currentWord.answer===index}">
           <button
-            mat-button
+            mat-raised-button
+            color="primary"
             (click)="makeChoice(index)"
             [disabled]="wordState.isTranslationChoosed"
           >
             <span class="key-button"> {{index+1}} </span>
-            {{translation}}
+            <span
+              class="translation"
+              [ngClass]="{'correct': translation===wordState.currentWord.wordTranslate&&wordState.isTranslationChoosed, 'incorrect': translation!==wordState.currentWord.wordTranslate}"
+              >{{translation}}</span
+            >
           </button>
           <div *ngIf="wordState.isTranslationChoosed">
             <span

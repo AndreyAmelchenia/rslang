@@ -3,7 +3,6 @@
   overflow: auto;
   position: relative;
   z-index: -3;
-  // background-color: aliceblue;
   background: url('../../../../../../../assets/images/audio.png') center center no-repeat;
   background-size: contain;
   flex: 1;
@@ -11,7 +10,7 @@
 
   &:after {
     content: '';
-    position: absolute;
+    position: fixed;
     z-index: -2;
     top: 0;
     left: 0;

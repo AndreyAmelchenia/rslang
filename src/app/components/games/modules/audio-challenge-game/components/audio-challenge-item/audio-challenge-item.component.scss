@@ -12,15 +12,22 @@ mat-list.mat-list.mat-list-base.list-horizontal {
   justify-content: space-around;
   mat-list-item {
     display: contents;
-    .correct {
-      color: darkgreen;
+    .correct.material-icons {
+      color: lawngreen;
     }
   }
 }
 .answer {
+  .translation{
+    &.incorrect {
+      color: red;
+    }
+  }
 
-  .mat-focus-indicator.mat-button.mat-button-base.mat-button-disabled {
-    color: black;
+}
+.translation{
+  &.correct {
+    color: lawngreen;
   }
 }
 .item-container {
