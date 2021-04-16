@@ -1,6 +1,7 @@
 <div *ngIf="words$|async as words">
   <div *ngIf="words.length!==0; else empty">
     <mat-grid-list [cols]="cols | async" [rowHeight]="rowHeight |async">
+      <app-buttons [color]="color" [words]="words"></app-buttons>
       <mat-grid-tile *ngFor="let word of words; trackBy:identify">
         <app-dictionary-item
           [word]="word"

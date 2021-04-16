@@ -5,12 +5,6 @@
         {{tab.icon}}
       </mat-icon>
     </ng-template>
-    <app-cards-tab
-      *ngIf="expectation | async; else elseBlock"
-      [group]="tab.group"
-      [color]="tab.color"
-    ></app-cards-tab>
-
-    <ng-template #elseBlock><mat-spinner></mat-spinner></ng-template>
+    <app-cards-tab [group]="tab.group" [color]="tab.color"></app-cards-tab>
   </mat-tab>
 </mat-tab-group>

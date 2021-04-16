@@ -3,7 +3,6 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-// import { LocalStorageService } from 'src/app/common/services/storage/local.service';
 import { SessionService } from 'src/app/common/services/storage/session.service';
 import { WordsService } from 'src/app/common/services/words-service/words.service';
 import { ArticlesActionsGameList, gameWordsList, LoadListGame } from '../actions/listGame.actions';
@@ -37,7 +36,7 @@ export class GameListEffects {
                   })
                   .pipe(
                     mergeMap((wordsAdd) => {
-                      if (wordsAdd[0].paginatedResults.length === 60) {
+                      if (wordsAdd[0].paginatedResults.length === wordsPerPage) {
                         return of(gameWordsList({ Words: wordsAdd[0].paginatedResults }));
                       }
                       return this.wordsService

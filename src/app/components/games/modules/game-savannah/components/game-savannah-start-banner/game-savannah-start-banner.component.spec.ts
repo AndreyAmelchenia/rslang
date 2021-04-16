@@ -8,9 +8,8 @@ describe('GameSavannahStartBannerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GameSavannahStartBannerComponent ]
-    })
-    .compileComponents();
+      declarations: [GameSavannahStartBannerComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

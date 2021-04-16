@@ -8,9 +8,8 @@ describe('GameSavannahStaticticsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GameSavannahStaticticsComponent ]
-    })
-    .compileComponents();
+      declarations: [GameSavannahStaticticsComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

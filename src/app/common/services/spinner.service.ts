@@ -25,7 +25,6 @@ export class LoadingService {
     if (!url) {
       throw new Error('The request URL must be provided to the LoadingService.setLoading function');
     }
-    console.log('loading');
     if (loading === true) {
       this.loadingMap.set(url, loading);
       this.loadingSub.next(true);
