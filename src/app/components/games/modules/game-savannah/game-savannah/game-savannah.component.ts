@@ -1,9 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Word } from 'src/app/common/models/word.model';
 import { Subscription } from 'rxjs';
 import { StatsService } from 'src/app/common/services/stats.service';
 import { IGame } from 'src/app/common/models/stats.model';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/redux/app.state';
+import { selectGameList } from 'src/app/redux/selectors/listGame.selectors';
+import { first } from 'rxjs/operators';
+import { LoadStatWords } from 'src/app/redux/actions/words.actions';
 import { GameSavannahLangs } from '../models/game-savannah-langs.enum';
 import { GameSavannahStatus } from '../models/game-savannah-status.model';
 import { GameSavannahService } from '../services/game-savannah.service';
@@ -55,13 +59,15 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
 
   constructor(
     private gameSavannahService: GameSavannahService,
-    private http: HttpClient,
     private statsService: StatsService,
+    private store: Store<AppState>,
   ) {
-    this.http
-      .get('assets/data/words.json')
-      .subscribe((res: Word[]) => this.setWords(this.shufle(res)));
-    this.resetStatistics();
+    this.store
+      .select(selectGameList())
+      .pipe(first())
+      .subscribe((words) => {
+        this.setWords(this.shufle(words));
+      });
   }
 
   ngOnInit(): void {
@@ -157,11 +163,17 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
       this.paused = true;
       this.gameSavannahStatistic.tries += 1;
       if (answer !== this.getAnswer()) {
-        this.words[this.currentWordId].statistics = false;
+        this.store.dispatch(LoadStatWords({ word: this.words[this.currentWordId], error: true }));
+        this.words = this.words.map((el, ind) =>
+          ind === this.currentWordId ? { ...el, statistics: false } : el,
+        );
         this.gameSavannahStatus.errors += 1;
         this.currentSeries = 0;
       } else {
-        this.words[this.currentWordId].statistics = true;
+        this.words = this.words.map((el, ind) =>
+          ind === this.currentWordId ? { ...el, statistics: true } : el,
+        );
+        this.store.dispatch(LoadStatWords({ word: this.words[this.currentWordId], error: false }));
         this.gameSavannahStatus.currentCounts += 1;
         this.gameSavannahStatistic.right += 1;
         this.currentSeries += 1;
