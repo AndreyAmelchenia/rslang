@@ -126,13 +126,35 @@ export class AudioChallengeGameService {
 
   formattedStatistic() {
     const { resultList: statistic } = this.getCurrentState();
+    let session = 0;
+    const resultState: IGame = statistic.reduce(
+      (acc, cur, index, arr) => {
+        const result = { ...acc };
+        if (cur.result) {
+          result.right += 1;
+          session += 1;
+        }
+        if (!cur.result) {
+          result.series = result.series <= session ? session : result.series;
+          session = 0;
+        }
+        result.tries = arr.length - acc.right;
 
-    const resultStat: IGame = {
-      learned: statistic.length,
-      tries: 100,
-      right: 75,
-      series: 10,
-    };
-    console.log(statistic, resultStat);
+        return result;
+      },
+      {
+        learned: statistic.length,
+        tries: 0,
+        right: 0,
+        series: 0,
+      },
+    );
+    console.log(resultState);
+    // const resultStat: IGame = {
+    //   learned: statistic.length,
+    //   tries: 100,
+    //   right: 75,
+    //   series: 10,
+    // };
   }
 }
