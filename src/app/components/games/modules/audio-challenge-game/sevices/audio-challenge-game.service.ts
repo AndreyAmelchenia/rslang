@@ -5,6 +5,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { AppState } from 'src/app/redux/app.state';
 import { selectGameList } from 'src/app/redux/selectors/listGame.selectors';
 import { Word } from 'src/app/common/models/word.model';
+import { LoadStatWords } from 'src/app/redux/actions/words.actions';
+import { first } from 'rxjs/operators';
 import { AudioChallengeState, AudioChallengeWord } from '../models/game-adio-challenge.model';
 import { GAME_LENGHT, initialAudioChallengeState } from '../constans/audio-challenge.constants';
 
@@ -44,16 +46,19 @@ export class AudioChallengeGameService {
   }
 
   getWords() {
-    this.store.select(selectGameList()).subscribe((words) => {
-      this.setGameState({
-        wordsInGame: words,
+    this.store
+      .select(selectGameList())
+      .pipe(first())
+      .subscribe((words) => {
+        this.setGameState({
+          wordsInGame: words,
+        });
+        const [currentWord] = words;
+        this.setGameState({
+          currentWord: this.createAudioChallengeWord(currentWord),
+        });
+        return undefined;
       });
-      const [currentWord] = words;
-      this.setGameState({
-        currentWord: this.createAudioChallengeWord(currentWord),
-      });
-      return undefined;
-    });
   }
 
   nextWord() {
@@ -103,7 +108,7 @@ export class AudioChallengeGameService {
     if (index) {
       resultUnswer = currentWord.wordTranslate === currentWord.translationsArray[index];
     }
-
+    this.store.dispatch(LoadStatWords({ word: currentWord, error: !resultUnswer }));
     const resultListNew = [...resultList, { word: currentWord, result: resultUnswer }];
     this.setGameState({
       resultList: resultListNew,

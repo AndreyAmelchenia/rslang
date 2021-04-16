@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { first } from 'rxjs/operators';
 
 import { Word } from 'src/app/common/models/word.model';
 import { StatsService } from 'src/app/common/services/stats.service';
+import { LoadStatWords } from 'src/app/redux/actions/words.actions';
 import { AppState } from 'src/app/redux/app.state';
 import { selectGameList } from 'src/app/redux/selectors/listGame.selectors';
 import { StatisticGame } from '../../game-statistic.model';
@@ -39,7 +41,7 @@ export class MyGameListComponent implements OnInit {
 
   wordsCount = 0;
 
-  amount = 20;
+  amount: number;
 
   amountTotalWords = 0;
 
@@ -82,9 +84,13 @@ export class MyGameListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.store.select(selectGameList()).subscribe((gameList) => {
-      this.words = gameList;
-    });
+    this.store
+      .select(selectGameList())
+      .pipe(first())
+      .subscribe((gameList) => {
+        this.words = gameList;
+        this.amount = gameList.length;
+      });
     this.tryCount = 0;
     this.solvedWords = new Set<Word>();
     this.unsolvedWords = new Set<Word>();
@@ -115,7 +121,6 @@ export class MyGameListComponent implements OnInit {
       this.bestSeries.push(this.countGoodAnswer);
       this.countAllTries += 1;
       this.getStatistic();
-      this.openDialog();
     }
   }
 
@@ -133,11 +138,12 @@ export class MyGameListComponent implements OnInit {
         }
         this.getStatistic();
         this.openDialog();
+        this.getStatWord();
       }
     } else {
       const elem = event.container.element.nativeElement.querySelector('.inside');
       elem.appendChild(event.item.element.nativeElement);
-      this.solvedWords.add(event.item.data.word);
+      this.solvedWords.add(event.item.data);
       this.playSoundScore();
 
       this.countImageArrayLength += 1;
@@ -148,6 +154,7 @@ export class MyGameListComponent implements OnInit {
       this.bestSeries.push(this.countGoodAnswer);
       this.amountTotalWords += 1;
       if (this.amountTotalWords === this.amount) {
+        this.getStatWord();
         this.getStatistic();
         this.openDialog();
       }
@@ -182,7 +189,7 @@ export class MyGameListComponent implements OnInit {
 
   getStatistic() {
     this.statsService.saveMyGameStats({
-      learned: this.solvedWords.size,
+      learned: this.amount,
       tries: this.countAllTries,
       right: this.solvedWords.size,
       series: this.getMaxOfBestAnswers(this.bestSeries),
@@ -206,5 +213,14 @@ export class MyGameListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe();
+  }
+
+  getStatWord() {
+    this.unsolvedWords.forEach((el) => {
+      this.store.dispatch(LoadStatWords({ word: el, error: true }));
+    });
+    this.solvedWords.forEach((el) => {
+      this.store.dispatch(LoadStatWords({ word: el, error: false }));
+    });
   }
 }

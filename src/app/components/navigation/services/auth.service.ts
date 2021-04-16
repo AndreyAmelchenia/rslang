@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { SessionService } from '../../../common/services/storage/session.service';
 import { loginSuccess } from '../../../redux/actions/auth.actions';
 import { IHttpUser, IUser } from '../../../redux/models/user.models';
@@ -24,8 +25,10 @@ export class AuthService {
     return this.http.post<IUser>(this.registerUrl, user);
   }
 
-  loginUser(user: IHttpUser): Observable<IUser> {
-    return this.http.post<IUser>(this.loginUrl, user);
+  loginUser(user: IHttpUser, reg: boolean): Observable<{ user: IUser; reg: boolean }> {
+    return this.http
+      .post<IUser>(this.loginUrl, user)
+      .pipe(map((userRes) => ({ user: userRes, reg })));
   }
 
   logout() {
@@ -35,7 +38,7 @@ export class AuthService {
   isAuth() {
     const user: IUser | null = this.getUser();
     if (user) {
-      this.store.dispatch(loginSuccess({ user, start: true }));
+      this.store.dispatch(loginSuccess({ user, start: true, reg: false }));
     }
   }
 
