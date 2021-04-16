@@ -21,7 +21,9 @@ export class HttpRequestInterceptor implements HttpInterceptor {
   constructor(private loading: LoadingService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    this.loading.setLoading(true, request.url);
+    if (request.method === 'GET') {
+      this.loading.setLoading(true, request.url);
+    }
     return next
       .handle(request)
       .pipe(

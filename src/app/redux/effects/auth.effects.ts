@@ -8,32 +8,34 @@ import { StatsService } from 'src/app/common/services/stats.service';
 import { SettingsService } from 'src/app/common/services/settings.service';
 import { SessionService } from 'src/app/common/services/storage/session.service';
 import { Store } from '@ngrx/store';
-import * as authActions from '../actions/auth.actions';
+import { login, loginFailure, loginSuccess, signUp, signUpFailure } from '../actions/auth.actions';
 import { ActionType } from '../models/authAction.models';
-import { IUser } from '../models/user.models';
 import { AuthService } from '../../components/navigation/services/auth.service';
 import { saveSettings } from '../actions/settings.actions';
 import { saveStatistics } from '../actions/stats.actions';
+import { initialState as initialStateSetting } from '../reducers/settings.reducer';
+import { initialState as initialStateStats } from '../reducers/stats.reducer';
 
 @Injectable()
 export class AuthEffects {
   login$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ActionType.LogIn),
-      exhaustMap((action: any) =>
-        this.authService.loginUser(action.user).pipe(
-          map((user: IUser) =>
-            authActions.loginSuccess({
+      ofType(login),
+      exhaustMap(({ user, reg }) =>
+        this.authService.loginUser(user, reg).pipe(
+          map((res) =>
+            loginSuccess({
               user: {
-                userId: user.userId,
-                name: user.name,
-                token: user.token,
-                photo: user.photo,
+                userId: res.user.userId,
+                name: res.user.name,
+                token: res.user.token,
+                photo: res.user.photo,
               },
               start: false,
+              reg: res.reg,
             }),
           ),
-          catchError((error) => of(authActions.loginFailure({ error }))),
+          catchError((error) => of(loginFailure({ error }))),
         ),
       ),
     ),
@@ -45,40 +47,22 @@ export class AuthEffects {
         ofType(ActionType.LogInSuccess),
         tap((action: any) => {
           this.sessionService.setItem('user', action.user);
-
           if (!action.start) {
             this.router.navigateByUrl('/');
+          }
+          if (action.reg) {
             this.store.dispatch(
               saveSettings({
-                payload: {
-                  wordsPerDay: 10,
-                  optional: {
-                    displayTranslation: true,
-                    displayHandlingButtons: true,
-                    setGame: {
-                      groupAmount: 10,
-                      groupLevel: 1,
-                      hideRequired: false,
-                    },
-                  },
-                },
+                payload: initialStateSetting,
               }),
             );
             this.store.dispatch(
               saveStatistics({
-                shortTerm: {
-                  date: Date.now(),
-                  audio: { learned: 0, tries: 0, right: 0, series: 0 },
-                  myGame: { learned: 0, tries: 0, right: 0, series: 0 },
-                  savanna: { learned: 0, tries: 0, right: 0, series: 0 },
-                  sprint: { learned: 0, tries: 0, right: 0, series: 0 },
-                },
-                longTerm: [{ date: Date.now(), learned: 0 }],
+                ...initialStateStats,
               }),
             );
           } else {
-            this.settingsService.getSettingsFromServer();
-            this.statsService.getStatisticsFromServer();
+            this.settingsService.getSettingsFromServer(!action.reg);
           }
         }),
       ),
@@ -87,15 +71,16 @@ export class AuthEffects {
 
   signUp$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(authActions.signUp),
+      ofType(signUp),
       switchMap(({ user }) =>
         this.authService.registerUser(user).pipe(
           map(() => {
-            return authActions.login({
+            return login({
               user: { email: user.get('email'), password: user.get('password') },
+              reg: true,
             });
           }),
-          catchError((error) => of(authActions.signUpFailure({ error }))),
+          catchError((error) => of(signUpFailure({ error }))),
         ),
       ),
     ),
