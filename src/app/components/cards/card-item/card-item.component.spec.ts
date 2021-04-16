@@ -1,3 +1,4 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StoreModule } from '@ngrx/store';
 
@@ -38,6 +39,7 @@ describe('CardItemComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [CardItemComponent],
       imports: [StoreModule.forRoot({})],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
     }).compileComponents();
   });
 
