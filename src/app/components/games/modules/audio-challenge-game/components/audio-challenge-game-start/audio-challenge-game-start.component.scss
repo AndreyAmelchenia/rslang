@@ -2,7 +2,7 @@
   height: 100%;
   display: grid;
   place-items: center;
-} 
+}
 .audio-start-container {
   height: 100%;
   display: grid;
@@ -11,22 +11,8 @@
 */
 
 :host {
-  flex: 1;
   position: relative;
-  background: url(../../../../../../../assets/images/audio.png) center center no-repeat;
-  background-size: cover;
-  color: black;
-}
-
-:host:after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  z-index: 2;
+  color: #fff;
 }
 
 .audio-start-container {
@@ -34,7 +20,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 100px;
+  margin-top: 20vh;
   position: relative;
   z-index: 3;
 }

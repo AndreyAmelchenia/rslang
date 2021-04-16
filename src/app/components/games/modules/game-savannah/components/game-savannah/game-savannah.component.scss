@@ -1,6 +1,6 @@
 :host {
   position: relative;
-  background: url('../../../../../../assets/images/savannah.jpg') center center no-repeat;
+  background: url('../../../../../../../assets/images/savannah.jpg') center center no-repeat;
   background-size: cover;
   flex: 1;
 }
@@ -11,6 +11,8 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
   padding: 0;
   background-color: rgba(black, 0.5);
   transition: background-color .3s ease-in-out;

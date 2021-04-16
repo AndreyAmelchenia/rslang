@@ -11,8 +11,12 @@
         <button mat-card-avatar mat-mini-fab (click)="playWordAudio()">
           <i class="material-icons">volume_up</i>
         </button>
-        <h3 *ngIf="wordState.isTranslationChoosed">{{wordState.currentWord.word}}</h3>
-        <h3 *ngIf="wordState.isTranslationChoosed">{{wordState.currentWord.transcription}}</h3>
+        <mat-card-title *ngIf="wordState.isTranslationChoosed">
+          {{wordState.currentWord.word}}
+        </mat-card-title>
+        <mat-card-subtitle *ngIf="wordState.isTranslationChoosed">
+          {{wordState.currentWord.transcription}}
+        </mat-card-subtitle>
       </mat-card-header>
       <div class="img-card-container">
         <img
@@ -28,17 +32,25 @@
       <ng-container
         *ngFor="let translation of wordState.currentWord.translationsArray; index as index"
       >
-        <mat-list-item>
+        <mat-list-item [ngClass]="{'answer': wordState.currentWord.answer===index}">
           <button
-            mat-button
+            mat-raised-button
+            color="primary"
             (click)="makeChoice(index)"
             [disabled]="wordState.isTranslationChoosed"
           >
             <span class="key-button"> {{index+1}} </span>
-            {{translation}}
+            <span
+              class="translation"
+              [ngClass]="{'correct': translation===wordState.currentWord.wordTranslate&&wordState.isTranslationChoosed, 'incorrect': translation!==wordState.currentWord.wordTranslate}"
+              >{{translation}}</span
+            >
           </button>
           <div *ngIf="wordState.isTranslationChoosed">
-            <span class="material-icons" *ngIf="translation===wordState.currentWord.wordTranslate">
+            <span
+              class="material-icons correct"
+              *ngIf="translation===wordState.currentWord.wordTranslate"
+            >
               check_circle_outline
             </span>
             <span class="material-icons" *ngIf="translation!==wordState.currentWord.wordTranslate">
