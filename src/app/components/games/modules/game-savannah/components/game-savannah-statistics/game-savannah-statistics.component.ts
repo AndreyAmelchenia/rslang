@@ -50,6 +50,7 @@ export class GameSavannahStatisticsComponent implements OnInit {
 
   playCurrentWord(i: number): void {
     if (this.currentWord === i) {
+      
       this.currentWord = -1;
       this.stopAudio();
     } else {

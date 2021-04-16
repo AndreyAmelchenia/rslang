@@ -1,4 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -93,18 +94,43 @@ const initialState: AppState = {
     id: 8,
   },
   stats: {
-    totalLearned: 52,
-    totalRightPercent: 85,
-    longestSeries: {
-      savanna: 25,
-      sprint: 10,
-      audio: 15,
-      myGame: 21,
+    shortTerm: {
+      date: 20210415,
+      savanna: {
+        learned: 52,
+        tries: 52,
+        right: 20,
+        series: 8,
+      },
+      sprint: {
+        learned: 60,
+        tries: 68,
+        right: 40,
+        series: 10,
+      },
+      audio: {
+        learned: 30,
+        tries: 35,
+        right: 30,
+        series: 25,
+      },
+      myGame: {
+        learned: 25,
+        tries: 25,
+        right: 20,
+        series: 5,
+      },
     },
-    dailyStatus: {
-      learned: 10,
-      rightPercent: 85,
-    },
+    longTerm: [
+      {
+        date: 20210415,
+        learned: 250,
+      },
+      {
+        date: 20210414,
+        learned: 50,
+      }
+    ],   
   },
   gameList: [
     {
@@ -141,13 +167,9 @@ describe('CardsTabComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CardsTabComponent],
-      imports: [
-        HttpClientModule,
-        MatPaginatorModule,
-        NoopAnimationsModule,
-        StoreModule.forRoot({}),
-      ],
-      providers: [provideMockStore({ initialState: { words: { wordsMock } } })],
+      imports: [HttpClientModule, MatPaginatorModule, NoopAnimationsModule, StoreModule.forRoot({})],
+      providers: [provideMockStore({ initialState: { words: { wordsMock }} })],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
     }).compileComponents();
     store = TestBed.inject(MockStore);
     store.setState({});
