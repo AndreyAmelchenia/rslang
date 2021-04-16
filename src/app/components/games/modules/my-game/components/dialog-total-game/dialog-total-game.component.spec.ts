@@ -53,7 +53,7 @@ describe('DialogTotalGameComponent', () => {
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} },
       ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
     store = TestBed.inject(MockStore);
     store.setState({ isAuthenticated: true });

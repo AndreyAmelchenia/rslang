@@ -112,6 +112,7 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
       this.words = this.wordsAll.slice();
       this.setDifferentWordAndTranslation();
     });
+    document.addEventListener('keydown', this.keyPressAction.bind(this));
   }
 
   ngOnDestroy() {
@@ -122,6 +123,7 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
     if (this.countDown) {
       this.countDown.unsubscribe();
     }
+    document.removeEventListener('keydown', this.keyPressAction);
   }
 
   onStart() {
@@ -234,6 +236,16 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
       this.isHideTrue = !this.isHideTrue;
     }
     this.countHelp += 1;
+  }
+
+  keyPressAction(event: KeyboardEvent): void {
+    if (event.key === '1') {
+      this.onAgree(true);
+    } else if (event.key === '2') {
+      this.onAgree(false);
+    } else if (event.key === '3') {
+      this.onHelp();
+    }
   }
 
   stopGame() {

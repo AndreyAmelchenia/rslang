@@ -6,8 +6,8 @@ import { AggregatedWordsRedux } from 'src/app/common/models/aggregatedWords.mode
 import { AppState } from 'src/app/redux/app.state';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { GamesSprintPlayComponent } from './games-sprint-play.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { GamesSprintPlayComponent } from './games-sprint-play.component';
 
 const wordsMock: AggregatedWordsRedux[] = [
   {
@@ -89,6 +89,11 @@ const initialState: AppState = {
     optional: {
       displayTranslation: true,
       displayHandlingButtons: true,
+      setGame: {
+        groupAmount: 5,
+        groupLevel: 4,
+        hideRequired: true,
+      },
     },
     id: 8,
   },
@@ -128,8 +133,8 @@ const initialState: AppState = {
       {
         date: 20210414,
         learned: 50,
-      }
-    ],   
+      },
+    ],
   },
   gameList: [
     {
@@ -191,10 +196,10 @@ describe('GamesSprintPlayComponent', () => {
       declarations: [GamesSprintPlayComponent],
       imports: [HttpClientTestingModule, BrowserAnimationsModule, StoreModule.forRoot({})],
       providers: [provideMockStore({ initialState })],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
     store = TestBed.inject(MockStore);
-   // store.setState({ gameList: {}});
+    // store.setState({ gameList: {}});
   });
 
   beforeEach(() => {

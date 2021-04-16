@@ -12,7 +12,7 @@ describe('MyGameStartComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [MyGameStartComponent],
       imports: [RouterTestingModule],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   });
 
