@@ -43,6 +43,7 @@ export class ProfileSettingsComponent implements OnInit {
     const payload = {
       wordsPerDay,
       optional: {
+        ...this.settings.optional,
         displayTranslation,
         displayHandlingButtons,
       },

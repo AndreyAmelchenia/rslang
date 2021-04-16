@@ -3,11 +3,9 @@
   [ngStyle]="{'background': word.userWord?.difficulty === 'hard' ? colorRGB(0.7) : colorRGB()}"
 >
   <mat-card-header>
-    <mat-card-title-group>
-      <mat-card-title>{{word.word}}</mat-card-title>
-      <mat-card-subtitle>{{word.transcription}}</mat-card-subtitle>
-      <mat-card-subtitle>{{word.wordTranslate}}</mat-card-subtitle>
-    </mat-card-title-group>
+    <mat-card-title>{{word.word}}</mat-card-title>
+    <mat-card-subtitle>{{word.transcription}}</mat-card-subtitle>
+    <mat-card-subtitle>{{word.wordTranslate}}</mat-card-subtitle>
     <img
       mat-card-md-image
       [src]="'https://andey-rslang-back-end.herokuapp.com/' + word.image"

@@ -37,7 +37,6 @@ export class DictionaryListComponent {
 
   @Output() restoreWordEvent = new EventEmitter();
 
-  // MatPaginator Output
   pageEvent: PageEvent;
 
   data: Observable<Word[]>;

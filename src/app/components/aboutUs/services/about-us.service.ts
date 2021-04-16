@@ -7,7 +7,6 @@ import { AboutUs } from '../models/about-us.model';
   providedIn: 'root',
 })
 export class AboutUsService {
-  // eslint-disable-next-line prettier/prettier
   private aboutUs: AboutUs[] = [
     new AboutUs(
       1,

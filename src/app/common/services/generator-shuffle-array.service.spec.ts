@@ -36,7 +36,7 @@ describe('GeneratorShuffleArrayService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideMockStore({ initialState: { gameList: { gameListMock }} })],
+      providers: [provideMockStore({ initialState: { gameList: { gameListMock } } })],
     });
     service = TestBed.inject(GeneratorShuffleArrayService);
     store = TestBed.inject(MockStore);

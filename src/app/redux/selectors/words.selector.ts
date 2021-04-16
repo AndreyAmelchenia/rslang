@@ -16,8 +16,6 @@ export const selectWords = createSelector(selectFeature, (state: AggregatedWords
 
 export const selectWordsByGroup = (group: number) =>
   createSelector(selectFeature, (state: AggregatedWordsRedux[]) => {
-    // console.log(state);
-
     return [
       {
         ...state[0],
@@ -48,6 +46,8 @@ export const selectBoolLengthWordsByGroupAndDeleted = (
   );
 
 export const wordsInCards = createFeatureSelector(wordsFeatureKey);
+export const selectWordById = (wordId: string) =>
+  createSelector(selectFeatureWords, (words: Word[]) => words.find((el) => el._id === wordId));
 
 export const wordsInCardsArr = createSelector(
   wordsInCards,

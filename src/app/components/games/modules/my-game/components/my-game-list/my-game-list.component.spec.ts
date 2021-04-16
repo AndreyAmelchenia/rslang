@@ -28,7 +28,7 @@ const wordsMock: Word[] = [
     textMeaningTranslate: 'textMeaningTranslate1',
     textExampleTranslate: 'textExampleTranslate1',
     userWord: {
-    difficulty: 'easy',
+      difficulty: 'easy',
       optional: {
         repeat: 1,
         failCount: 0,
@@ -52,11 +52,11 @@ const wordsMock: Word[] = [
     textExampleTranslate: 'textExampleTranslate2',
     userWord: {
       difficulty: 'hard',
-        optional: {
-          repeat: 2,
-          failCount: 1,
-        },
+      optional: {
+        repeat: 2,
+        failCount: 1,
       },
+    },
   },
 ];
 
@@ -240,11 +240,16 @@ describe('MyGameListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [MyGameListComponent],
-      imports: [HttpClientTestingModule, RouterTestingModule, MatDialogModule, StoreModule.forRoot({})],
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule,
+        MatDialogModule,
+        StoreModule.forRoot({}),
+      ],
       providers: [
         provideMockStore({ initialState }),
         { provide: MAT_DIALOG_DATA, useValue: {} },
-        { provide: MatDialogRef, useValue: {} }
+        { provide: MatDialogRef, useValue: {} },
       ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
     }).compileComponents();

@@ -9,6 +9,11 @@ export const initialState: ISettings = {
   optional: {
     displayTranslation: true,
     displayHandlingButtons: true,
+    setGame: {
+      groupAmount: 10,
+      groupLevel: 1,
+      hideRequired: false,
+    },
   },
 };
 
