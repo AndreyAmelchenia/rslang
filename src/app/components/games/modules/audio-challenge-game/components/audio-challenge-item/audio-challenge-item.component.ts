@@ -1,5 +1,5 @@
 import { Component, HostListener, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { API_URL, GAME_LENGHT } from '../../constans/audio-challenge.constants';
+import { API_URL, GAME_LENGTH } from '../../constants/audio-challenge.constants';
 import { AudioChallengeState } from '../../models/game-adio-challenge.model';
 import { AudioChallengeGameService } from '../../sevices/audio-challenge-game.service';
 
@@ -11,7 +11,7 @@ import { AudioChallengeGameService } from '../../sevices/audio-challenge-game.se
 export class AudioChallengeItemComponent implements OnChanges {
   apiUrl = API_URL;
 
-  gameLength = GAME_LENGHT;
+  gameLength = GAME_LENGTH;
 
   @Input()
   wordState: AudioChallengeState;

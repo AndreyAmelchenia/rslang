@@ -4,6 +4,7 @@ import { of } from 'rxjs';
 
 // import { filter, map } from 'rxjs/operators';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { GamesListComponent } from './games-list.component';
 import { GamesService } from '../../../../common/services/games.service';
 import { GameModel } from '../../../../common/models/games.model';
@@ -43,6 +44,7 @@ describe('GamesListComponent', () => {
         { provide: BreakpointObserver, useValue: { observe: () => of(testState) } },
       ],
       imports: [HttpClientModule],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   });
 

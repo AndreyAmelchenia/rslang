@@ -15,8 +15,6 @@ export class GameSavannahHeadComponent {
 
   @Output() restartGame = new EventEmitter();
 
-  langs: string[] = Object.keys(GameSavannahLangs).map((key) => GameSavannahLangs[key]);
-
   attempts = new Array(5);
 
   changeLang(key: string): void {

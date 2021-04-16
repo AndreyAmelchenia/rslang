@@ -15,5 +15,6 @@ export interface AudioChallengeState {
 }
 
 export interface AudioChallengeWord extends Word {
+  answer: number;
   translationsArray: string[];
 }
