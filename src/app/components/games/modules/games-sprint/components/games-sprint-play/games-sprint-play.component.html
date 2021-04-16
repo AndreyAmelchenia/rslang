@@ -2,7 +2,9 @@
   <div *ngIf="play">
     <h2>Время игры 60 секунд!</h2>
     <mat-card-actions>
-      <button mat-raised-button color="accent" class="start-button" (click)="onStart()">Старт</button>
+      <button mat-raised-button color="accent" class="start-button" (click)="onStart()">
+        Старт
+      </button>
       <button mat-raised-button color="primary" (click)="goBack()">Назад</button>
     </mat-card-actions>
     <div class="icons">
@@ -22,9 +24,32 @@
       ></app-games-sprint-card>
     </div>
     <mat-card-actions>
-      <button mat-raised-button color="warn" [disabled]="!start" (click)="onAgree(false)" [@changeButton]="isHideFalse ? 'hide' : 'show'">НЕВЕРНО</button>
-      <button mat-raised-button color="primary" [disabled]="!start" (click)="onAgree(true)" [@changeButton]="isHideTrue ? 'hide' : 'show'">ВЕРНО</button><br>
-      <button mat-raised-button class="help-button" [disabled]="(countHelp>=3 || !start) ? true : false" (click)="onHelp()">Подсказка</button>
+      <button
+        mat-raised-button
+        color="warn"
+        [disabled]="!start"
+        (click)="onAgree(false)"
+        [@changeButton]="isHideFalse ? 'hide' : 'show'"
+      >
+        НЕВЕРНО
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="!start"
+        (click)="onAgree(true)"
+        [@changeButton]="isHideTrue ? 'hide' : 'show'"
+      >
+        ВЕРНО</button
+      ><br />
+      <button
+        mat-raised-button
+        class="help-button"
+        [disabled]="(countHelp>=3 || !start) ? true : false"
+        (click)="onHelp()"
+      >
+        Подсказка
+      </button>
     </mat-card-actions>
   </div>
   <div *ngIf="end">

@@ -1,17 +1,15 @@
 import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Location } from '@angular/common';
-import { Router } from '@angular/router';
-
 import { Word } from 'src/app/common/models/word.model';
 import { GeneratorShuffleArrayService } from 'src/app/common/services/generator-shuffle-array.service';
 import { selectGameList } from 'src/app/redux/selectors/listGame.selectors';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/redux/app.state';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CssConstants } from '../../../../../../shared/constants/css-constants';
 import { DataConstants } from '../../../../../../shared/constants/data-constants';
 import { GamesSprintService } from '../../services/games-sprint.service';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 
 const wordsQuantityPerCard = 1;
 
@@ -19,18 +17,20 @@ const wordsQuantityPerCard = 1;
   selector: 'app-games-sprint-play',
   animations: [
     trigger('changeButton', [
-      state('hide', style({
-        opacity: 0,
-      })),
-      state('show', style({
-        opacity: 1,
-      })),
-      transition('hide => show', [
-        animate('1s')
-      ]),
-      transition('show => hide', [
-        animate('0.5s')
-      ]),
+      state(
+        'hide',
+        style({
+          opacity: 0,
+        }),
+      ),
+      state(
+        'show',
+        style({
+          opacity: 1,
+        }),
+      ),
+      transition('hide => show', [animate('1s')]),
+      transition('show => hide', [animate('0.5s')]),
     ]),
   ],
   templateUrl: './games-sprint-play.component.html',
@@ -119,9 +119,9 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
     this.deltaInScore = 10;
     this.play = false;
     this.end = true;
-    if(this.countDown) {
+    if (this.countDown) {
       this.countDown.unsubscribe();
-   }
+    }
   }
 
   onStart() {
@@ -147,7 +147,7 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   }
 
   setWord() {
-    if(this.words.length < 3) {
+    if (this.words.length < 3) {
       this.words = this.wordsAll.slice();
     }
     this.wordsInCard = this.setRandomWord(this.words.length, wordsQuantityPerCard).map(
@@ -232,7 +232,7 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
       this.isHideFalse = !this.isHideFalse;
     } else if (this.countHelp < 3) {
       this.isHideTrue = !this.isHideTrue;
-    } 
+    }
     this.countHelp += 1;
   }
 
@@ -252,6 +252,6 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   }
 
   goBack(): void {
-    this.location.back(); 
+    this.location.back();
   }
 }

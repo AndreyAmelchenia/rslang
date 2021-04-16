@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { GamesSettingsDialogComponent } from '../games-settings-dialog/games-settings-dialog.component';
 
 @Component({
   selector: 'app-games-settings',
@@ -6,6 +8,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./games-settings.component.scss'],
 })
 export class GamesSettingsComponent {
-  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
-  constructor() {}
+  constructor(public dialog: MatDialog) {}
+
+  openDialogSettings() {
+    const dialogRef = this.dialog.open(GamesSettingsDialogComponent);
+    dialogRef.afterClosed().subscribe();
+  }
 }

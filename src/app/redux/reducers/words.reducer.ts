@@ -3,6 +3,7 @@ import { AggregatedWords, AggregatedWordsRedux } from 'src/app/common/models/agg
 import { Word } from '../../common/models/word.model';
 import {
   AddDifficultyWords,
+  AddStatWords,
   addWords,
   BackWord,
   retrievedWordsList,
@@ -69,7 +70,37 @@ export const booksReducer = createReducer(
       },
     ];
   }),
-
+  on(AddStatWords, (state, { wordId, error }) => {
+    return [
+      {
+        ...state[0],
+        paginatedResults: state[0].paginatedResults.map((el) =>
+          el._id === wordId
+            ? {
+                ...el,
+                userWord: el.userWord
+                  ? {
+                      ...el.userWord,
+                      optional: {
+                        repeat: el.userWord.optional.repeat + 1,
+                        failCount: error
+                          ? el.userWord.optional.failCount + 1
+                          : el.userWord.optional.failCount,
+                      },
+                    }
+                  : {
+                      difficulty: 'easy',
+                      optional: {
+                        repeat: 1,
+                        failCount: error ? 1 : 0,
+                      },
+                    },
+              }
+            : el,
+        ),
+      },
+    ];
+  }),
   on(addWords, (state, { word }) => {
     const currentWord: Word = {
       ...word,

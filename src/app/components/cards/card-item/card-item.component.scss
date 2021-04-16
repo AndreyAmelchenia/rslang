@@ -7,6 +7,9 @@
 
 mat-card {
   height: calc(100% - 42px);
+  > div {
+    display: none;
+  }
 }
 mat-card-content {
   justify-content: center;
@@ -27,11 +30,6 @@ h3{
   font-weight: bold;
   margin-bottom: 0;
 }
-
-// .example-header-image {
-//   background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-//   background-size: cover;
-// }
 
 img{
   height: auto;

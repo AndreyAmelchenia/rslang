@@ -23,7 +23,7 @@ const testWords: Word[] = [
     textMeaningTranslate: 'textMeaningTranslate1',
     textExampleTranslate: 'textExampleTranslate1',
     userWord: {
-    difficulty: 'easy',
+      difficulty: 'easy',
       optional: {
         repeat: 1,
         failCount: 0,
@@ -47,11 +47,11 @@ const testWords: Word[] = [
     textExampleTranslate: 'textExampleTranslate2',
     userWord: {
       difficulty: 'hard',
-        optional: {
-          repeat: 2,
-          failCount: 1,
-        },
+      optional: {
+        repeat: 2,
+        failCount: 1,
       },
+    },
   },
 ];
 
@@ -89,7 +89,7 @@ describe('WordsService', () => {
     expect(req.request.method).toEqual('GET');
     req.flush(testWords);
 
-  //  httpMock.verify();
+    //  httpMock.verify();
   });
 
   it('should return empty array', () => {
@@ -103,6 +103,6 @@ describe('WordsService', () => {
     expect(req.request.method).toEqual('GET');
     req.flush([]);
 
- //   httpMock.verify();
+    //   httpMock.verify();
   });
 });

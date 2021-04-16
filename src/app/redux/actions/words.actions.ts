@@ -11,11 +11,29 @@ export enum ArticlesActions {
   AddDifficulty = '[Add difficulty] Add difficulty',
   LoadDifficulty = '[Load difficulty] Add difficulty to back',
   addWords = '[Words Page] add words to paginateResult',
+  AddStatWords = '[Statistic Word] add stat word',
+  LoadStatWords = '[Statistic Word] load stat word',
 }
 
 export const retrievedWordsList = createAction(
   ArticlesActions.RetrievedWordSuccess,
   props<{ Words: AggregatedWords[] }>(),
+);
+
+export const AddStatWords = createAction(
+  ArticlesActions.AddStatWords,
+  props<{
+    wordId: string;
+    error: boolean;
+  }>(),
+);
+
+export const LoadStatWords = createAction(
+  ArticlesActions.LoadStatWords,
+  props<{
+    word: Word;
+    error: boolean;
+  }>(),
 );
 
 export const LoadWords = createAction(

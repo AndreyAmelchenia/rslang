@@ -1,3 +1,5 @@
+import { Word } from './word.model';
+
 export type AggregatedWordsToGet = {
   group: number;
   page: number;
@@ -10,4 +12,10 @@ export type DifficultyWord = {
   userId: string;
   difficulty: 'easy' | 'hard' | 'deleted';
   newWord: boolean;
+};
+
+export type StatWord = {
+  word: Word;
+  userId: string;
+  error?: boolean;
 };
