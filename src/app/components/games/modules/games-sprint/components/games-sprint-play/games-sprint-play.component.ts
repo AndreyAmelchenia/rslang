@@ -133,7 +133,7 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
       // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       this.counter > 0 ? (this.counter -= 1) : this.stopGame();
     });
-    this.start = true;    
+    this.start = true;
   }
 
   playAudio() {
