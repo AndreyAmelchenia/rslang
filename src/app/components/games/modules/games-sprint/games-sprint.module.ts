@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from '../../../../shared/shared.module';
-
-import { GamesRoutingModule } from '../../games-routing.module';
 import { AngularMaterialModule } from '../../../../shared/material/material.module';
 import { GamesSprintPlayComponent } from './components/games-sprint-play/games-sprint-play.component';
 import { GamesSprintCardComponent } from './components/games-sprint-card/games-sprint-card.component';
@@ -22,7 +20,6 @@ import { GamesSprintRoutingModule } from './games-sprint-routing.module';
     CommonModule,
     HttpClientModule,
     AngularMaterialModule,
-    // GamesRoutingModule,
     GamesSprintRoutingModule,
     SharedModule,
   ],

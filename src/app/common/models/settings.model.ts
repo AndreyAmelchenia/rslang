@@ -3,6 +3,11 @@ export interface ISettings {
   optional: {
     displayTranslation: boolean;
     displayHandlingButtons: boolean;
+    setGame: {
+      groupAmount: number;
+      groupLevel: number;
+      hideRequired: boolean;
+    };
   };
   id?: number;
 }

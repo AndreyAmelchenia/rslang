@@ -1,31 +1,5 @@
 <div class="settings-content">
-  <button mat-mini-fab [matMenuTriggerFor]="menu" color="primary" mat-button>
+  <button mat-mini-fab color="primary" mat-button (click)="openDialogSettings()">
     <mat-icon>settings</mat-icon>
   </button>
-
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item [matMenuTriggerFor]="wordsPerPage">Количество слов</button>
-    <button mat-menu-item [matMenuTriggerFor]="level">Уровень сложности</button>
-    <button mat-menu-item>
-      <mat-checkbox>Больше не показывать</mat-checkbox>
-    </button>
-  </mat-menu>
-
-  <mat-menu #wordsPerPage="matMenu">
-    <button mat-menu-item>10</button>
-    <button mat-menu-item>20</button>
-    <button mat-menu-item>30</button>
-    <button mat-menu-item>40</button>
-    <button mat-menu-item>50</button>
-    <button mat-menu-item>60</button>
-  </mat-menu>
-
-  <mat-menu #level="matMenu">
-    <button mat-menu-item>1</button>
-    <button mat-menu-item>2</button>
-    <button mat-menu-item>3</button>
-    <button mat-menu-item>4</button>
-    <button mat-menu-item>5</button>
-    <button mat-menu-item>6</button>
-  </mat-menu>
 </div>

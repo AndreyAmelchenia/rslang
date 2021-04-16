@@ -34,10 +34,9 @@ describe('GeneratorPasswordService', () => {
   let service: GeneratorPasswordService;
   let store: MockStore;
 
-
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideMockStore({ initialState: { gameList: { gameListMock }} })],
+      providers: [provideMockStore({ initialState: { gameList: { gameListMock } } })],
     });
     service = TestBed.inject(GeneratorPasswordService);
     store = TestBed.inject(MockStore);

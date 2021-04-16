@@ -32,10 +32,10 @@ const wordsMock: AggregatedWordsRedux[] = [
             failCount: 2,
           },
         },
-      }
+      },
     ],
-  totalCount: [{ 0: 5, 1: 6, 2: 4, 3: 4, 4: 8, 5: 1 }],
-  }
+    totalCount: [{ 0: 5, 1: 6, 2: 4, 3: 4, 4: 8, 5: 1 }],
+  },
 ];
 
 const initialState: AppState = {
@@ -152,7 +152,7 @@ const initialState: AppState = {
       },
     },
   ],
-}
+};
 
 describe('GamesSprintPlayComponent', () => {
   let component: GamesSprintPlayComponent;

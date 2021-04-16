@@ -1,23 +1,14 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { State, StoreModule } from '@ngrx/store';
+import { StoreModule } from '@ngrx/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { Observable, of } from 'rxjs';
 
 import { AggregatedWordsRedux } from 'src/app/common/models/aggregatedWords.model';
 import { AppState } from 'src/app/redux/app.state';
 import { CardsTabComponent } from './cards-tab.component';
-/*
-const paginatorMock: MatPaginator = {
-  page: 
-}
-*/
-/*
-const paginatorMock: MatPaginator = {
-  page: of(PageEvent),
-}*/
+
 const wordsMock: AggregatedWordsRedux[] = [
   {
     paginatedResults: [
@@ -43,10 +34,10 @@ const wordsMock: AggregatedWordsRedux[] = [
             failCount: 2,
           },
         },
-      }
+      },
     ],
-  totalCount: [{ 0: 5, 1: 6, 2: 4, 3: 4, 4: 8, 5: 1 }],
-  }
+    totalCount: [{ 0: 5, 1: 6, 2: 4, 3: 4, 4: 8, 5: 1 }],
+  },
 ];
 
 const initialState: AppState = {
@@ -140,7 +131,7 @@ const initialState: AppState = {
       },
     },
   ],
-}
+};
 
 describe('CardsTabComponent', () => {
   let component: CardsTabComponent;
@@ -150,17 +141,22 @@ describe('CardsTabComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CardsTabComponent],
-      imports: [HttpClientModule, MatPaginatorModule, NoopAnimationsModule, StoreModule.forRoot({})],
-      providers: [provideMockStore({ initialState: { words: { wordsMock }} })],
+      imports: [
+        HttpClientModule,
+        MatPaginatorModule,
+        NoopAnimationsModule,
+        StoreModule.forRoot({}),
+      ],
+      providers: [provideMockStore({ initialState: { words: { wordsMock } } })],
     }).compileComponents();
     store = TestBed.inject(MockStore);
-    store.setState({ });
+    store.setState({});
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CardsTabComponent);
     component = fixture.componentInstance;
-  //  component.paginator = paginatorMock;
+    //  component.paginator = paginatorMock;
     fixture.detectChanges();
   });
 
