@@ -26,18 +26,3 @@
   position: relative;
   z-index: 3;
 }
-
-.sprint {
-
-  &__help-subtitle {
-    font-size: 14px;
-  }
-
-  &__button-wrapper {
-    padding: 30px 0 0;
-
-    @media (max-width: 1024px) {
-      padding: 15px 0;
-    }
-  }
-}

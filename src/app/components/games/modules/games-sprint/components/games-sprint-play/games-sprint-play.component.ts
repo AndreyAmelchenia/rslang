@@ -9,6 +9,7 @@ import { AppState } from 'src/app/redux/app.state';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { LoadStatWords } from 'src/app/redux/actions/words.actions';
 import { first } from 'rxjs/operators';
+import { GameResult } from 'src/app/components/games/models/games.result.model';
 import { CssConstants } from '../../../../../../shared/constants/css-constants';
 import { DataConstants } from '../../../../../../shared/constants/data-constants';
 import { GamesSprintService } from '../../services/games-sprint.service';

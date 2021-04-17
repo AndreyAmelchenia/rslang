@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-
+import { GamesBannerData } from 'src/app/components/games/models/games-start-banner.model';
 import { AudioChallengeGameService } from '../../sevices/audio-challenge-game.service';
 
 @Component({
@@ -10,6 +10,12 @@ import { AudioChallengeGameService } from '../../sevices/audio-challenge-game.se
 export class AudioChallengeGameStartComponent {
   @Input()
   wordState;
+
+  banner: GamesBannerData = {
+    title: 'Аудиовызов',
+    subtitle:
+      'Мини-игра «Аудиовызов» - это тренировка, развивающая восприятие английского языка на слух.',
+  };
 
   constructor(private audioChallengeGameService: AudioChallengeGameService) {}
 
