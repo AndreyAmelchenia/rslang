@@ -6,19 +6,22 @@ import { first } from 'rxjs/operators';
 
 import { Word } from 'src/app/common/models/word.model';
 import { StatsService } from 'src/app/common/services/stats.service';
+import { GameResult } from 'src/app/components/games/models/games.result.model';
 import { LoadStatWords } from 'src/app/redux/actions/words.actions';
 import { AppState } from 'src/app/redux/app.state';
 import { selectGameList } from 'src/app/redux/selectors/listGame.selectors';
+import { URL_BACK_SERVER } from 'src/app/shared/constants/url-constants';
 import { StatisticGame } from '../../game-statistic.model';
 
-import { MyGameService } from '../../services/my-game.service';
-import { DialogTotalGameComponent } from '../dialog-total-game/dialog-total-game.component';
+// import { DialogTotalGameComponent } from '../dialog-total-game/dialog-total-game.component';
 @Component({
   selector: 'app-my-game-list',
   templateUrl: './my-game-list.component.html',
   styleUrls: ['./my-game-list.component.scss'],
 })
 export class MyGameListComponent implements OnInit {
+  apiUrl = URL_BACK_SERVER.URL_BACK;
+
   words: Word[];
 
   solvedWords = new Set<Word>();
@@ -75,8 +78,11 @@ export class MyGameListComponent implements OnInit {
 
   countAllTries = 0;
 
+  openResult = false;
+
+  gameResult: GameResult[] = [];
+
   constructor(
-    private myGameService: MyGameService,
     private router: Router,
     public dialog: MatDialog,
     private store: Store<AppState>,
@@ -119,15 +125,30 @@ export class MyGameListComponent implements OnInit {
     if (this.changedGameList.length === 0) {
       this.countGoodAnswer += 1;
       this.bestSeries.push(this.countGoodAnswer);
-      this.countAllTries += 1;
       this.getStatistic();
     }
+  }
+
+  addGameResult(data, result: boolean): void {
+    this.gameResult.push({
+      word: data.word,
+      wordTranslate: data.wordTranslate,
+      audio: data.audio,
+      result,
+    });
+  }
+
+  submitResult(ev: boolean): void {
+    const path = ev ? 'games/my-game' : '/games';
+    this.openResult = false;
+    this.router.navigate([path]);
   }
 
   drop(event, dropPictureId: string) {
     this.dropPictureId = dropPictureId;
     if (this.dragPictureId !== dropPictureId) {
       this.unsolvedWords.add(event.item.data);
+      this.addGameResult(event.item.data, false);
       this.playSoundTry();
       this.tryCount += 1;
       this.countAllTries += 1;
@@ -144,6 +165,7 @@ export class MyGameListComponent implements OnInit {
       const elem = event.container.element.nativeElement.querySelector('.inside');
       elem.appendChild(event.item.element.nativeElement);
       this.solvedWords.add(event.item.data);
+      this.addGameResult(event.item.data, true);
       this.playSoundScore();
 
       this.countImageArrayLength += 1;
@@ -201,18 +223,20 @@ export class MyGameListComponent implements OnInit {
   }
 
   openDialog() {
-    const dialogRef = this.dialog.open(DialogTotalGameComponent, {
-      width: '80%',
-      height: '80%',
-      data: {
-        score: this.score,
-        try: this.tryCount,
-        unsolved: [...this.unsolvedWords],
-      },
-      disableClose: true,
-    });
+    this.openResult = true;
 
-    dialogRef.afterClosed().subscribe();
+    // const dialogRef = this.dialog.open(DialogTotalGameComponent, {
+    //   width: '80%',
+    //   height: '80%',
+    //   data: {
+    //     score: this.score,
+    //     try: this.tryCount,
+    //     unsolved: [...this.unsolvedWords],
+    //   },
+    //   disableClose: true,
+    // });
+
+    // dialogRef.afterClosed().subscribe();
   }
 
   getStatWord() {

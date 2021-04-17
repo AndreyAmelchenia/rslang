@@ -11,6 +11,8 @@ import { LoadStatWords } from 'src/app/redux/actions/words.actions';
 import { first } from 'rxjs/operators';
 import { StatsService } from 'src/app/common/services/stats.service';
 import { IGame } from 'src/app/common/models/stats.model';
+import { GameResult } from 'src/app/components/games/models/games.result.model';
+import { Router } from '@angular/router';
 import { CssConstants } from '../../../../../../shared/constants/css-constants';
 import { DataConstants } from '../../../../../../shared/constants/data-constants';
 import { GamesSprintService } from '../../services/games-sprint.service';
@@ -102,6 +104,8 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
 
   isHideTrue = false;
 
+  gameResult: GameResult[] = [];
+
   constructor(
     private gamesSprintService: GamesSprintService,
     public generatorShuffleArrayService: GeneratorShuffleArrayService,
@@ -109,6 +113,7 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
     private location: Location,
     private store: Store<AppState>,
     private statsService: StatsService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -219,17 +224,20 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
     if (!this.mistake) {
       this.store.dispatch(LoadStatWords({ word: this.wordInCard, error: false }));
       this.wordsCorrect.push(this.wordInCard);
+
       this.countTrue += 1;
       this.countScore();
       this.elem.nativeElement.querySelectorAll('.score')[0].style.color = CssConstants.colorGreen;
     } else {
       this.store.dispatch(LoadStatWords({ word: this.wordInCard, error: true }));
       this.wordsInCorrect.push(this.wordInCard);
+
       this.countTrueSeries.push(this.countTrue);
       this.countTrue = 0;
       this.elem.nativeElement.querySelectorAll('.score')[0].style.color = CssConstants.colorRed;
       this.deltaInScore = DataConstants.deltaInScore;
     }
+    this.addGameResult(this.wordInCard, this.mistake);
     const randomNumbers = this.setRandomWord(
       DataConstants.wordsPerMinute,
       DataConstants.trueWordsPerMinute,
@@ -241,6 +249,24 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
     }
     this.isHideFalse = false;
     this.isHideTrue = false;
+  }
+
+  addGameResult(data, result: boolean): void {
+    this.gameResult.push({
+      word: data.word,
+      wordTranslate: data.wordTranslate,
+      audio: data.audio,
+      result,
+    });
+  }
+
+  submitResult(ev = true): void {
+    this.end = false;
+    if (ev) {
+      this.location.back();
+    } else {
+      this.router.navigate(['/games']);
+    }
   }
 
   countScore() {

@@ -1,23 +1,11 @@
 <div class="game-start-content">
-  <div class="my-game__title">
-    <h1>Своя игра</h1>
-  </div>
-  <div class="my-game__help">
-    <div class="my-game__help-title">
-      Мини-игра «Своя игра» - это тренировка зрительного восприятия правильности перевода.
-    </div>
-    <div class="my-game__help-subtitle">
-      <p>
-        Вы должны сопоставить изображение со словом. Просто нажмите на изображение и перетаскивайте
-        его на выбранное вами слово. У вас будет 5 попыток, за каждый правильный ответ начисляется
-        10 очков. Удачи!
-      </p>
-    </div>
-  </div>
-  <div class="my-game__button-wrapper">
-    <button class="my-game__button--start" (click)="onStartGame()">
-      <mat-icon>flag</mat-icon>
-      <span>Играть</span>
-    </button>
-  </div>
+  <app-games-start-banner [banner]="banner" (startGame)="onStartGame()">
+    <p>
+      Вы должны сопоставить изображение со словом. Просто нажмите на изображение и перетаскивайте
+      его на выбранное вами слово. У вас будет 5 попыток, за каждый правильный ответ начисляется 10
+      очков. Удачи!
+    </p>
+  </app-games-start-banner>
 </div>
+
+<app-full-screen-for-games></app-full-screen-for-games>
