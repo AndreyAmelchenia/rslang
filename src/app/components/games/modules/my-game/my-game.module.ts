@@ -10,6 +10,7 @@ import { MyGameStartComponent } from './components/my-game-start/my-game-start.c
 import { MyGameListComponent } from './components/my-game-list/my-game-list.component';
 import { DialogTotalGameComponent } from './components/dialog-total-game/dialog-total-game.component';
 import { MyGameRoutingModule } from './my-game-routing.module';
+import { GamesSharedModule } from '../games-shared.module';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { MyGameRoutingModule } from './my-game-routing.module';
     MatCardModule,
     AngularMaterialModule,
     MyGameRoutingModule,
+    GamesSharedModule,
   ],
   exports: [],
   providers: [],
