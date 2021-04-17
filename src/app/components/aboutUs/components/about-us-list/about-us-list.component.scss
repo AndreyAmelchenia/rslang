@@ -12,7 +12,12 @@ h1 {
 mat-card {
   width: 80%;
   padding: 1em 0em 1em 0em;
+
+  @media (max-width: 1340px) {
+    height: 205px;
+  }
 }
+
 
 mat-card-title-group {
   display: flex;

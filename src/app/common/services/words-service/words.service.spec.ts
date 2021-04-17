@@ -2,6 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { StoreModule } from '@ngrx/store';
+import { URL_BACK_SERVER } from 'src/app/shared/constants/url-constants';
 
 import { Word } from '../../models/word.model';
 import { WordsService } from './words.service';
@@ -83,9 +84,7 @@ describe('WordsService', () => {
       expect(res).toEqual(testWords);
     });
 
-    const req = httpMock.expectOne(
-      'https://andey-rslang-back-end.herokuapp.com/words?group=5&page=10',
-    );
+    const req = httpMock.expectOne(`${URL_BACK_SERVER.URL_BACK}words?group=5&page=10`);
     expect(req.request.method).toEqual('GET');
     req.flush(testWords);
 
@@ -97,9 +96,7 @@ describe('WordsService', () => {
       expect(res).toEqual([]);
     });
 
-    const req = httpMock.expectOne(
-      'https://andey-rslang-back-end.herokuapp.com/words?group=5&page=10',
-    );
+    const req = httpMock.expectOne(`${URL_BACK_SERVER.URL_BACK}words?group=5&page=10`);
     expect(req.request.method).toEqual('GET');
     req.flush([]);
 

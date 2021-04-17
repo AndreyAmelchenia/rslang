@@ -1,4 +1,4 @@
-<div class="game-field">
+<div class="game-field" *ngIf="!openResult; else result">
   <div cdkDropListGroup class="game">
     <div class="item-container">
       <div
@@ -17,7 +17,7 @@
         >
           <div *cdkDragPlaceholder></div>
           <p class="imgblock">
-            <img [src]="'https://andey-rslang-back-end.herokuapp.com/' + item.image" />
+            <img [src]="apiUrl + item.image" />
             <span>{{item.wordTranslate}}</span>
           </p>
         </div>
@@ -56,3 +56,16 @@
     </div>
   </div>
 </div>
+
+<ng-template #result>
+  <div class="game-field">
+    <app-games-end
+      [light]="true"
+      [words]="words"
+      [gameResult]="gameResult"
+      (submitResult)="submitResult($event)"
+    ></app-games-end>
+  </div>
+</ng-template>
+
+<app-full-screen-for-games></app-full-screen-for-games>

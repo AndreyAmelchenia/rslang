@@ -5,6 +5,7 @@ import { Word } from 'src/app/common/models/word.model';
 import { LoadDifficultyWords, LoadStatWords } from 'src/app/redux/actions/words.actions';
 import { AppState } from 'src/app/redux/app.state';
 import { selectSettings } from 'src/app/redux/selectors/settings.selector';
+import { URL_BACK_SERVER } from 'src/app/shared/constants/url-constants';
 
 @Component({
   selector: 'app-card-item',
@@ -16,6 +17,8 @@ export class CardItemComponent {
   @Input() word: Word;
 
   @Input() color: number[];
+
+  apiUrl = URL_BACK_SERVER.URL_BACK;
 
   audio: HTMLAudioElement;
 
@@ -43,15 +46,11 @@ export class CardItemComponent {
 
   playAudio() {
     this.play = true;
-    this.audio = new Audio(`https://andey-rslang-back-end.herokuapp.com/${this.word.audio}`);
+    this.audio = new Audio(`${this.apiUrl}${this.word.audio}`);
 
-    this.audioExample = new Audio(
-      `https://andey-rslang-back-end.herokuapp.com/${this.word.audioExample}`,
-    );
+    this.audioExample = new Audio(`${this.apiUrl}${this.word.audioExample}`);
 
-    this.audioMeaning = new Audio(
-      `https://andey-rslang-back-end.herokuapp.com/${this.word.audioMeaning}`,
-    );
+    this.audioMeaning = new Audio(`${this.apiUrl}${this.word.audioMeaning}`);
     this.audio.play();
     [this.audio, this.audioExample, this.audioMeaning].forEach((el, index, arr) => {
       el.addEventListener('ended', () => arr[index + 1] && arr[index + 1].play());
