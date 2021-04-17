@@ -117,23 +117,17 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // eslint-disable-next-line no-console
-    console.log('ngOnInit');
     this.store
     .select(selectGameList())
     .pipe(first())
     .subscribe((words) => {
       this.wordsAll = words;
-      console.log(this.wordsAll);
       this.words = this.wordsAll.slice();
-      console.log(this.words);
       this.setDifferentWordAndTranslation();
     });
   }
 
   ngOnDestroy() {
-    // eslint-disable-next-line no-console
-    console.log('ngOnDestroy');
     this.score = 0;
     this.deltaInScore = 10;
     this.play = false;
@@ -144,9 +138,6 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   }
 
   onStart() {
-    // eslint-disable-next-line no-console
-    console.log('OnStart');
-
     this.countDown = this.gamesSprintService.getCounter(DataConstants.tick).subscribe(() => {
       this.playAudio();
       if (this.counter > 0) {
@@ -177,7 +168,6 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
         (number) => this.words[number],
       );
     } else {
-      console.log('444');
       this.stopGame();
     }
     this.words = this.words.filter((word) => !this.wordsInCard.includes(word));
@@ -260,12 +250,8 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   submitResult(event: boolean): void {
     this.end = false;
     if (event) {
-   //   this.router.navigate(['/games/sprint/play']);
       this.location.back();
       this.start = true;
-      console.log (this.words);
-
-      
     } else {
       this.router.navigate(['/games']);
     }
@@ -292,7 +278,6 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   }
 
   keyPressAction(event: KeyboardEvent): void {
-    console.log(event.key);
     if (event.key === '1') {
       this.onAgree(true);
     } else if (event.key === '2') {
@@ -303,8 +288,6 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   }
 
   stopGame() {
-    // eslint-disable-next-line no-console
-    console.log('stop');
     this.pauseAudio();
     this.play = false;
     this.end = true;
