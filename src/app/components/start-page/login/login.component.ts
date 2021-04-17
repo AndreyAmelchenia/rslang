@@ -53,7 +53,7 @@ export class LoginComponent {
       this.store.dispatch(login({ user: this.userData.value, reg: false }));
     }
   }
-
+  
   goBack() {
     this.location.back();
   }
