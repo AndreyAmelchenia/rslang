@@ -16,7 +16,7 @@
     >
     <img
       mat-card-md-image
-      [src]="'https://andey-rslang-back-end.herokuapp.com/' + word.image"
+      [src]="apiUrl + word.image"
       alt="Photo of a Shiba Inu"
       (click)="click(word, true)"
     />
@@ -36,8 +36,8 @@
         color="accent"
         aria-label="Example icon button with a home icon"
         [title]="word.userWord?.difficulty === 'hard' ? 'add card to EASY' : 'add card to HARD'"
-        (click)="word.userWord?.difficulty === 'hard' 
-        ? addDifficultyWord(word._id, 'easy', !word.userWord) 
+        (click)="word.userWord?.difficulty === 'hard'
+        ? addDifficultyWord(word._id, 'easy', !word.userWord)
         : addDifficultyWord(word._id, 'hard', !word.userWord)"
       >
         <mat-icon>

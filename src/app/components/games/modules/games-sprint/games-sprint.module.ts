@@ -8,6 +8,7 @@ import { GamesSprintCardComponent } from './components/games-sprint-card/games-s
 import { GamesSprintMainComponent } from './components/games-sprint-main/games-sprint-main.component';
 import { GamesSprintEndComponent } from './components/games-sprint-end/games-sprint-end.component';
 import { GamesSprintRoutingModule } from './games-sprint-routing.module';
+import { GamesSharedModule } from '../games-shared.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { GamesSprintRoutingModule } from './games-sprint-routing.module';
     AngularMaterialModule,
     GamesSprintRoutingModule,
     SharedModule,
+    GamesSharedModule,
   ],
 })
 export class GamesSprintModule {}

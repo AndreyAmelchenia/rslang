@@ -14,11 +14,7 @@
     <mat-card-subtitle *ngIf="word.userWord"
       >Ошибок: {{word.userWord?.optional?.failCount}}</mat-card-subtitle
     >
-    <img
-      mat-card-md-image
-      [src]="'https://andey-rslang-back-end.herokuapp.com/' + word.image"
-      alt="Photo of a Shiba Inu"
-    />
+    <img mat-card-md-image [src]="apiUrl + word.image" alt="Photo of a Shiba Inu" />
     <div class="group-button">
       <button
         mat-mini-fab

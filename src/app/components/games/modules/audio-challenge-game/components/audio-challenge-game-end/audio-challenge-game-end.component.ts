@@ -1,17 +1,9 @@
-import { Component, Input, OnChanges, OnDestroy, ViewChild } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { API_URL } from '../../constants/audio-challenge.constants';
+import { URL_BACK_SERVER } from 'src/app/shared/constants/url-constants';
 import { AudioChallengeState } from '../../models/game-adio-challenge.model';
 import { AudioChallengeGameService } from '../../sevices/audio-challenge-game.service';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
 
 @Component({
   selector: 'app-audio-challenge-game-end',
@@ -19,32 +11,29 @@ export interface PeriodicElement {
   styleUrls: ['./audio-challenge-game-end.component.scss'],
 })
 export class AudioChallengeGameEndComponent implements OnChanges, OnDestroy {
-  @Input()
-  wordState: AudioChallengeState;
-
-  displayedColumns: string[] = ['word', 'result', 'audio'];
+  @Input() wordState: AudioChallengeState;
 
   dataSource;
 
-  @ViewChild(MatSort) sort: MatSort;
+  url = URL_BACK_SERVER;
 
-  constructor(private audioChallengeGameService: AudioChallengeGameService) {}
+  constructor(
+    private audioChallengeGameService: AudioChallengeGameService,
+    private router: Router,
+  ) {}
 
   ngOnChanges(): void {
-    const resultArray = [...this.wordState?.resultList].map((item) => {
+    this.dataSource = [...this.wordState?.resultList].map((item) => {
       return { ...item.word, result: item.result };
     });
-    this.dataSource = new MatTableDataSource(resultArray);
-    this.dataSource.sort = this.sort;
   }
 
-  playAgain() {
-    this.audioChallengeGameService.gameStart();
-  }
-
-  playWordAudio(audio: string) {
-    const audioElement = new Audio(API_URL + audio);
-    audioElement.play();
+  submitResult(ev: boolean): void {
+    if (ev) {
+      this.audioChallengeGameService.gameStart();
+    } else {
+      this.router.navigate(['/games']);
+    }
   }
 
   ngOnDestroy(): void {
