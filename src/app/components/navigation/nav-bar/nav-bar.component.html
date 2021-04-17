@@ -40,8 +40,8 @@
       <div class="space"></div>
       <ng-template [ngIf]="isAuth$|async" [ngIfThen]="loginBlock" [ngIfElse]="log"> </ng-template>
       <ng-template #log>
-        <a [routerLink]="[path.Registration]" class="link">Регистрация</a>
-        <a routerLink="/" class="link">Войти</a>
+        <button (click)="modalRegistration()" mat-raised-button color="primary">Регистрация</button>
+        <button (click)="modalLogin()" mat-raised-button color="primary">Войти</button>
       </ng-template>
       <ng-template #loginBlock>
         <div class="block_user">
