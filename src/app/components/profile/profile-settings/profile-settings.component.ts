@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { ISettings } from 'src/app/common/models/settings.model';
 import { saveSettings } from 'src/app/redux/actions/settings.actions';
 import { AppState } from 'src/app/redux/app.state';
-import { selectSettings } from 'src/app/redux/selectors/settings.selector';
+import { selectSetGames } from 'src/app/redux/selectors/settings.selector';
 
 @Component({
   selector: 'app-profile-settings',
@@ -21,7 +21,7 @@ export class ProfileSettingsComponent implements OnInit {
   constructor(private store: Store<AppState>, private formBuilder: FormBuilder) {}
 
   ngOnInit() {
-    this.store.select(selectSettings).subscribe((settings) => {
+    this.store.select(selectSetGames).subscribe((settings) => {
       this.settings = settings;
     });
 
