@@ -10,12 +10,12 @@ import { IGame } from 'src/app/common/models/stats.model';
 import { Router } from '@angular/router';
 import { GamesBannerData } from 'src/app/components/games/models/games-start-banner.model';
 import { GameResult } from 'src/app/components/games/models/games.result.model';
+import { first } from 'rxjs/operators';
+import { LoadStatWords } from 'src/app/redux/actions/words.actions';
 import { GameSavannahLangs } from '../../models/game-savannah-langs.enum';
 import { GameSavannahStatus } from '../../models/game-savannah-status.model';
 import { GameSavannahService } from '../../services/game-savannah.service';
 import { GameSavannahDialogComponent } from '../game-savannah-dialog/game-savannah-dialog.component';
-import { first } from 'rxjs/operators';
-import { LoadStatWords } from 'src/app/redux/actions/words.actions';
 
 @Component({
   selector: 'app-game-savannah',
@@ -87,9 +87,12 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.store.select(selectGameList()).pipe(first()).subscribe((words) => {
-      this.words = words;
-    });
+    this.store
+      .select(selectGameList())
+      .pipe(first())
+      .subscribe((words) => {
+        this.words = [...words];
+      });
     this.resetStatistics();
     this.subscription = this.gameSavannahService.data.subscribe((data) => {
       this.gameSavannahStatus = data;

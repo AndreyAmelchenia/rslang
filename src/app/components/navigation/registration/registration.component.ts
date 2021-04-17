@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Location } from '@angular/common';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../../common/services/auth.service';
 import { signUp } from '../../../redux/actions/auth.actions';
 
 const myNameValidator = (control: FormControl) => {

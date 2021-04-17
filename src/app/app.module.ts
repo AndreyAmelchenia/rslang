@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './components/app/app.component';
-import { TokenInterceptorService } from './components/navigation/services/token-interceptor.service';
+import { TokenInterceptorService } from './common/services/token-interceptor.service';
 import { ReduxModule } from './redux/redux.module';
 import { SharedModule } from './shared/shared.module';
 import { NavigationModule } from './components/navigation/navigation.module';

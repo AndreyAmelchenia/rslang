@@ -2,6 +2,10 @@
   margin: 0 auto;
   width: 90%;
   display: flex;
+
+  h1 {
+    font-weight: bold;
+  }
 }
 
 .stats-card {
@@ -22,6 +26,7 @@
 
 .radio-button {
   margin: 5px;
+  font-size: 14px;
 }
 
 @media (max-width: 800px) {
