@@ -8,18 +8,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularMaterialModule } from 'src/app/shared/material/material.module';
 import { MyGameStartComponent } from './components/my-game-start/my-game-start.component';
 import { MyGameListComponent } from './components/my-game-list/my-game-list.component';
-import { DialogTotalGameComponent } from './components/dialog-total-game/dialog-total-game.component';
 import { MyGameRoutingModule } from './my-game-routing.module';
 import { GamesSharedModule } from '../games-shared.module';
 
 @NgModule({
-  declarations: [
-    MyGameListComponent,
-    MyGameStartComponent,
-    MyGameListComponent,
-    DialogTotalGameComponent,
-  ],
-  entryComponents: [DialogTotalGameComponent],
+  declarations: [MyGameListComponent, MyGameStartComponent, MyGameListComponent],
   imports: [
     CommonModule,
     HttpClientModule,

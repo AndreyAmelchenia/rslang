@@ -11,8 +11,21 @@
     margin: 1rem auto;
     max-width: 20rem;
 
+    &--large {
+      max-width: 100%;
+
+      .games-end table td {
+        text-align: left;
+      }
+    }
+
     .start-button {
         margin: 1rem auto;
+
+        &.is-disabled {
+          opacity: 0.75;
+          pointer-events: none;
+        }
     }
 
     .icons {

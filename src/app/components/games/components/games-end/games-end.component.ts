@@ -41,6 +41,8 @@ export class GamesEndComponent implements OnInit, OnDestroy {
 
   play = false;
 
+  submitted = false;
+
   @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit(): void {
@@ -50,14 +52,16 @@ export class GamesEndComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.playAgain();
+    if (!this.submitted) this.playAgain();
   }
 
   playAgain(): void {
+    this.submitted = true;
     this.submitResult.emit(true);
   }
 
   cancel(): void {
+    this.submitted = true;
     this.submitResult.emit(false);
   }
 
