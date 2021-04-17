@@ -5,7 +5,6 @@ import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { SessionService } from 'src/app/common/services/storage/session.service';
-import { LoadListGame } from 'src/app/redux/actions/listGame.actions';
 import { isLoginSelector } from 'src/app/redux/selectors/auth.selectors';
 import { AboutUs } from '../../aboutUs/models/about-us.model';
 import { AboutUsService } from '../../aboutUs/services/about-us.service';
@@ -153,9 +152,6 @@ export class StartPageComponent implements OnInit {
 
   ngOnInit() {
     this.isAuth$ = this.store.select(isLoginSelector).pipe(map((el) => !el));
-    if (this.userSession.getItem('user')) {
-      this.store.dispatch(LoadListGame({ group: 0, page: 0, wordsPerPage: 20 }));
-    }
   }
 
   nextItem(index: number) {
