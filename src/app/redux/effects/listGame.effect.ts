@@ -22,7 +22,7 @@ export class GameListEffects {
         return of(this.userSession.getItem('user')).pipe(
           mergeMap(({ userId }) => {
             return this.wordsService
-              .aggregatedGameList({
+              .aggregatedGameListNew({
                 group,
                 page,
                 userId,
@@ -34,7 +34,7 @@ export class GameListEffects {
                     return of(gameWordsList({ Words: wordsAdd[0].paginatedResults }));
                   }
                   return this.wordsService
-                    .aggregatedGameListNew({
+                    .aggregatedGameList({
                       group,
                       page,
                       userId,
