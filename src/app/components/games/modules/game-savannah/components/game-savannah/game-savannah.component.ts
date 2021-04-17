@@ -7,8 +7,11 @@ import { AppState } from 'src/app/redux/app.state';
 import { MatDialog } from '@angular/material/dialog';
 import { StatsService } from 'src/app/common/services/stats.service';
 import { IGame } from 'src/app/common/models/stats.model';
-import { GameResult } from 'src/app/components/games/components/games-end/games-end.component';
 import { Router } from '@angular/router';
+import { GamesBannerData } from 'src/app/components/games/models/games-start-banner.model';
+import { GameResult } from 'src/app/components/games/models/games.result.model';
+import { first } from 'rxjs/operators';
+import { LoadStatWords } from 'src/app/redux/actions/words.actions';
 import { GameSavannahLangs } from '../../models/game-savannah-langs.enum';
 import { GameSavannahStatus } from '../../models/game-savannah-status.model';
 import { GameSavannahService } from '../../services/game-savannah.service';
@@ -21,6 +24,8 @@ import { GameSavannahDialogComponent } from '../game-savannah-dialog/game-savann
 })
 export class GameSavannahComponent implements OnDestroy, OnInit {
   private timerId: ReturnType<typeof setTimeout>;
+
+  langs: string[] = Object.keys(GameSavannahLangs).map((key) => GameSavannahLangs[key]);
 
   subscription!: Subscription;
 
@@ -61,6 +66,18 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
 
   currentSeries = 0;
 
+  banner: GamesBannerData = {
+    title: 'Саванна',
+    subtitle:
+      'Мини-игра «Саванна» - это тренировка по переводу пассивного изученного словаря в активную стадию.',
+  };
+
+  sound = new Audio();
+
+  scoreAudio = 'assets/sounds/score.mp3';
+
+  tryAudio = 'assets/sounds/try.mp3';
+
   constructor(
     private gameSavannahService: GameSavannahService,
     private store: Store<AppState>,
@@ -70,9 +87,12 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.store.select(selectGameList()).subscribe((words) => {
-      this.words = words;
-    });
+    this.store
+      .select(selectGameList())
+      .pipe(first())
+      .subscribe((words) => {
+        this.words = [...words];
+      });
     this.resetStatistics();
     this.subscription = this.gameSavannahService.data.subscribe((data) => {
       this.gameSavannahStatus = data;
@@ -83,6 +103,14 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
     this.setStatistics();
     this.setDefaultData();
     this.subscription.unsubscribe();
+  }
+
+  playSound(valid: boolean): void {
+    if (this.gameSavannahStatus.sound) {
+      this.sound.src = valid ? this.scoreAudio : this.tryAudio;
+      this.sound.load();
+      this.sound.play();
+    }
   }
 
   setStatistics(): void {
@@ -107,11 +135,11 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
 
   changeGameSavannahStatus(data: GameSavannahStatus): void {
     this.gameSavannahService.updateGameStatus(data);
-    this.restartGame();
   }
 
-  changeLang(data: GameSavannahStatus): void {
-    this.gameSavannahService.updateGameStatus(data);
+  changeLang(key: string): void {
+    this.gameSavannahStatus.currentLang = GameSavannahLangs[key];
+    this.gameSavannahService.updateGameStatus(this.gameSavannahStatus);
   }
 
   setDefaultData(): void {
@@ -122,9 +150,9 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
   }
 
   startGame(): void {
+    this.setDefaultData();
     this.gameSavannahStatus.wordsCount = this.words.length;
     this.gameSavannahService.updateGameStatus(this.gameSavannahStatus);
-    this.setDefaultData();
     this.playWord(0);
   }
 
@@ -205,6 +233,7 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
   }
 
   setWordStatistic(data: boolean): void {
+    this.playSound(data);
     if (!this.gameResult.some((el) => el.word === this.words[this.currentWordId].word)) {
       this.gameResult.push({
         word: this.words[this.currentWordId].word,
@@ -225,10 +254,12 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
       this.paused = true;
       this.gameSavannahStatistic.tries += 1;
       if (answer !== this.getAnswer()) {
+        this.store.dispatch(LoadStatWords({ word: this.words[this.currentWordId], error: true }));
         this.setWordStatistic(false);
         this.gameSavannahStatus.errors += 1;
         this.currentSeries = 0;
       } else {
+        this.store.dispatch(LoadStatWords({ word: this.words[this.currentWordId], error: false }));
         this.setWordStatistic(true);
         this.gameSavannahStatus.currentCounts += 1;
         this.gameSavannahStatistic.right += 1;

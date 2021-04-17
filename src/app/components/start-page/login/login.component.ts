@@ -7,7 +7,7 @@ import { AppState } from 'src/app/redux/app.state';
 import { Observable } from 'rxjs';
 import { isLoginSelector } from 'src/app/redux/selectors/auth.selectors';
 import { MatDialogRef } from '@angular/material/dialog';
-import { AuthService } from '../../navigation/services/auth.service';
+import { AuthService } from '../../../common/services/auth.service';
 
 const myNameValidator = (control: FormControl) => {
   const condition = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[+/-/_/@/$/!/%/*/?/&/#/./,/;/:/{/}/])[0-9a-zA-Z+/-/_/@/$/!/%/*/?/&/#/./,/;/:/[/{/}/]{8,}/.test(
@@ -50,7 +50,7 @@ export class LoginComponent {
 
   onSubmit(): void {
     if (!this.userData.invalid) {
-      this.store.dispatch(login({ user: this.userData.value }));
+      this.store.dispatch(login({ user: this.userData.value, reg: false }));
     }
   }
 

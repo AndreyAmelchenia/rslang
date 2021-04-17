@@ -7,6 +7,10 @@ import { selectGameList } from 'src/app/redux/selectors/listGame.selectors';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/redux/app.state';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { LoadStatWords } from 'src/app/redux/actions/words.actions';
+import { first } from 'rxjs/operators';
+import { StatsService } from 'src/app/common/services/stats.service';
+import { IGame } from 'src/app/common/models/stats.model';
 import { CssConstants } from '../../../../../../shared/constants/css-constants';
 import { DataConstants } from '../../../../../../shared/constants/data-constants';
 import { GamesSprintService } from '../../services/games-sprint.service';
@@ -48,9 +52,9 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
 
   wordsAll: Word[] = [];
 
-  wordsCorrect: string[] = [];
+  wordsCorrect: Word[] = [];
 
-  wordsInCorrect: string[] = [];
+  wordsInCorrect: Word[] = [];
 
   wordsUniquePlayed = new Set();
 
@@ -72,7 +76,7 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
 
   deltaInScore = DataConstants.deltaInScore;
 
-  responseEndGame: {} = {};
+  responseEndGame: IGame;
 
   countTries = 0;
 
@@ -104,14 +108,18 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
     private elem: ElementRef,
     private location: Location,
     private store: Store<AppState>,
+    private statsService: StatsService,
   ) {}
 
   ngOnInit() {
-    this.store.select(selectGameList()).subscribe((words) => {
-      this.wordsAll = words;
-      this.words = this.wordsAll.slice();
-      this.setDifferentWordAndTranslation();
-    });
+    this.store
+      .select(selectGameList())
+      .pipe(first())
+      .subscribe((words) => {
+        this.wordsAll = words;
+        this.words = this.wordsAll.slice();
+        this.setDifferentWordAndTranslation();
+      });
   }
 
   ngOnDestroy() {
@@ -122,14 +130,17 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
     if (this.countDown) {
       this.countDown.unsubscribe();
     }
+    document.removeEventListener('keydown', this.keyPressAction);
   }
 
   onStart() {
     this.countDown = this.gamesSprintService.getCounter(DataConstants.tick).subscribe(() => {
       this.playAudio();
-      // eslint-disable-next-line no-return-assign
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      this.counter > 0 ? (this.counter -= 1) : this.stopGame();
+      if (this.counter > 0) {
+        this.counter -= 1;
+      } else {
+        this.stopGame();
+      }
     });
     this.start = true;
   }
@@ -192,12 +203,14 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
     this.countTries += 1;
     this.wordsUniquePlayed.add(this.wordInCard);
     if (!this.mistake) {
-      this.wordsCorrect.push(this.wordInCard.word);
+      this.store.dispatch(LoadStatWords({ word: this.wordInCard, error: false }));
+      this.wordsCorrect.push(this.wordInCard);
       this.countTrue += 1;
       this.countScore();
       this.elem.nativeElement.querySelectorAll('.score')[0].style.color = CssConstants.colorGreen;
     } else {
-      this.wordsInCorrect.push(this.wordInCard.word);
+      this.store.dispatch(LoadStatWords({ word: this.wordInCard, error: true }));
+      this.wordsInCorrect.push(this.wordInCard);
       this.countTrueSeries.push(this.countTrue);
       this.countTrue = 0;
       this.elem.nativeElement.querySelectorAll('.score')[0].style.color = CssConstants.colorRed;
@@ -236,6 +249,16 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
     this.countHelp += 1;
   }
 
+  keyPressAction(event: KeyboardEvent): void {
+    if (event.key === '1') {
+      this.onAgree(true);
+    } else if (event.key === '2') {
+      this.onAgree(false);
+    } else if (event.key === '3') {
+      this.onHelp();
+    }
+  }
+
   stopGame() {
     this.pauseAudio();
     this.play = false;
@@ -245,10 +268,9 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
       learned: this.wordsUniquePlayed.size,
       tries: this.countTries,
       right: this.countTrueSeries.reduce((accum, value) => accum + value, 0),
-      bestSeries: Math.max(...this.countTrueSeries),
-      correct: this.wordsCorrect,
-      incorrect: this.wordsInCorrect,
+      series: Math.max(...this.countTrueSeries),
     };
+    this.statsService.saveSprintStats(this.responseEndGame);
   }
 
   goBack(): void {

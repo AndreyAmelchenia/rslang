@@ -1,43 +1,22 @@
-<!--
-<div class="games-sprint-main">
-  <mat-card class="main-field">
-    <mat-card-content>
-      <img mat-card-image src="assets/images/sprint.png" alt="Running man" />
-      <h2>Спринт</h2>
-      <h4>Правила игры:</h4>
-      <p>
-        Перед вами игра "Спринт". Вы увидете карточку со словом на английском языке и перевод. Вам
-        нужно понять, соответствует ли перевод слову на английском. Если соответстует - жмите кнопку
-        "ВЕРНО"; если не соответствует - жмите кнопку "НЕВЕРНО". Спешите - у вас есть только 60
-        секунд! Угадывайте несколько слов подряд и получайте больше очков.
-      </p>
-      <p>Удачи!</p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="goBack()">Назад</button>
-      <button mat-raised-button color="primary" routerLink='/games/sprint/play'>Играть</button>
-    </mat-card-actions>
-  </mat-card>
-</div>
--->
-
 <div class="game-start-content">
-  <div class="savannah__title">
+  <div class="sprint__title">
     <h1>Спринт</h1>
   </div>
-  <div class="savannah__help">
-    <div class="savannah__help-title">Мини-игра «Спринт» - это тренировка для повторения слов.</div>
-    <div class="savannah__help-subtitle">
+  <div class="sprint__help">
+    <div class="sprint__help-title">Мини-игра «Спринт» - это тренировка для повторения слов.</div>
+    <div class="sprint__help-subtitle">
       <p>
         Перед вами игра "Спринт". Вы увидете карточку со словом на английском языке и перевод. Вам
         нужно понять, соответствует ли перевод слову на английском. Если соответстует - жмите кнопку
-        "ВЕРНО"; если не соответствует - жмите кнопку "НЕВЕРНО". Спешите - у вас есть только 60
-        секунд! Угадывайте несколько слов подряд и получайте больше очков.
+        "ВЕРНО" (или клавишу 1); если не соответствует - жмите кнопку "НЕВЕРНО" (или клавишу 2).
+        Спешите - у вас есть только 60 секунд! Угадывайте несколько слов подряд и получайте больше
+        очков. Трижды за игру вы можете воспользоваться подсказкой - жмите кнопку "Подсказка" (или
+        клавишу 3).
       </p>
     </div>
   </div>
-  <div class="savannah__button-wrapper">
-    <button class="savannah__button--start" routerLink="/games/sprint/play">
+  <div class="sprint__button-wrapper">
+    <button class="sprint__button--start" routerLink="/games/sprint/play">
       <mat-icon>flag</mat-icon>
       <span>Играть</span>
     </button>

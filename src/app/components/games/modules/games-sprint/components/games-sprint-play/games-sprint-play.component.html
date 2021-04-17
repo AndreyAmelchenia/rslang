@@ -31,7 +31,7 @@
         (click)="onAgree(false)"
         [@changeButton]="isHideFalse ? 'hide' : 'show'"
       >
-        НЕВЕРНО
+        НЕВЕРНО 2
       </button>
       <button
         mat-raised-button
@@ -40,7 +40,7 @@
         (click)="onAgree(true)"
         [@changeButton]="isHideTrue ? 'hide' : 'show'"
       >
-        ВЕРНО</button
+        ВЕРНО 1</button
       ><br />
       <button
         mat-raised-button
@@ -48,7 +48,7 @@
         [disabled]="(countHelp>=3 || !start) ? true : false"
         (click)="onHelp()"
       >
-        Подсказка
+        Подсказка 3
       </button>
     </mat-card-actions>
   </div>

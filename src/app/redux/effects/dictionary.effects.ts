@@ -9,7 +9,6 @@ import { DictionaryService } from '../../common/services/dictionary.service';
 
 import { SessionService } from '../../common/services/storage/session.service';
 import { syncWords } from '../actions/dictionary.actions';
-import { ActionType } from '../models/dictionaryAction.models';
 import * as dictionaryActions from '../actions/dictionary.actions';
 import { IUser } from '../models/user.models';
 import { userSelector } from '../selectors/auth.selectors';
@@ -18,7 +17,7 @@ import { userSelector } from '../selectors/auth.selectors';
 export class DictionaryEffects {
   updateWords$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ActionType.updateWords, ActionType.restoreWordSuccess),
+      ofType(dictionaryActions.updateWords, dictionaryActions.restoreWordSuccess),
       concatLatestFrom(() => this.store.select(userSelector)),
       switchMap(([, userData]) =>
         this.dictionaryService.getWords(userData).pipe(
@@ -37,7 +36,7 @@ export class DictionaryEffects {
 
   restoreWord$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ActionType.restoreWord),
+      ofType(dictionaryActions.restoreWord),
       concatLatestFrom(() => this.store.select(userSelector)),
       tap(([actionWord, user]: [actionWord: any, user: any]) =>
         this.store.dispatch(syncWords({ word: actionWord.word, user })),

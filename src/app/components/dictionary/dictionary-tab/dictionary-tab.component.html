@@ -15,6 +15,7 @@
         [totalCount$]="totalCount$"
         [color]="tab.color"
         [label]="label"
+        [settings]="settings"
         (changePageEvent)="changePage($event)"
         (restoreWordEvent)="restoreWord($event)"
         *ngIf="expectation | async; else elseBlock"
