@@ -5,7 +5,15 @@
   <mat-card-header>
     <mat-card-title>{{word.word}}</mat-card-title>
     <mat-card-subtitle>{{word.transcription}}</mat-card-subtitle>
-    <mat-card-subtitle>{{word.wordTranslate}}</mat-card-subtitle>
+    <mat-card-subtitle *ngIf="settings.optional.displayTranslation"
+      >{{word.wordTranslate}}</mat-card-subtitle
+    >
+    <mat-card-subtitle *ngIf="word.userWord"
+      >Повторений: {{word.userWord?.optional?.repeat}}</mat-card-subtitle
+    >
+    <mat-card-subtitle *ngIf="word.userWord"
+      >Ошибок: {{word.userWord?.optional?.failCount}}</mat-card-subtitle
+    >
     <img mat-card-md-image [src]="apiUrl + word.image" alt="Photo of a Shiba Inu" />
     <div class="group-button">
       <button
@@ -18,7 +26,7 @@
         <mat-icon>{{play ? 'pause_circle_outline' : 'play_circle' }}</mat-icon>
       </button>
       <button
-        *ngIf="isRestore()"
+        *ngIf="isRestore() && settings.optional.displayHandlingButtons"
         mat-mini-fab
         color="accent"
         aria-label="Example icon button with a home icon"
@@ -31,8 +39,8 @@
   </mat-card-header>
   <mat-card-content>
     <h3>{{word.textExample}}</h3>
-    <em>{{word.textExampleTranslate}}</em>
+    <em *ngIf="settings.optional.displayTranslation">{{word.textExampleTranslate}}</em>
     <h3>{{word.textMeaning}}</h3>
-    <em>{{word.textMeaningTranslate}}</em>
+    <em *ngIf="settings.optional.displayTranslation">{{word.textMeaningTranslate}}</em>
   </mat-card-content>
 </mat-card>

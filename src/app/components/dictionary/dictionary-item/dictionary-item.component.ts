@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
+import { ISettings } from '../../../common/models/settings.model';
 import { Word } from '../../../common/models/word.model';
 import { URL_BACK_SERVER } from '../../../shared/constants/url-constants';
 
@@ -14,6 +15,8 @@ export class DictionaryItemComponent {
   @Input() color: number[];
 
   @Input() label: string;
+
+  @Input() settings: ISettings;
 
   @Output() restoreWordEvent = new EventEmitter();
 
