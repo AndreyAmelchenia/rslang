@@ -1,4 +1,4 @@
-<div class="game-field">
+<div class="game-field" *ngIf="!openResult; else result">
   <div cdkDropListGroup class="game">
     <div class="item-container">
       <div
@@ -56,5 +56,16 @@
     </div>
   </div>
 </div>
+
+<ng-template #result>
+  <div class="game-field">
+    <app-games-end
+      [light]="true"
+      [words]="words"
+      [gameResult]="gameResult"
+      (submitResult)="submitResult($event)"
+    ></app-games-end>
+  </div>
+</ng-template>
 
 <app-full-screen-for-games></app-full-screen-for-games>

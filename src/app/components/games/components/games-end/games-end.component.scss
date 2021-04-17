@@ -5,7 +5,13 @@
 }
 
 .games-end {
-  margin: 0 auto 100px;
+  margin: 0 auto;
+  padding: 1px 20px 20px;
+
+  &.is-light {
+    border-radius: 3px;
+    background-color: rgba(#fff, 0.75);
+  }
 
   &__table {
     width: 700px;

@@ -27,6 +27,8 @@ export class GamesEndComponent implements OnInit, OnDestroy {
 
   @Input() countOfBadResults = 5;
 
+  @Input() light = false;
+
   @Output() submitResult = new EventEmitter();
 
   displayedColumns: string[] = ['word', 'translate', 'result', 'audio'];
