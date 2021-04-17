@@ -15,18 +15,6 @@ import { GameSavannahStatus } from '../../models/game-savannah-status.model';
 import { GameSavannahService } from '../../services/game-savannah.service';
 import { GameSavannahDialogComponent } from '../game-savannah-dialog/game-savannah-dialog.component';
 
-const bannerData: GamesBannerData = {
-  title: 'Саванна',
-  subtitle:
-    'Мини-игра «Саванна» - это тренировка по переводу пассивного изученного словаря в активную стадию.',
-  description: [
-    'После запуска игры вы увидите падающее слово на английском (или русском, если режим игры RU-> EN) и четыре варианта перевода. Выбрать правильный ответ можно двумя способами:',
-    '1. Кликните по нему мышью;',
-    '2. Используйте клавиши 1, 2, 3, 4.',
-    '3. Выберите режим игры:',
-  ],
-};
-
 @Component({
   selector: 'app-game-savannah',
   templateUrl: './game-savannah.component.html',
@@ -76,7 +64,17 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
 
   currentSeries = 0;
 
-  banner: GamesBannerData = bannerData;
+  banner: GamesBannerData = {
+    title: 'Саванна',
+    subtitle:
+      'Мини-игра «Саванна» - это тренировка по переводу пассивного изученного словаря в активную стадию.',
+  };
+
+  sound = new Audio();
+
+  scoreAudio = 'assets/sounds/score.mp3';
+
+  tryAudio = 'assets/sounds/try.mp3';
 
   constructor(
     private gameSavannahService: GameSavannahService,
@@ -102,6 +100,14 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
     this.subscription.unsubscribe();
   }
 
+  playSound(valid: boolean): void {
+    if (this.gameSavannahStatus.sound) {
+      this.sound.src = valid ? this.scoreAudio : this.tryAudio;
+      this.sound.load();
+      this.sound.play();
+    }
+  }
+
   setStatistics(): void {
     this.gameSavannahStatistic.learned = this.words.length;
     this.gameSavannahStatistic.tries = this.gameResult.length;
@@ -124,7 +130,6 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
 
   changeGameSavannahStatus(data: GameSavannahStatus): void {
     this.gameSavannahService.updateGameStatus(data);
-    this.restartGame();
   }
 
   changeLang(key: string): void {
@@ -136,16 +141,13 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
     this.play = true;
     this.openStatistics = false;
     this.paused = false;
-    console.log(this.play, this.openStatistics, this.paused);
-
-    debugger;
     this.clearTimer();
   }
 
   startGame(): void {
+    this.setDefaultData();
     this.gameSavannahStatus.wordsCount = this.words.length;
     this.gameSavannahService.updateGameStatus(this.gameSavannahStatus);
-    this.setDefaultData();
     this.playWord(0);
   }
 
@@ -226,6 +228,7 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
   }
 
   setWordStatistic(data: boolean): void {
+    this.playSound(data);
     if (!this.gameResult.some((el) => el.word === this.words[this.currentWordId].word)) {
       this.gameResult.push({
         word: this.words[this.currentWordId].word,

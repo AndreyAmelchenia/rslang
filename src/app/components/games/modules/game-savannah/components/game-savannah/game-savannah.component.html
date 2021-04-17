@@ -1,16 +1,15 @@
-<div class="savannah" [class.is-dark]="!play">
-  <app-game-savannah-head
-    *ngIf="play && !openStatistics"
-    [gameSavannahStatus]="gameSavannahStatus"
-    (changeStatus)="changeGameSavannahStatus($event)"
-    (restartGame)="openRestartGameDialog()"
-  ></app-game-savannah-head>
-  <div class="savannah__body">
-    <app-games-start-banner
-      *ngIf="!play && !openStatistics && paused"
-      [banner]="banner"
-      (startGame)="startGame()"
-    >
+<div class="savannah is-dark" *ngIf="!play; else game">
+  <div class="savannah__body" *ngIf="!openStatistics">
+    <app-games-start-banner [banner]="banner" (startGame)="startGame()">
+      <div class="savannah__description">
+        <p>
+          После запуска игры вы увидите падающее слово на английском (или русском, если режим игры
+          RU-> EN) и четыре варианта перевода. Выбрать правильный ответ можно двумя способами:
+        </p>
+        <p>1. Кликните по нему мышью;</p>
+        <p>2. Используйте клавиши 1, 2, 3, 4.</p>
+        <p>3. Выберите режим игры:</p>
+      </div>
       <div class="savannah__lang">
         <span
           *ngFor="let item of langs"
@@ -25,22 +24,36 @@
         </mat-icon>
       </div>
     </app-games-start-banner>
-    <app-game-savannah-list
-      *ngIf="play && !openStatistics && !paused"
-      [currentWord]="currentWord"
-      [answers]="answers"
-      [answer]="getAnswer()"
-      [isPaused]="isPaused"
-      [time]="'--time: ' + animationTime + 's'"
-      (checked)="checkAnswer($event)"
-    ></app-game-savannah-list>
+  </div>
+
+  <div class="savannah__body" *ngIf="openStatistics">
     <app-games-end
-      *ngIf="openStatistics && !play"
       [words]="words"
       [gameResult]="gameResult"
       (submitResult)="submitResult($event)"
     ></app-games-end>
   </div>
 </div>
+
+<ng-template #game>
+  <div class="savannah">
+    <app-game-savannah-head
+      [gameSavannahStatus]="gameSavannahStatus"
+      (changeStatus)="changeGameSavannahStatus($event)"
+      (restartGame)="openRestartGameDialog()"
+    ></app-game-savannah-head>
+    <div class="savannah__body">
+      <app-game-savannah-list
+        *ngIf="!paused"
+        [currentWord]="currentWord"
+        [answers]="answers"
+        [answer]="getAnswer()"
+        [isPaused]="isPaused"
+        [time]="'--time: ' + animationTime + 's'"
+        (checked)="checkAnswer($event)"
+      ></app-game-savannah-list>
+    </div>
+  </div>
+</ng-template>
 
 <app-full-screen-for-games></app-full-screen-for-games>
