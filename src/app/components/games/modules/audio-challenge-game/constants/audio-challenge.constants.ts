@@ -2,7 +2,7 @@ import { AudioChallengeState, AudioChallengeWord } from '../models/game-adio-cha
 
 export const API_URL = 'https://andey-rslang-back-end.herokuapp.com/';
 
-export const GAME_LENGHT = 20;
+export const GAME_LENGTH = 20;
 
 export const initialAudioChallengeWord: AudioChallengeWord = {
   _id: '',
@@ -20,6 +20,7 @@ export const initialAudioChallengeWord: AudioChallengeWord = {
   textMeaningTranslate: '',
   textExampleTranslate: '',
   translationsArray: [],
+  answer: -1,
   userWord: {
     difficulty: 'easy',
     optional: {
