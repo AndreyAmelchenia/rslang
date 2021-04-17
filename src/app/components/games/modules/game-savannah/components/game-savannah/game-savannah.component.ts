@@ -91,7 +91,7 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
       .select(selectGameList())
       .pipe(first())
       .subscribe((words) => {
-        this.words = [...words];
+        this.words = words;
       });
     this.resetStatistics();
     this.subscription = this.gameSavannahService.data.subscribe((data) => {
@@ -237,7 +237,7 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
     if (!this.gameResult.some((el) => el.word === this.words[this.currentWordId].word)) {
       this.gameResult.push({
         word: this.words[this.currentWordId].word,
-        translate: this.words[this.currentWordId].wordTranslate,
+        wordTranslate: this.words[this.currentWordId].wordTranslate,
         result: data,
         audio: this.words[this.currentWordId].audio,
       });
