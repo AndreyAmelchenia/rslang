@@ -85,10 +85,10 @@ const wordsReduxMock: AggregatedWordsRedux[] = [
             failCount: 2,
           },
         },
-      }
+      },
     ],
-  totalCount: [{ 0: 5, 1: 6, 2: 4, 3: 4, 4: 8, 5: 1 }],
-  }
+    totalCount: [{ 0: 5, 1: 6, 2: 4, 3: 4, 4: 8, 5: 1 }],
+  },
 ];
 
 const initialState: AppState = {
@@ -140,6 +140,11 @@ const initialState: AppState = {
     optional: {
       displayTranslation: true,
       displayHandlingButtons: true,
+      setGame: {
+        groupAmount: 5,
+        groupLevel: 4,
+        hideRequired: true,
+      },
     },
     id: 8,
   },
@@ -179,8 +184,8 @@ const initialState: AppState = {
       {
         date: 20210414,
         learned: 50,
-      }
-    ],   
+      },
+    ],
   },
   gameList: [
     {
@@ -251,7 +256,7 @@ describe('MyGameListComponent', () => {
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} },
       ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
     store = TestBed.inject(MockStore);
   });

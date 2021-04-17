@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 import { AppState } from 'src/app/redux/app.state';
 import { selectGameList } from 'src/app/redux/selectors/listGame.selectors';
 import { Word } from 'src/app/common/models/word.model';
+import { LoadStatWords } from 'src/app/redux/actions/words.actions';
 import { IGame } from 'src/app/common/models/stats.model';
+import { StatsService } from 'src/app/common/services/stats.service';
 import { AudioChallengeState, AudioChallengeWord } from '../models/game-adio-challenge.model';
 import { GAME_LENGTH, initialAudioChallengeState } from '../constants/audio-challenge.constants';
 
@@ -15,7 +18,7 @@ import { GAME_LENGTH, initialAudioChallengeState } from '../constants/audio-chal
 export class AudioChallengeGameService {
   private gameState = new BehaviorSubject<AudioChallengeState>(initialAudioChallengeState);
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>, private statsService: StatsService) {}
 
   getStateChange(): Observable<AudioChallengeState> {
     return this.gameState.asObservable();
@@ -45,16 +48,19 @@ export class AudioChallengeGameService {
   }
 
   getWords() {
-    this.store.select(selectGameList()).subscribe((words) => {
-      this.setGameState({
-        wordsInGame: words,
+    this.store
+      .select(selectGameList())
+      .pipe(first())
+      .subscribe((words) => {
+        this.setGameState({
+          wordsInGame: words,
+        });
+        const [currentWord] = words;
+        this.setGameState({
+          currentWord: this.createAudioChallengeWord(currentWord),
+        });
+        return undefined;
       });
-      const [currentWord] = words;
-      this.setGameState({
-        currentWord: this.createAudioChallengeWord(currentWord),
-      });
-      return undefined;
-    });
   }
 
   nextWord() {
@@ -106,7 +112,7 @@ export class AudioChallengeGameService {
       resultAnswer = currentWord.wordTranslate === currentWord.translationsArray[index];
       currentWord.answer = index;
     }
-
+    this.store.dispatch(LoadStatWords({ word: currentWord, error: !resultAnswer }));
     const resultListNew = [...resultList, { word: currentWord, result: resultAnswer }];
     this.setGameState({
       resultList: resultListNew,
@@ -149,6 +155,6 @@ export class AudioChallengeGameService {
         series: 0,
       },
     );
-    console.log(resultState);
+    this.statsService.saveAudioStats(resultState);
   }
 }

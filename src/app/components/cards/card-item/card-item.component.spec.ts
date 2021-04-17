@@ -39,7 +39,7 @@ describe('CardItemComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [CardItemComponent],
       imports: [StoreModule.forRoot({})],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   });
 

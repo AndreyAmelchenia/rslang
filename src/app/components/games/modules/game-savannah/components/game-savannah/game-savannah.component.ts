@@ -13,6 +13,8 @@ import { GameSavannahLangs } from '../../models/game-savannah-langs.enum';
 import { GameSavannahStatus } from '../../models/game-savannah-status.model';
 import { GameSavannahService } from '../../services/game-savannah.service';
 import { GameSavannahDialogComponent } from '../game-savannah-dialog/game-savannah-dialog.component';
+import { first } from 'rxjs/operators';
+import { LoadStatWords } from 'src/app/redux/actions/words.actions';
 
 @Component({
   selector: 'app-game-savannah',
@@ -70,7 +72,7 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.store.select(selectGameList()).subscribe((words) => {
+    this.store.select(selectGameList()).pipe(first()).subscribe((words) => {
       this.words = words;
     });
     this.resetStatistics();
@@ -225,10 +227,12 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
       this.paused = true;
       this.gameSavannahStatistic.tries += 1;
       if (answer !== this.getAnswer()) {
+        this.store.dispatch(LoadStatWords({ word: this.words[this.currentWordId], error: true }));
         this.setWordStatistic(false);
         this.gameSavannahStatus.errors += 1;
         this.currentSeries = 0;
       } else {
+        this.store.dispatch(LoadStatWords({ word: this.words[this.currentWordId], error: false }));
         this.setWordStatistic(true);
         this.gameSavannahStatus.currentCounts += 1;
         this.gameSavannahStatistic.right += 1;

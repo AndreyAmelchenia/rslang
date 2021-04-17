@@ -12,7 +12,7 @@ describe('CardsListComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [CardsListComponent],
       imports: [StoreModule.forRoot({})],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   });
 

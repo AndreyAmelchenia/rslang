@@ -36,7 +36,7 @@ export class LoginComponent {
 
   onSubmit(): void {
     if (!this.userData.invalid) {
-      this.store.dispatch(login({ user: this.userData.value }));
+      this.store.dispatch(login({ user: this.userData.value, reg: false }));
     }
   }
 
