@@ -8,10 +8,11 @@ import { StatsService } from 'src/app/common/services/stats.service';
 import { SettingsService } from 'src/app/common/services/settings.service';
 import { SessionService } from 'src/app/common/services/storage/session.service';
 import { Store } from '@ngrx/store';
+import { AlertBarService } from '../../common/services/alert-bar.service';
 import * as authActions from '../actions/auth.actions';
 import { ActionType } from '../models/authAction.models';
 import { IUser } from '../models/user.models';
-import { AuthService } from '../../components/navigation/services/auth.service';
+import { AuthService } from '../../common/services/auth.service';
 import { saveSettings } from '../actions/settings.actions';
 import { saveStatistics } from '../actions/stats.actions';
 
@@ -91,7 +92,7 @@ export class AuthEffects {
       switchMap(({ user }) =>
         this.authService.registerUser(user).pipe(
           map(() => {
-            return authActions.login({
+            return authActions.signUpSuccess({
               user: { email: user.get('email'), password: user.get('password') },
             });
           }),
@@ -101,11 +102,29 @@ export class AuthEffects {
     ),
   );
 
-  signUpSuccess$ = createEffect(
+  signUpSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ActionType.SignUpSuccess),
+      map((user) => authActions.login(user)),
+    ),
+  );
+
+  signUpFailure$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(ActionType.SignUpSuccess),
-        tap(() => this.router.navigateByUrl('/')),
+        ofType(ActionType.SignUpFailure),
+        tap(() =>
+          this.alertBarService.notification$.next('Пользователь с такой почтой уже существует'),
+        ),
+      ),
+    { dispatch: false },
+  );
+
+  loginFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(ActionType.LogInFailure),
+        tap(() => this.alertBarService.notification$.next('Неправильная почта или пароль')),
       ),
     { dispatch: false },
   );
@@ -141,5 +160,6 @@ export class AuthEffects {
     private sessionService: SessionService,
     private settingsService: SettingsService,
     private statsService: StatsService,
+    private alertBarService: AlertBarService,
   ) {}
 }
