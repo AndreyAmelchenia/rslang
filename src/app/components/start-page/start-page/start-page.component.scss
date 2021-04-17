@@ -1,41 +1,217 @@
-.team{
+img {
+  max-width: 100%;
+  display: block;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+section {
+  padding: 7em 0;
+}
+
+.container {
+  width: 85%;
+  max-width: 65em;
+  margin: 0 auto;
+}
+
+.split {
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  > h2 {
-    margin-top: 10px;
-  }
-  > h1 {
-    margin-top: 10px;
+  gap: 1em;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  &>* {
+    flex-basis: 30%;
+    min-width: 15em;
   }
 }
 
-.block_img{
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  > img{
-    width: 45%;
-    border-radius: 50%;
+.spacing>*+* {
+  margin-top: var(--spacer, 2rem)
+}
+
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  color: var(--clr-text, #fff);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 1.125rem;
+  padding: .5em 1.25em;
+  background: var(--clr-accent, blue);
+  border-radius: .25em;
+  transition:
+    transform 250ms ease-in-out,
+    opacity 250ms linear;
+}
+
+.btn:hover,
+.btn:focus {
+  transform: scale(1.1);
+  opacity: .9;
+}
+
+.primary-title {
+  font-size: 4rem;
+  font-size: clamp(2rem, calc(3vw + 1rem), 4.5rem);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.section-title {
+  text-align: center;
+  font-size: clamp(2rem, calc(3vw + 1rem), 4.5rem);
+  line-height: 1;
+  color: black;
+  margin-bottom: 5rem;
+}
+
+.hero {
+  color: white;
+  text-align: center;
+  padding: 15em 0;
+  background: #673ab7;
+
+  @supports (background-blend-mode: multiply) {
+    background: url(../../../../assets/images/background-flag.png),
+      radial-gradient(#444, #111);
+    background-blend-mode: multiply;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center center;
     background-size: cover;
   }
-  
 }
+.featured {
+  background: #eee;
 
-.content{
-  margin: 20px;
-  > h3{
-    max-width: 600px;
+  &__item {
+    display: block;
+    position: relative;
+    transform: scale(.85);
+    transition: transform 250ms ease-in-out;
+    text-decoration: none;
+    color: #333;
+    text-align: center;
+    line-height: 1.2;
+
+
+
+    &:hover,
+    &:focus {
+      transform: scale(1);
+
+      .featured__details {
+        opacity: 1;
+        text-shadow: 0 0 2em rgba(#fff, 1)
+      }
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 10%;
+      left: 10%;
+      padding: 75% 75% 0 0;
+      border-radius: 50%;
+      background: #673ab7;
+      z-index: -1;
+    }
+  }
+
+  &__details {
+    .description {
+      display: block;
+      font-weight: 700;
+      font-size: 2rem;
+    }
   }
 }
-.mat-display-1{
-  font-weight: bold;
-  color: darkblue;
+
+.product {
+  background: radial-gradient(var(--clr-inner, limegreen), var(--clr-outer, purple));
+  padding: 3em;
+  border-radius: 1em;
+  margin-bottom: 5em;
+  text-align: center;
+
+  &__title {
+    font-size: clamp(2rem, calc(5vw + 1rem), 5.5rem);
+    text-transform: uppercase;
+    line-height: 1;
+    color: #fff;
+    text-shadow: 0 0 .2em rgba(#000, .2);
+  }
+
+  &__image {
+    margin: -5em 0 0 0;
+    &.team {
+      border-radius: 50%;
+      max-width: 14em;
+    }
+  }
+  &__video {
+    width: 100%;
+    shape-margin: 1em;
+  }
+
+  @media (min-width: 45em) {
+    text-align: left;
+    margin-bottom: 9em;
+
+    &__title {
+      margin: 0;
+    }
+
+    &__image {
+      float: right;
+      width: 65%;
+      shape-margin: 1em;
+      margin: 0 -5em 0 0;
+    }
+    &__video {
+      float: right;
+      width: 32em;
+      height: 18em;
+      shape-margin: 1em;
+      margin: 0 -5em 0 0;
+    }
+
+
+    &.section-left {
+      .product__image {
+        float: left;
+        margin: 0 0 0 -5em;
+        shape-margin: 2em;
+      }
+    }
+  }
 }
 
+.hero {
+  --clr-accent: #faa700;
+}
 
-iframe{
-  width: 560px;
-  height: 315px;
+.section-red {
+  --clr-inner: #faa700;
+  --clr-outer: #e48d00;
+  --clr-accent: #a1173c;
+}
+
+.section-white {
+  --clr-inner: #fce4b3;
+  --clr-outer: #eac886;
+  --clr-accent: #2f4858;
+}
+
+.section-blue {
+  --clr-inner: #6dd5ed;
+  --clr-outer: #2193b0;
+  --clr-accent: #008951;
 }
