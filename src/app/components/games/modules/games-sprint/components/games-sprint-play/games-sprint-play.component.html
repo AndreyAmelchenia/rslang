@@ -15,12 +15,12 @@
     </mat-card-actions>
     <div class="icons">
       <div class="flex">
-        <mat-icon aria-hidden="false" aria-label="Example home icon">alarm</mat-icon>
+        <mat-icon aria-hidden="false" aria-label="Example alarm icon">alarm</mat-icon>
         <div>{{counter}}</div>
       </div>
       <div class="flex">
-        <mat-icon aria-hidden="false" aria-label="Example home icon">star_border</mat-icon>
-        <div class="score">{{score}}</div>
+        <mat-icon aria-hidden="false" aria-label="Example star icon">star_border</mat-icon>
+        <div class="score" id="score">{{score}}</div>
       </div>
     </div>
     <div>
@@ -37,7 +37,7 @@
         (click)="onAgree(false)"
         [@changeButton]="isHideFalse ? 'hide' : 'show'"
       >
-        НЕВЕРНО 2
+        НЕВЕРНО (2)
       </button>
       <button
         mat-raised-button
@@ -46,7 +46,7 @@
         (click)="onAgree(true)"
         [@changeButton]="isHideTrue ? 'hide' : 'show'"
       >
-        ВЕРНО 1</button
+        ВЕРНО (1)</button
       ><br />
       <button
         mat-raised-button
@@ -54,7 +54,7 @@
         [disabled]="(countHelp>=3 || !start) ? true : false"
         (click)="onHelp()"
       >
-        Подсказка 3
+        Подсказка (3)
       </button>
     </mat-card-actions>
   </div>

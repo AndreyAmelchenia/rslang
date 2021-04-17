@@ -117,19 +117,23 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    // eslint-disable-next-line no-console
+    console.log('ngOnInit');
     this.store
-      .select(selectGameList())
-      .pipe(first())
-      .subscribe((words) => {
-        this.wordsAll = words;
-        this.words = this.wordsAll.slice();
-        // eslint-disable-next-line no-console
-        console.log(this.words);
-        this.setDifferentWordAndTranslation();
-      });
+    .select(selectGameList())
+    .pipe(first())
+    .subscribe((words) => {
+      this.wordsAll = words;
+      console.log(this.wordsAll);
+      this.words = this.wordsAll.slice();
+      console.log(this.words);
+      this.setDifferentWordAndTranslation();
+    });
   }
 
   ngOnDestroy() {
+    // eslint-disable-next-line no-console
+    console.log('ngOnDestroy');
     this.score = 0;
     this.deltaInScore = 10;
     this.play = false;
@@ -137,14 +141,14 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
     if (this.countDown) {
       this.countDown.unsubscribe();
     }
-    document.removeEventListener('keydown', this.keyPressAction);
   }
 
   onStart() {
+    // eslint-disable-next-line no-console
+    console.log('OnStart');
+
     this.countDown = this.gamesSprintService.getCounter(DataConstants.tick).subscribe(() => {
       this.playAudio();
-      // eslint-disable-next-line no-console
-      console.log(this.words.length);
       if (this.counter > 0) {
         this.counter -= 1;
       } else {
@@ -152,6 +156,7 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
       }
     });
     this.start = true;
+    document.addEventListener('keydown', this.keyPressAction.bind(this));
   }
 
   playAudio() {
@@ -167,26 +172,18 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   }
 
   setWord() {
-  /*  if (this.words.length < 3) {
-      this.words = this.wordsAll.slice();
-    } */
     if (this.words.length) {
       this.wordsInCard = this.setRandomWord(this.words.length, wordsQuantityPerCard).map(
         (number) => this.words[number],
       );
     } else {
+      console.log('444');
       this.stopGame();
     }
-    // eslint-disable-next-line no-console
-    console.log(this.wordsInCard);
     this.words = this.words.filter((word) => !this.wordsInCard.includes(word));
-    // eslint-disable-next-line no-console
-    console.log(this.words);
     if (this.wordsInCard.length === 1) {
       [this.wordInCard] = this.wordsInCard;
     }
-    // eslint-disable-next-line no-console
-    console.log(this.wordsInCard);
   }
 
   setSameWordAndTranslation() {
@@ -227,17 +224,17 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
 
       this.countTrue += 1;
       this.countScore();
-      this.elem.nativeElement.querySelectorAll('.score')[0].style.color = CssConstants.colorGreen;
+      this.elem.nativeElement.querySelector("div.score").style.color = CssConstants.colorGreen;
     } else {
       this.store.dispatch(LoadStatWords({ word: this.wordInCard, error: true }));
       this.wordsInCorrect.push(this.wordInCard);
 
       this.countTrueSeries.push(this.countTrue);
       this.countTrue = 0;
-      this.elem.nativeElement.querySelectorAll('.score')[0].style.color = CssConstants.colorRed;
+      this.elem.nativeElement.querySelector("div.score").style.color = CssConstants.colorRed;
       this.deltaInScore = DataConstants.deltaInScore;
     }
-    this.addGameResult(this.wordInCard, this.mistake);
+    this.addGameResult(this.wordInCard, !this.mistake);
     const randomNumbers = this.setRandomWord(
       DataConstants.wordsPerMinute,
       DataConstants.trueWordsPerMinute,
@@ -260,10 +257,15 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
     });
   }
 
-  submitResult(ev = true): void {
+  submitResult(event: boolean): void {
     this.end = false;
-    if (ev) {
+    if (event) {
+   //   this.router.navigate(['/games/sprint/play']);
       this.location.back();
+      this.start = true;
+      console.log (this.words);
+
+      
     } else {
       this.router.navigate(['/games']);
     }
@@ -290,6 +292,7 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   }
 
   keyPressAction(event: KeyboardEvent): void {
+    console.log(event.key);
     if (event.key === '1') {
       this.onAgree(true);
     } else if (event.key === '2') {
@@ -300,10 +303,13 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   }
 
   stopGame() {
+    // eslint-disable-next-line no-console
+    console.log('stop');
     this.pauseAudio();
     this.play = false;
     this.end = true;
     this.countDown.unsubscribe();
+    document.removeEventListener('keydown', this.keyPressAction.bind(this));
     this.responseEndGame = {
       learned: this.wordsUniquePlayed.size,
       tries: this.countTries,
