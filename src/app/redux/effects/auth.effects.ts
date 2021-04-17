@@ -10,8 +10,6 @@ import { SessionService } from 'src/app/common/services/storage/session.service'
 import { Store } from '@ngrx/store';
 import { AlertBarService } from '../../common/services/alert-bar.service';
 import * as authActions from '../actions/auth.actions';
-import { ActionType } from '../models/authAction.models';
-import { IUser } from '../models/user.models';
 import { AuthService } from '../../common/services/auth.service';
 import { saveSettings } from '../actions/settings.actions';
 import { saveStatistics } from '../actions/stats.actions';
@@ -22,7 +20,7 @@ import { initialState as initialStateStats } from '../reducers/stats.reducer';
 export class AuthEffects {
   login$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ActionType.LogIn),
+      ofType(authActions.login),
       exhaustMap(({ user, reg }) =>
         this.authService.loginUser(user, reg).pipe(
           map((res) =>
@@ -46,8 +44,8 @@ export class AuthEffects {
   loginToken$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(ActionType.LogInSuccess),
-        tap((action: any) => {
+        ofType(authActions.loginSuccess),
+        tap((action) => {
           this.sessionService.setItem('user', action.user);
           if (!action.start) {
             this.router.navigateByUrl('/');
@@ -90,7 +88,7 @@ export class AuthEffects {
 
   signUpSuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ActionType.SignUpSuccess),
+      ofType(authActions.signUpSuccess),
       map((user) => authActions.login(user)),
     ),
   );
@@ -98,7 +96,7 @@ export class AuthEffects {
   signUpFailure$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(ActionType.SignUpFailure),
+        ofType(authActions.signUpFailure),
         tap(() =>
           this.alertBarService.notification$.next('Пользователь с такой почтой уже существует'),
         ),
@@ -109,7 +107,7 @@ export class AuthEffects {
   loginFailure$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(ActionType.LogInFailure),
+        ofType(authActions.loginFailure),
         tap(() => this.alertBarService.notification$.next('Неправильная почта или пароль')),
       ),
     { dispatch: false },
@@ -118,7 +116,7 @@ export class AuthEffects {
   logOut$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(ActionType.LogOut),
+        ofType(authActions.logout),
         tap(() => {
           this.sessionService.removeItem('user');
           this.settingsService.resetSettings();
@@ -132,7 +130,7 @@ export class AuthEffects {
   isAuth$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(ActionType.isAuth),
+        ofType(authActions.isAuth),
         tap(() => this.authService.isAuth()),
       ),
     { dispatch: false },
