@@ -3,6 +3,10 @@
   flex: 1;
   padding: 2rem;
   background-color: #fff;
+
+  @media (max-width: 768px) {
+    padding: 1rem 0;
+  }
 }
 .content{
     position: relative;
