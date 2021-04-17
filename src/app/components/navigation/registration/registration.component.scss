@@ -3,14 +3,14 @@
   flex-direction: column;
   align-items: center;
 }
-.card {
-  max-width: 500px;
-  margin: 0 auto;
-}
+// .card {
+//   max-width: 500px;
+//   margin: 0 auto;
+// }
 
-.input{
-  width: 100%;
-}
+// .input{
+//   width: 100%;
+// }
 
 .example-1 .form-group{
   padding:1em;
@@ -23,7 +23,7 @@
   user-select:none
 }
 .example-1 .label{
-  width:120px;
+  // width:120px;
   border:2px dashed grey;
   border-radius:5px;display:block;
   padding:1.2em;
@@ -44,4 +44,7 @@
 }
 .example-1 .label:hover i,.example-1 .label:hover .title{
   color:#000
+}
+.center {
+  text-align: center;
 }

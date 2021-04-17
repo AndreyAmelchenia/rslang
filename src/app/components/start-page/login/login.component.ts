@@ -4,6 +4,9 @@ import { Store } from '@ngrx/store';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { login } from 'src/app/redux/actions/auth.actions';
 import { AppState } from 'src/app/redux/app.state';
+import { Observable } from 'rxjs';
+import { isLoginSelector } from 'src/app/redux/selectors/auth.selectors';
+import { MatDialogRef } from '@angular/material/dialog';
 import { AuthService } from '../../../common/services/auth.service';
 
 const myNameValidator = (control: FormControl) => {
@@ -27,19 +30,30 @@ export class LoginComponent {
     password: ['', [Validators.required, myNameValidator]],
   });
 
+  isAuth$: Observable<boolean>;
+
   constructor(
     public auth: AuthService,
     private store: Store<AppState>,
     private location: Location,
     private formBuilder: FormBuilder,
+    public dialogRef: MatDialogRef<LoginComponent>,
   ) {}
+
+  ngOnInit(): void {
+    this.store.select(isLoginSelector).subscribe((data) => {
+      if (data) {
+        this.dialogRef.close();
+      }
+    });
+  }
 
   onSubmit(): void {
     if (!this.userData.invalid) {
       this.store.dispatch(login({ user: this.userData.value, reg: false }));
     }
   }
-
+  
   goBack() {
     this.location.back();
   }
