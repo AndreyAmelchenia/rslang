@@ -27,9 +27,9 @@ export class HttpRequestInterceptor implements HttpInterceptor {
     return next
       .handle(request)
       .pipe(
-        catchError((err) => {
+        catchError(() => {
           this.loading.setLoading(false, request.url);
-          return err;
+          throw new Error();
         }),
       )
       .pipe(

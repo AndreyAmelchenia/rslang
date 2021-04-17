@@ -12,7 +12,6 @@ import { selectGameList } from 'src/app/redux/selectors/listGame.selectors';
 import { URL_BACK_SERVER } from 'src/app/shared/constants/url-constants';
 import { StatisticGame } from '../../game-statistic.model';
 
-import { MyGameService } from '../../services/my-game.service';
 import { DialogTotalGameComponent } from '../dialog-total-game/dialog-total-game.component';
 @Component({
   selector: 'app-my-game-list',
@@ -79,7 +78,6 @@ export class MyGameListComponent implements OnInit {
   countAllTries = 0;
 
   constructor(
-    private myGameService: MyGameService,
     private router: Router,
     public dialog: MatDialog,
     private store: Store<AppState>,
@@ -122,7 +120,6 @@ export class MyGameListComponent implements OnInit {
     if (this.changedGameList.length === 0) {
       this.countGoodAnswer += 1;
       this.bestSeries.push(this.countGoodAnswer);
-      this.countAllTries += 1;
       this.getStatistic();
     }
   }

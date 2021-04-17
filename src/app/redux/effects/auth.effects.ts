@@ -8,9 +8,9 @@ import { StatsService } from 'src/app/common/services/stats.service';
 import { SettingsService } from 'src/app/common/services/settings.service';
 import { SessionService } from 'src/app/common/services/storage/session.service';
 import { Store } from '@ngrx/store';
-import { login, loginFailure, loginSuccess, signUp, signUpFailure } from '../actions/auth.actions';
-import { ActionType } from '../models/authAction.models';
-import { AuthService } from '../../components/navigation/services/auth.service';
+import { AlertBarService } from '../../common/services/alert-bar.service';
+import * as authActions from '../actions/auth.actions';
+import { AuthService } from '../../common/services/auth.service';
 import { saveSettings } from '../actions/settings.actions';
 import { saveStatistics } from '../actions/stats.actions';
 import { initialState as initialStateSetting } from '../reducers/settings.reducer';
@@ -20,11 +20,11 @@ import { initialState as initialStateStats } from '../reducers/stats.reducer';
 export class AuthEffects {
   login$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(login),
+      ofType(authActions.login),
       exhaustMap(({ user, reg }) =>
         this.authService.loginUser(user, reg).pipe(
           map((res) =>
-            loginSuccess({
+            authActions.loginSuccess({
               user: {
                 userId: res.user.userId,
                 name: res.user.name,
@@ -35,7 +35,7 @@ export class AuthEffects {
               reg: res.reg,
             }),
           ),
-          catchError((error) => of(loginFailure({ error }))),
+          catchError((error) => of(authActions.loginFailure({ error }))),
         ),
       ),
     ),
@@ -44,8 +44,8 @@ export class AuthEffects {
   loginToken$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(ActionType.LogInSuccess),
-        tap((action: any) => {
+        ofType(authActions.loginSuccess),
+        tap((action) => {
           this.sessionService.setItem('user', action.user);
           if (!action.start) {
             this.router.navigateByUrl('/');
@@ -71,26 +71,44 @@ export class AuthEffects {
 
   signUp$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(signUp),
+      ofType(authActions.signUp),
       switchMap(({ user }) =>
         this.authService.registerUser(user).pipe(
           map(() => {
-            return login({
+            return authActions.signUpSuccess({
               user: { email: user.get('email'), password: user.get('password') },
               reg: true,
             });
           }),
-          catchError((error) => of(signUpFailure({ error }))),
+          catchError((error) => of(authActions.signUpFailure({ error }))),
         ),
       ),
     ),
   );
 
-  signUpSuccess$ = createEffect(
+  signUpSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(authActions.signUpSuccess),
+      map((user) => authActions.login(user)),
+    ),
+  );
+
+  signUpFailure$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(ActionType.SignUpSuccess),
-        tap(() => this.router.navigateByUrl('/')),
+        ofType(authActions.signUpFailure),
+        tap(() =>
+          this.alertBarService.notification$.next('Пользователь с такой почтой уже существует'),
+        ),
+      ),
+    { dispatch: false },
+  );
+
+  loginFailure$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(authActions.loginFailure),
+        tap(() => this.alertBarService.notification$.next('Неправильная почта или пароль')),
       ),
     { dispatch: false },
   );
@@ -98,7 +116,7 @@ export class AuthEffects {
   logOut$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(ActionType.LogOut),
+        ofType(authActions.logout),
         tap(() => {
           this.sessionService.removeItem('user');
           this.settingsService.resetSettings();
@@ -112,7 +130,7 @@ export class AuthEffects {
   isAuth$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(ActionType.isAuth),
+        ofType(authActions.isAuth),
         tap(() => this.authService.isAuth()),
       ),
     { dispatch: false },
@@ -126,5 +144,6 @@ export class AuthEffects {
     private sessionService: SessionService,
     private settingsService: SettingsService,
     private statsService: StatsService,
+    private alertBarService: AlertBarService,
   ) {}
 }
