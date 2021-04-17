@@ -3,6 +3,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   ViewChild,
@@ -11,13 +12,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Word } from 'src/app/common/models/word.model';
 import { URL_BACK_SERVER } from 'src/app/shared/constants/url-constants';
-
-export interface GameResult {
-  word: string;
-  translate: string;
-  result: boolean;
-  audio: string;
-}
+import { GameResult } from '../../models/games.result.model';
 
 @Component({
   selector: 'app-games-end',
@@ -25,7 +20,7 @@ export interface GameResult {
   styleUrls: ['./games-end.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GamesEndComponent implements OnInit {
+export class GamesEndComponent implements OnInit, OnDestroy {
   @Input() words: Word[];
 
   @Input() gameResult: GameResult[] = [];
@@ -40,12 +35,20 @@ export class GamesEndComponent implements OnInit {
 
   subTitle = '';
 
+  audio: HTMLAudioElement;
+
+  play = false;
+
   @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.gameResult);
     this.dataSource.sort = this.sort;
     this.calcStatistics();
+  }
+
+  ngOnDestroy() {
+    this.playAgain();
   }
 
   playAgain(): void {
@@ -57,8 +60,9 @@ export class GamesEndComponent implements OnInit {
   }
 
   playWordAudio(audio: string): void {
-    const audioElement = new Audio(`${URL_BACK_SERVER.URL_BACK + audio}`);
-    audioElement.play();
+    if (this.audio) this.audio.pause();
+    this.audio = new Audio(`${URL_BACK_SERVER.URL_BACK + audio}`);
+    this.audio.play();
   }
 
   private calcStatistics(): void {
@@ -73,44 +77,5 @@ export class GamesEndComponent implements OnInit {
     } else {
       this.subTitle += `Тренируйтесь еще. Вы знаете только ${right} из ${this.gameResult.length} слов.`;
     }
-    console.log('calcStatistics end');
   }
-
-  // @Output() repeatGame = new EventEmitter();
-  // audio: HTMLAudioElement;
-  // audioExample: HTMLAudioElement;
-  // audioMeaning: HTMLAudioElement;
-  // play = false;
-  // currentWord = -1;
-
-  // playCurrentWord(i: number): void {
-  //   if (this.currentWord === i) {
-  //     this.currentWord = -1;
-  //     this.stopAudio();
-  //   } else {
-  //     this.currentWord = i;
-  //     if (this.play) this.stopAudio();
-  //     this.playAudio(i);
-  //   }
-  // }
-  // playAudio(i: number) {
-  //   this.play = true;
-  //   this.audio = new Audio(`${URL_BACK_SERVER.URL_BACK + this.words[i].audio}`);
-  //   this.audioExample = new Audio(`${URL_BACK_SERVER.URL_BACK + this.words[i].audioExample}`);
-  //   this.audioMeaning = new Audio(`${URL_BACK_SERVER.URL_BACK + this.words[i].audioMeaning}`);
-  //   [this.audio, this.audioExample, this.audioMeaning].forEach((el, index, arr) => {
-  //     el.addEventListener('ended', () => arr[index + 1] && arr[index + 1].play());
-  //   });
-  //   this.audioMeaning.addEventListener('ended', () => this.playCurrentWord(this.currentWord));
-  //   this.audio.play();
-  // }
-  // stopAudio() {
-  //   this.play = false;
-  //   this.audio.pause();
-  //   this.audioExample.pause();
-  //   this.audioMeaning.pause();
-  // }
-  // repeat(): void {
-  //   this.repeatGame.emit();
-  // }
 }
