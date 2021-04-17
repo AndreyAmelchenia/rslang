@@ -9,7 +9,8 @@ import { AppState } from 'src/app/redux/app.state';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { LoadStatWords } from 'src/app/redux/actions/words.actions';
 import { first } from 'rxjs/operators';
-import { GameResult } from 'src/app/components/games/models/games.result.model';
+import { StatsService } from 'src/app/common/services/stats.service';
+import { IGame } from 'src/app/common/models/stats.model';
 import { CssConstants } from '../../../../../../shared/constants/css-constants';
 import { DataConstants } from '../../../../../../shared/constants/data-constants';
 import { GamesSprintService } from '../../services/games-sprint.service';
@@ -75,7 +76,7 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
 
   deltaInScore = DataConstants.deltaInScore;
 
-  responseEndGame: {} = {};
+  responseEndGame: IGame;
 
   countTries = 0;
 
@@ -107,6 +108,7 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
     private elem: ElementRef,
     private location: Location,
     private store: Store<AppState>,
+    private statsService: StatsService,
   ) {}
 
   ngOnInit() {
@@ -266,10 +268,9 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
       learned: this.wordsUniquePlayed.size,
       tries: this.countTries,
       right: this.countTrueSeries.reduce((accum, value) => accum + value, 0),
-      bestSeries: Math.max(...this.countTrueSeries),
-      correct: this.wordsCorrect,
-      incorrect: this.wordsInCorrect,
+      series: Math.max(...this.countTrueSeries),
     };
+    this.statsService.saveSprintStats(this.responseEndGame);
   }
 
   goBack(): void {
