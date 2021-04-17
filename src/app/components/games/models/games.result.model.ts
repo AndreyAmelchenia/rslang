@@ -1,6 +1,6 @@
 export interface GameResult {
   word: string;
-  translate: string;
+  wordTranslate: string;
   result: boolean;
   audio: string;
 }

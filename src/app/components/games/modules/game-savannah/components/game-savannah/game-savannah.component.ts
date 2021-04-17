@@ -237,7 +237,7 @@ export class GameSavannahComponent implements OnDestroy, OnInit {
     if (!this.gameResult.some((el) => el.word === this.words[this.currentWordId].word)) {
       this.gameResult.push({
         word: this.words[this.currentWordId].word,
-        translate: this.words[this.currentWordId].wordTranslate,
+        wordTranslate: this.words[this.currentWordId].wordTranslate,
         result: data,
         audio: this.words[this.currentWordId].audio,
       });
