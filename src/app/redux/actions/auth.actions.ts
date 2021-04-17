@@ -9,7 +9,10 @@ export const loginSuccess = createAction(
 );
 export const loginFailure = createAction(ActionType.LogInFailure, props<any>());
 export const signUp = createAction(ActionType.SignUp, props<{ user: FormData }>());
-export const signUpSuccess = createAction(ActionType.SignUpSuccess, props<{ user: IHttpUser }>());
+export const signUpSuccess = createAction(
+  ActionType.SignUpSuccess,
+  props<{ user: IHttpUser; reg: boolean }>(),
+);
 export const signUpFailure = createAction(ActionType.SignUpFailure, props<any>());
 export const logout = createAction(ActionType.LogOut);
 export const isAuth = createAction(ActionType.isAuth);
