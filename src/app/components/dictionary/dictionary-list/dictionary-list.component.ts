@@ -11,6 +11,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ISettings } from '../../../common/models/settings.model';
 import { Word } from '../../../common/models/word.model';
 import { AppState } from '../../../redux/app.state';
 
@@ -30,6 +31,8 @@ export class DictionaryListComponent {
   @Input() label: string;
 
   @Input() words$: Observable<Word[]>;
+
+  @Input() settings: ISettings;
 
   @Input() totalCount$: Observable<number>;
 

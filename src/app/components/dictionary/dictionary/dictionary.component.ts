@@ -3,8 +3,10 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { totalCount, wordsDictionary } from 'src/app/redux/selectors/dictionary.selectors';
 import { Word } from 'src/app/common/models/word.model';
+import { ISettings } from '../../../common/models/settings.model';
 import { DictionaryService } from '../../../common/services/dictionary.service';
 import { restoreWord } from '../../../redux/actions/dictionary.actions';
+import { selectSettings } from '../../../redux/selectors/settings.selector';
 
 export interface ExampleTab {
   label: string;
@@ -33,12 +35,23 @@ export class DictionaryComponent implements OnInit {
 
   totalCount$: Observable<number>;
 
+  settings: ISettings;
+
   constructor(private dictionaryService: DictionaryService, private store: Store) {
     this.tabs = [
       { label: 'Изучаемые слова', icon: 'filter_1', color: 'blue', id: 1 },
       { label: 'Сложные слова', icon: 'filter_2', color: 'green', id: 2 },
       { label: 'Удалённые слова', icon: 'filter_3', color: 'brown', id: 3 },
     ];
+  }
+
+  ngOnInit() {
+    this.words$ = this.store.select(wordsDictionary);
+    this.totalCount$ = this.store.select(totalCount);
+    this.dictionaryService.updateWords();
+    this.getGroup();
+    this.getSection();
+    this.getSettings();
   }
 
   onChangePage(event) {
@@ -66,11 +79,9 @@ export class DictionaryComponent implements OnInit {
     this.currentSection = this.dictionaryService.getSection();
   }
 
-  ngOnInit() {
-    this.words$ = this.store.select(wordsDictionary);
-    this.totalCount$ = this.store.select(totalCount);
-    this.dictionaryService.updateWords();
-    this.getGroup();
-    this.getSection();
+  getSettings() {
+    this.store.select(selectSettings).subscribe((settings) => {
+      this.settings = settings;
+    });
   }
 }
