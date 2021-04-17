@@ -118,6 +118,8 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
       .subscribe((words) => {
         this.wordsAll = words;
         this.words = this.wordsAll.slice();
+        // eslint-disable-next-line no-console
+        console.log(this.words);
         this.setDifferentWordAndTranslation();
       });
   }
@@ -136,6 +138,8 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   onStart() {
     this.countDown = this.gamesSprintService.getCounter(DataConstants.tick).subscribe(() => {
       this.playAudio();
+      // eslint-disable-next-line no-console
+      console.log(this.words.length);
       if (this.counter > 0) {
         this.counter -= 1;
       } else {
@@ -158,16 +162,26 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   }
 
   setWord() {
-    if (this.words.length < 3) {
+  /*  if (this.words.length < 3) {
       this.words = this.wordsAll.slice();
+    } */
+    if (this.words.length) {
+      this.wordsInCard = this.setRandomWord(this.words.length, wordsQuantityPerCard).map(
+        (number) => this.words[number],
+      );
+    } else {
+      this.stopGame();
     }
-    this.wordsInCard = this.setRandomWord(this.words.length, wordsQuantityPerCard).map(
-      (number) => this.words[number],
-    );
+    // eslint-disable-next-line no-console
+    console.log(this.wordsInCard);
     this.words = this.words.filter((word) => !this.wordsInCard.includes(word));
+    // eslint-disable-next-line no-console
+    console.log(this.words);
     if (this.wordsInCard.length === 1) {
       [this.wordInCard] = this.wordsInCard;
     }
+    // eslint-disable-next-line no-console
+    console.log(this.wordsInCard);
   }
 
   setSameWordAndTranslation() {
@@ -180,8 +194,8 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
 
   setDifferentWordAndTranslation() {
     this.setWord();
-    this.translations = this.setRandomWord(this.words.length, wordsQuantityPerCard).map(
-      (number) => this.words[number],
+    this.translations = this.setRandomWord(this.wordsAll.length, wordsQuantityPerCard).map(
+      (number) => this.wordsAll[number],
     );
     if (this.translations.length === 1) {
       [this.translation] = this.translations;

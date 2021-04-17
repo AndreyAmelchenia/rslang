@@ -13,13 +13,13 @@ import { LoadListGame } from 'src/app/redux/actions/listGame.actions';
 })
 export class GamesSprintMainComponent {
   constructor(private location: Location, private store: Store<AppState>) {
-    this.store
+    /* this.store
       .select(selectGameList())
       .pipe(first())
       .subscribe((words) => {
         const { group } = words[0];
         this.store.dispatch(LoadListGame({ group, page: 0, wordsPerPage: 180 }));
-      });
+      }); */
   }
 
   goBack(): void {

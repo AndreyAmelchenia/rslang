@@ -21,7 +21,7 @@ export class GeneratorShuffleArrayService {
 
   public getRandomNumbers(rangeLength: number, randomNumbersQuantity: number): number[] {
     const array: number[] = [];
-    for (let index = 1; index <= rangeLength; index += 1) {
+    for (let index = 0; index <= rangeLength; index += 1) {
       array.push(index);
     }
     const result: number[] = [];
