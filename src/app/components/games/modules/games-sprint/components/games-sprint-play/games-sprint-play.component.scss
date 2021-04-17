@@ -1,9 +1,12 @@
 :host {
+  position: relative;
   flex: 1;
-  margin: 2rem;
+  padding: 2rem;
+  background-color: #fff;
 }
 .content{
-  position: relative;
+    position: relative;
+    height: 100%;
     text-align: center;
     margin: 1rem auto;
     max-width: 20rem;
