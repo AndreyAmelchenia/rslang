@@ -9,6 +9,7 @@ import { StatsService } from 'src/app/common/services/stats.service';
 import { LoadStatWords } from 'src/app/redux/actions/words.actions';
 import { AppState } from 'src/app/redux/app.state';
 import { selectGameList } from 'src/app/redux/selectors/listGame.selectors';
+import { URL_BACK_SERVER } from 'src/app/shared/constants/url-constants';
 import { StatisticGame } from '../../game-statistic.model';
 
 import { MyGameService } from '../../services/my-game.service';
@@ -19,6 +20,8 @@ import { DialogTotalGameComponent } from '../dialog-total-game/dialog-total-game
   styleUrls: ['./my-game-list.component.scss'],
 })
 export class MyGameListComponent implements OnInit {
+  apiUrl = URL_BACK_SERVER.URL_BACK;
+
   words: Word[];
 
   solvedWords = new Set<Word>();

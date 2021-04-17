@@ -17,6 +17,8 @@ export class DictionaryItemComponent {
 
   @Output() restoreWordEvent = new EventEmitter();
 
+  apiUrl = URL_BACK_SERVER.URL_BACK;
+
   audio: HTMLAudioElement;
 
   audioExample: HTMLAudioElement;

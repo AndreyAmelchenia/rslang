@@ -17,7 +17,7 @@
         >
           <div *cdkDragPlaceholder></div>
           <p class="imgblock">
-            <img [src]="'https://andey-rslang-back-end.herokuapp.com/' + item.image" />
+            <img [src]="apiUrl + item.image" />
             <span>{{item.wordTranslate}}</span>
           </p>
         </div>

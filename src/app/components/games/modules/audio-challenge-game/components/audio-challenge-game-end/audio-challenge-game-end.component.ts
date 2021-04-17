@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, OnDestroy, ViewChild } from '@angular/core
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { API_URL } from '../../constants/audio-challenge.constants';
+import { URL_BACK_SERVER } from 'src/app/shared/constants/url-constants';
 import { AudioChallengeState } from '../../models/game-adio-challenge.model';
 import { AudioChallengeGameService } from '../../sevices/audio-challenge-game.service';
 
@@ -26,6 +26,8 @@ export class AudioChallengeGameEndComponent implements OnChanges, OnDestroy {
 
   dataSource;
 
+  url = URL_BACK_SERVER;
+
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private audioChallengeGameService: AudioChallengeGameService) {}
@@ -43,7 +45,7 @@ export class AudioChallengeGameEndComponent implements OnChanges, OnDestroy {
   }
 
   playWordAudio(audio: string) {
-    const audioElement = new Audio(API_URL + audio);
+    const audioElement = new Audio(URL_BACK_SERVER.URL_BACK + audio);
     audioElement.play();
   }
 

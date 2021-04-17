@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { URL_BACK_SERVER } from 'src/app/shared/constants/url-constants';
 import { SessionService } from '../../../common/services/storage/session.service';
 import { loginSuccess } from '../../../redux/actions/auth.actions';
 import { IHttpUser, IUser } from '../../../redux/models/user.models';
@@ -11,9 +12,9 @@ import { IHttpUser, IUser } from '../../../redux/models/user.models';
   providedIn: 'root',
 })
 export class AuthService {
-  registerUrl = 'https://andey-rslang-back-end.herokuapp.com/users';
+  registerUrl = `${URL_BACK_SERVER.URL_BACK}users`;
 
-  loginUrl = 'https://andey-rslang-back-end.herokuapp.com/signin';
+  loginUrl = `${URL_BACK_SERVER.URL_BACK}signin`;
 
   constructor(
     private http: HttpClient,

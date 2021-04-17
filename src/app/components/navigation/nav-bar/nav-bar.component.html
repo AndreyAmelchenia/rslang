@@ -45,11 +45,7 @@
       </ng-template>
       <ng-template #loginBlock>
         <div class="block_user">
-          <img
-            *ngIf="(user$|async).photo"
-            class="avatar"
-            [src]="'https://andey-rslang-back-end.herokuapp.com/' + (user$|async).photo"
-          />
+          <img *ngIf="(user$|async).photo" class="avatar" [src]="apiUrl + (user$|async).photo" />
           <span class="greet">Привет, {{(user$|async).name}}</span>
           <button mat-raised-button color="accent" (click)="onLogout()">Выход</button>
         </div>
