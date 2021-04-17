@@ -1,14 +1,27 @@
+import {
+  animate,
+  animateChild,
+  query,
+  stagger,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChildren } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { SessionService } from 'src/app/common/services/storage/session.service';
 import { LoadListGame } from 'src/app/redux/actions/listGame.actions';
 import { isLoginSelector } from 'src/app/redux/selectors/auth.selectors';
 import { AboutUs } from '../../aboutUs/models/about-us.model';
 import { AboutUsService } from '../../aboutUs/services/about-us.service';
+import { RegistrationComponent } from '../../navigation/registration/registration.component';
+import { LoginComponent } from '../login/login.component';
 
 export interface Tile {
   color: string;
@@ -20,8 +33,21 @@ export interface Tile {
   selector: 'app-start-page',
   templateUrl: './start-page.component.html',
   styleUrls: ['./start-page.component.scss'],
+  animations: [
+    trigger('sectionAnimation', [
+      transition('initial <=> focused', [query('@childAnimation', stagger(100, [animateChild()]))]),
+    ]),
+    trigger('childAnimation', [
+      state('initial', style({ opacity: 0 })),
+      state('focused', style({ opacity: 1 })),
+      transition('initial <=> focused', [animate('0.5s')]),
+    ]),
+  ],
 })
-export class StartPageComponent implements OnInit {
+export class StartPageComponent implements OnInit, AfterViewInit {
+  @ViewChildren('welcomeAnimation')
+  childreny!: any;
+
   isAuth$: Observable<boolean>;
 
   safeURL: SafeResourceUrl;
@@ -32,12 +58,7 @@ export class StartPageComponent implements OnInit {
 
   index = 0;
 
-  colsAndRows = of({
-    one: { col: 6, row: 1 },
-    two: { col: 2, row: 2 },
-    three: { col: 2, row: 1 },
-    four: { col: 4, row: 1 },
-  });
+  animationState: string;
 
   constructor(
     private store: Store,
@@ -45,6 +66,8 @@ export class StartPageComponent implements OnInit {
     private aboutUsService: AboutUsService,
     public breakpointObserver: BreakpointObserver,
     private userSession: SessionService,
+    private dialog: MatDialog,
+    private element: ElementRef,
   ) {
     this.aboutUsService.getTeam().subscribe((aboutUs) => {
       this.aboutUs = aboutUs.reduce((acc, item) => [...acc, { ...item }], []);
@@ -53,103 +76,28 @@ export class StartPageComponent implements OnInit {
     this.safeURL = this.sanitizer.bypassSecurityTrustResourceUrl(
       'https://www.youtube.com/embed/1ozGKlOzEVc',
     );
-    this.colsAndRows = this.breakpointObserver
-      .observe([
-        '(min-width: 700px)',
-        '(min-width: 1060px)',
-        '(min-width: 840px)',
-        '(min-width: 600px)',
-        '(min-width: 300px)',
-      ])
-      .pipe(
-        mergeMap(({ breakpoints }) => {
-          if (breakpoints['(min-width: 1060px)'])
-            return of({
-              one: { col: 7, row: 1 },
-              two: { col: 2, row: 2 },
-              three: { col: 3, row: 1 },
-              four: { col: 4, row: 1 },
-            });
-          if (breakpoints['(min-width: 840px)'])
-            return of({
-              one: { col: 5, row: 1 },
-              two: { col: 4, row: 1 },
-              three: { col: 2, row: 1 },
-              four: { col: 7, row: 1 },
-            });
-          if (breakpoints['(min-width: 700px)'])
-            return of({
-              one: { col: 5, row: 1 },
-              two: { col: 4, row: 1 },
-              three: { col: 2, row: 1 },
-              four: { col: 7, row: 1 },
-            });
-          if (breakpoints['(min-width: 600px)'])
-            return this.isAuth$.pipe(
-              map((bool) => {
-                if (bool) {
-                  return {
-                    one: { col: 9, row: 1 },
-                    two: { col: 4, row: 1 },
-                    three: { col: 5, row: 1 },
-                    four: { col: 9, row: 1 },
-                  };
-                }
-                return {
-                  one: { col: 5, row: 1 },
-                  two: { col: 2, row: 1 },
-                  three: { col: 2, row: 1 },
-                  four: { col: 7, row: 1 },
-                };
-              }),
-            );
-          if (breakpoints['(min-width: 300px)'])
-            return this.isAuth$.pipe(
-              map((bool) => {
-                if (bool) {
-                  return {
-                    one: { col: 9, row: 1 },
-                    two: { col: 9, row: 1 },
-                    three: { col: 9, row: 1 },
-                    four: { col: 9, row: 1 },
-                  };
-                }
-                return {
-                  one: { col: 7, row: 1 },
-                  two: { col: 7, row: 1 },
-                  three: { col: 7, row: 1 },
-                  four: { col: 7, row: 1 },
-                };
-              }),
-            );
-          return this.isAuth$.pipe(
-            map((bool) => {
-              if (bool) {
-                return {
-                  one: { col: 9, row: 1 },
-                  two: { col: 9, row: 1 },
-                  three: { col: 9, row: 1 },
-                  four: { col: 9, row: 1 },
-                };
-              }
-              return {
-                one: { col: 7, row: 1 },
-                two: { col: 7, row: 1 },
-                three: { col: 7, row: 1 },
-                four: { col: 7, row: 1 },
-              };
-            }),
-          );
-        }),
-      );
   }
 
-  tiles: Tile[] = [
-    { text: 'one', cols: 3, rows: 1, color: 'lightblue' },
-    { text: 'Two', cols: 1, rows: 2, color: 'lightgreen' },
-    { text: 'Three', cols: 1, rows: 1, color: 'lightpink' },
-    { text: 'Four', cols: 2, rows: 1, color: '#DDBDF1' },
-  ];
+  ngAfterViewInit() {
+    const options = {
+      threshold: 0.5,
+    };
+
+    const fu = (entries, observer) => {
+      entries.forEach((elem) => {
+        if (elem.isIntersecting) {
+          this.animationState = 'focused';
+          observer.unobserve(elem.target);
+        } else {
+          this.animationState = 'initial';
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(fu, options);
+    observer.observe(this.element.nativeElement);
+    this.childreny.toArray().map((child) => observer.observe(child.nativeElement));
+  }
 
   ngOnInit() {
     this.isAuth$ = this.store.select(isLoginSelector).pipe(map((el) => !el));
@@ -161,5 +109,13 @@ export class StartPageComponent implements OnInit {
   nextItem(index: number) {
     this.index = index;
     this.aboutUsItem = of(this.aboutUs[index % 8]);
+  }
+
+  modalLogin() {
+    this.dialog.open(LoginComponent, { width: '480px' });
+  }
+
+  modalRegistration() {
+    this.dialog.open(RegistrationComponent, { width: '480px' });
   }
 }
