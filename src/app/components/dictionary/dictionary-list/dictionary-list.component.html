@@ -4,6 +4,7 @@
       <app-buttons [color]="color" [words]="words"></app-buttons>
       <mat-grid-tile *ngFor="let word of words; trackBy:identify">
         <app-dictionary-item
+          [settings]="settings"
           [word]="word"
           [color]="color"
           [label]="label"

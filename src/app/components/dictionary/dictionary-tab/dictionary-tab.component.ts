@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { ISettings } from '../../../common/models/settings.model';
 import { Word } from '../../../common/models/word.model';
 import { AppState } from '../../../redux/app.state';
 import { selectExpectation } from '../../../redux/selectors/request.selector';
@@ -29,6 +30,8 @@ export class DictionaryTabComponent implements OnInit {
   @Input() label: string;
 
   @Input() group: number;
+
+  @Input() settings: ISettings;
 
   @Output() changePageEvent = new EventEmitter();
 
