@@ -6,17 +6,11 @@ import { AngularMaterialModule } from '../../../../shared/material/material.modu
 import { GamesSprintPlayComponent } from './components/games-sprint-play/games-sprint-play.component';
 import { GamesSprintCardComponent } from './components/games-sprint-card/games-sprint-card.component';
 import { GamesSprintMainComponent } from './components/games-sprint-main/games-sprint-main.component';
-import { GamesSprintEndComponent } from './components/games-sprint-end/games-sprint-end.component';
 import { GamesSprintRoutingModule } from './games-sprint-routing.module';
 import { GamesSharedModule } from '../games-shared.module';
 
 @NgModule({
-  declarations: [
-    GamesSprintMainComponent,
-    GamesSprintPlayComponent,
-    GamesSprintCardComponent,
-    GamesSprintEndComponent,
-  ],
+  declarations: [GamesSprintMainComponent, GamesSprintPlayComponent, GamesSprintCardComponent],
   imports: [
     CommonModule,
     HttpClientModule,

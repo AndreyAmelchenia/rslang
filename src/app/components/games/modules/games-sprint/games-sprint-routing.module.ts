@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { GamesSprintPlayComponent } from './components/games-sprint-play/games-sprint-play.component';
 import { GamesSprintMainComponent } from './components/games-sprint-main/games-sprint-main.component';
-import { GamesSprintEndComponent } from './components/games-sprint-end/games-sprint-end.component';
 
 const routes: Routes = [
   {
@@ -16,10 +15,6 @@ const routes: Routes = [
       {
         path: 'play',
         component: GamesSprintPlayComponent,
-      },
-      {
-        path: 'play/end',
-        component: GamesSprintEndComponent,
       },
     ],
   },

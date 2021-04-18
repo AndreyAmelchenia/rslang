@@ -2,9 +2,6 @@ import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { AppState } from 'src/app/redux/app.state';
 import { Store } from '@ngrx/store';
-import { selectGameList } from 'src/app/redux/selectors/listGame.selectors';
-import { first } from 'rxjs/operators';
-import { LoadListGame } from 'src/app/redux/actions/listGame.actions';
 import { Router } from '@angular/router';
 import { GamesBannerData } from 'src/app/components/games/models/games-start-banner.model';
 

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Location } from '@angular/common';
 import { Word } from 'src/app/common/models/word.model';
@@ -109,7 +109,6 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   constructor(
     private gamesSprintService: GamesSprintService,
     public generatorShuffleArrayService: GeneratorShuffleArrayService,
-    private elem: ElementRef,
     private location: Location,
     private store: Store<AppState>,
     private statsService: StatsService,
@@ -117,37 +116,34 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    console.log('ngOnInit');
     this.store
       .select(selectGameList())
       .pipe(first())
       .subscribe((words) => {
         this.wordsAll = words;
-        console.log(this.wordsAll);
         this.words = this.wordsAll.slice();
-        console.log(this.words);
         this.setDifferentWordAndTranslation();
       });
   }
 
   ngOnDestroy() {
-    console.log('ngOnDestroy');
     this.score = 0;
     this.deltaInScore = 10;
     this.play = false;
-    this.end = true;
+    this.end = false;
+    this.start = false;
     if (this.countDown) {
       this.countDown.unsubscribe();
     }
   }
 
   onStart() {
-    console.log('onStart');
     this.countDown = this.gamesSprintService.getCounter(DataConstants.tick).subscribe(() => {
       this.playAudio();
       if (this.counter > 0) {
         this.counter -= 1;
       } else {
+        document.removeEventListener('keydown', this.keyPressAction);
         this.stopGame();
       }
     });
@@ -172,9 +168,8 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
       this.wordsInCard = this.setRandomWord(this.words.length, wordsQuantityPerCard).map(
         (number) => this.words[number],
       );
-      console.log(this.wordsInCard);
     } else {
-      console.log('stop!');
+      document.removeEventListener('keydown', this.keyPressAction);
       this.stopGame();
     }
     this.words = this.words.filter((word) => !this.wordsInCard.includes(word));
@@ -215,23 +210,20 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
     }
     this.countTries += 1;
     this.wordsUniquePlayed.add(this.wordInCard);
-    console.log(this.mistake);
     if (!this.mistake) {
-      console.log('!this.mistake');
       this.store.dispatch(LoadStatWords({ word: this.wordInCard, error: false }));
       this.wordsCorrect.push(this.wordInCard);
 
       this.countTrue += 1;
       this.countScore();
-      this.elem.nativeElement.querySelector('div.score').style.color = CssConstants.colorGreen;
+      (document.querySelector('div.score') as HTMLElement).style.color = CssConstants.colorGreen;
     } else {
-      console.log('this.mistake');
       this.store.dispatch(LoadStatWords({ word: this.wordInCard, error: true }));
       this.wordsInCorrect.push(this.wordInCard);
 
       this.countTrueSeries.push(this.countTrue);
       this.countTrue = 0;
-      this.elem.nativeElement.querySelector('div.score').style.color = CssConstants.colorRed;
+      (document.querySelector('div.score') as HTMLElement).style.color = CssConstants.colorRed;
       this.deltaInScore = DataConstants.deltaInScore;
     }
     this.addGameResult(this.wordInCard, !this.mistake);
@@ -288,25 +280,24 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   }
 
   keyPressAction(event: KeyboardEvent): void {
-    if (+event.key === 1) {
-      this.onAgree(true);
-    } else if (+event.key === 2) {
-      this.onAgree(false);
-    } else if (+event.key === 3) {
-      this.onHelp();
+    if (this.start) {
+      if (+event.key === 1) {
+        this.onAgree(true);
+      } else if (+event.key === 2) {
+        this.onAgree(false);
+      } else if (+event.key === 3) {
+        this.onHelp();
+      }
     }
   }
 
   stopGame() {
-    console.log('stopGame');
+    document.removeEventListener('keydown', this.keyPressAction);
     this.pauseAudio();
     this.play = false;
     this.end = true;
-    if (this.countDown) {
-      this.countDown.unsubscribe();
-    }
-
-    document.removeEventListener('keydown', this.keyPressAction.bind(this));
+    this.start = false;
+    this.countDown.unsubscribe();
     this.responseEndGame = {
       learned: this.wordsUniquePlayed.size,
       tries: this.countTries,
