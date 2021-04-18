@@ -118,13 +118,13 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.store
-    .select(selectGameList())
-    .pipe(first())
-    .subscribe((words) => {
-      this.wordsAll = words;
-      this.words = this.wordsAll.slice();
-      this.setDifferentWordAndTranslation();
-    });
+      .select(selectGameList())
+      .pipe(first())
+      .subscribe((words) => {
+        this.wordsAll = words;
+        this.words = this.wordsAll.slice();
+        this.setDifferentWordAndTranslation();
+      });
   }
 
   ngOnDestroy() {
@@ -214,14 +214,14 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
 
       this.countTrue += 1;
       this.countScore();
-      this.elem.nativeElement.querySelector("div.score").style.color = CssConstants.colorGreen;
+      this.elem.nativeElement.querySelector('div.score').style.color = CssConstants.colorGreen;
     } else {
       this.store.dispatch(LoadStatWords({ word: this.wordInCard, error: true }));
       this.wordsInCorrect.push(this.wordInCard);
 
       this.countTrueSeries.push(this.countTrue);
       this.countTrue = 0;
-      this.elem.nativeElement.querySelector("div.score").style.color = CssConstants.colorRed;
+      this.elem.nativeElement.querySelector('div.score').style.color = CssConstants.colorRed;
       this.deltaInScore = DataConstants.deltaInScore;
     }
     this.addGameResult(this.wordInCard, !this.mistake);
