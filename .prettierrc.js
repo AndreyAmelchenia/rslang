@@ -19,4 +19,5 @@ module.exports = {
       },
     },
   ],
+  endOfLine:"auto",
 };
