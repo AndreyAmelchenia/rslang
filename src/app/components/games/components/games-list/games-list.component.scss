@@ -1,12 +1,30 @@
-.content {
-  margin-bottom: 20px;
+.featured {
+  background: #fafafa;
+  min-height: 80vh;
+}
+.section-title {
   text-align: center;
+  font-size: clamp(2rem, calc(3vw + 1rem), 4.5rem);
+  line-height: 1;
+  color: black;
+  margin-bottom: 5rem;
+}
 
-  h1 {
-    margin: 16px;
+.split {
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
+  justify-content: center;
+  &>* {
+    flex-basis: 20%;
+    min-width: 15em;
   }
 }
 
-mat-grid-tile {
-  text-align: center;
-}
+// .container {
+//   width: 85%;
+//   max-width: 65em;
+//   margin: 0 auto;
+// }
+
+

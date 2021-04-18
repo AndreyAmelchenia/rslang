@@ -9,8 +9,8 @@
     "id": 2,
     "name": "sprint",
     "nameRU": "Спринт",
-    "img": "./assets/images/sprint.png"
-  },  
+    "img": "./assets/images/runsprint.png"
+  },
   {
     "id": 3,
     "name": "audio",
@@ -19,8 +19,8 @@
   },
   {
     "id": 4,
-    "name": "my-game", 
+    "name": "my-game",
     "nameRU": "Своя игра",
-    "img": "./assets/images/game.png" 
+    "img": "./assets/images/game.png"
   }
 ]
