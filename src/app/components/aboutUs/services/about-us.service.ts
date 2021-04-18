@@ -23,7 +23,7 @@ export class AboutUsService {
       'Andrey',
       'Amelchenia',
       'Team-lead',
-      'Реализовал бэкенд проекта, электронный учебник, стартовую страницу.',
+      'Реализовал бэкенд проекта, электронный учебник.',
       'https://github.com/andreyamelchenia',
     ),
     new AboutUs(
@@ -59,7 +59,7 @@ export class AboutUsService {
       'Maksim',
       'Stankevich',
       'Software Engineer',
-      'Создатель игры "Аудиовызов".',
+      'Реализовал стартовую страницу. Создатель игры "Аудиовызов".',
       'https://github.com/803142',
     ),
     new AboutUs(

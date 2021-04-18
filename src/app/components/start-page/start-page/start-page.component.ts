@@ -17,6 +17,7 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SessionService } from 'src/app/common/services/storage/session.service';
 import { isLoginSelector } from 'src/app/redux/selectors/auth.selectors';
+import { UrlConstants } from 'src/app/shared/constants/url-constants';
 import { AboutUs } from '../../aboutUs/models/about-us.model';
 import { AboutUsService } from '../../aboutUs/services/about-us.service';
 import { RegistrationComponent } from '../../navigation/registration/registration.component';
@@ -72,9 +73,7 @@ export class StartPageComponent implements OnInit, AfterViewInit {
       this.aboutUs = aboutUs.reduce((acc, item) => [...acc, { ...item }], []);
     });
     this.aboutUsItem = of(this.aboutUs[this.index]);
-    this.safeURL = this.sanitizer.bypassSecurityTrustResourceUrl(
-      'https://www.youtube.com/embed/1ozGKlOzEVc',
-    );
+    this.safeURL = this.sanitizer.bypassSecurityTrustResourceUrl(UrlConstants.urlVideo);
   }
 
   ngAfterViewInit() {
