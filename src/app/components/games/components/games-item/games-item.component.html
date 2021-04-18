@@ -1,6 +1,8 @@
-<a [routerLink]="['/games/', game.name]">
-  <mat-card>
-    <img mat-card-image [src]="game.img" alt="{{ game.nameRU }}" />
-    <mat-card-title>{{ game.nameRU }}</mat-card-title>
-  </mat-card>
-</a>
+<li class="featured__item">
+  <a [routerLink]="['/games/', game.name]">
+    <img [src]="game.img" alt="{{ game.nameRU }}" class="featured__img" />
+    <p class="featured__details">
+      <span class="description">{{ game.nameRU }}</span>
+    </p>
+  </a>
+</li>

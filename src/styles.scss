@@ -17,3 +17,51 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 
+
+.featured {
+  background: #eee;
+
+  &__item {
+    display: block;
+    position: relative;
+    transform: scale(.85);
+    transition: transform 250ms ease-in-out;
+    text-decoration: none;
+    color: #333;
+    text-align: center;
+    line-height: 1.2;
+
+
+
+    &:hover,
+    &:focus {
+      transform: scale(1);
+
+      .featured__details {
+        opacity: 1;
+        text-shadow: 0 0 2em rgba(#fff, 1)
+      }
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 10%;
+      left: 10%;
+      padding: 75% 75% 0 0;
+      border-radius: 50%;
+      background: #673ab7;
+      z-index: -1;
+    }
+  }
+
+  &__details {
+    .description {
+      display: block;
+      font-weight: 700;
+      font-size: 2rem;
+    }
+  }
+}
+
+
