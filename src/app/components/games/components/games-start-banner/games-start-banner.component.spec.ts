@@ -1,6 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { GamesBannerData } from '../../models/games-start-banner.model';
 
 import { GamesStartBannerComponent } from './games-start-banner.component';
+
+const bannerMock: GamesBannerData = {
+  title: 'testTitle',
+  subtitle: 'testSubTitle',
+};
 
 describe('GamesStartBannerComponent', () => {
   let component: GamesStartBannerComponent;
@@ -8,14 +14,14 @@ describe('GamesStartBannerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GamesStartBannerComponent ]
-    })
-    .compileComponents();
+      declarations: [GamesStartBannerComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(GamesStartBannerComponent);
     component = fixture.componentInstance;
+    component.banner = bannerMock;
     fixture.detectChanges();
   });
 
