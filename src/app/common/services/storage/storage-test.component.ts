@@ -18,11 +18,5 @@ export class StorageTestComponent {
     const token = 'asjkldkljasdw89350sjldfq234jo12i4';
     this.localStorage.setItem('user', JSON.stringify({ id: 99, email: 'test@tut.by', token }));
     this.sessionStorage.setItem('test-session', `some session string + token: ${token}`);
-    setTimeout(() => {
-      // eslint-disable-next-line no-console
-      console.log('this local storage work!', this.localStorage.getItem('user'));
-      // eslint-disable-next-line no-console
-      console.log('this session storage work!', this.sessionStorage.getItem('test-session'));
-    }, 1000);
   }
 }

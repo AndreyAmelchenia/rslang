@@ -7,7 +7,6 @@ import {
   platformBrowserDynamicTesting,
 } from '@angular/platform-browser-dynamic/testing';
 
-// eslint-disable-next-line prettier/prettier
 declare const require: {
   context(
     path: string,

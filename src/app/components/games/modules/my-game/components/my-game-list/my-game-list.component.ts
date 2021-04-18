@@ -12,8 +12,6 @@ import { AppState } from 'src/app/redux/app.state';
 import { selectGameList } from 'src/app/redux/selectors/listGame.selectors';
 import { URL_BACK_SERVER } from 'src/app/shared/constants/url-constants';
 import { StatisticGame } from '../../game-statistic.model';
-
-// import { DialogTotalGameComponent } from '../dialog-total-game/dialog-total-game.component';
 @Component({
   selector: 'app-my-game-list',
   templateUrl: './my-game-list.component.html',
@@ -224,19 +222,6 @@ export class MyGameListComponent implements OnInit {
 
   openDialog() {
     this.openResult = true;
-
-    // const dialogRef = this.dialog.open(DialogTotalGameComponent, {
-    //   width: '80%',
-    //   height: '80%',
-    //   data: {
-    //     score: this.score,
-    //     try: this.tryCount,
-    //     unsolved: [...this.unsolvedWords],
-    //   },
-    //   disableClose: true,
-    // });
-
-    // dialogRef.afterClosed().subscribe();
   }
 
   getStatWord() {
