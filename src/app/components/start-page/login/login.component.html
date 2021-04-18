@@ -1,4 +1,7 @@
 <mat-card class="card">
+  <div class="modal" *ngIf="loading">
+    <mat-spinner class="spinner"></mat-spinner>
+  </div>
   <form [formGroup]="userData" (ngSubmit)="onSubmit()">
     <mat-card-title>Войти</mat-card-title>
     <mat-card-content [class.card-content]="true">
