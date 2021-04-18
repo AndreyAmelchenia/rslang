@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
@@ -20,7 +21,7 @@ import { GameResult } from '../../models/games.result.model';
   styleUrls: ['./games-end.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GamesEndComponent implements OnInit, OnDestroy {
+export class GamesEndComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() words: Word[];
 
   @Input() gameResult: GameResult[] = [];
@@ -49,6 +50,10 @@ export class GamesEndComponent implements OnInit, OnDestroy {
     this.dataSource = new MatTableDataSource(this.gameResult);
     this.dataSource.sort = this.sort;
     this.calcStatistics();
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
   }
 
   ngOnDestroy() {
