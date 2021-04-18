@@ -13,7 +13,7 @@ import { URL_BACK_SERVER } from 'src/app/shared/constants/url-constants';
 import { AppState } from 'src/app/redux/app.state';
 import { selectStats } from 'src/app/redux/selectors/stats.selector';
 import { SessionService } from './storage/session.service';
-import { IDay, IGame, IResponse, IStats } from '../models/stats.model';
+import { IDailyStats, IDay, IGame, IResponse, IStats } from '../models/stats.model';
 
 const { URL_BACK } = URL_BACK_SERVER;
 
@@ -52,11 +52,11 @@ export class StatsService {
     this.store.dispatch(resetStatistics());
   }
 
-  addLastGameResults = (learned: number, currentDate: number, longTermStats: IDay[]): IDay[] => {
+  addLastGameResults = (learned: number, longTermStats: IDay[]): IDay[] => {
     const lastItem: IDay = longTermStats[longTermStats.length - 1];
 
     if (
-      new Date(currentDate).toDateString() ===
+      new Date(Date.now()).toDateString() ===
       new Date(longTermStats[longTermStats.length - 1].date).toDateString()
     ) {
       const arr = longTermStats.slice(0, -1);
@@ -67,7 +67,7 @@ export class StatsService {
       return arr;
     }
     const arr = longTermStats.slice();
-    arr.push({ date: currentDate, learned });
+    arr.push({ date: Date.now(), learned });
     return arr;
   };
 
@@ -87,13 +87,27 @@ export class StatsService {
       data = statistics;
     });
 
+    let shortData: IDailyStats;
+    if (new Date(data.shortTerm.date).toDateString() === new Date(Date.now()).toDateString()) {
+      shortData = {
+        ...data.shortTerm,
+        [game]: this.addShortResults(data, stats),
+      };
+    } else {
+      shortData = {
+        date: Date.now(),
+        audio: { learned: 0, tries: 0, right: 0, series: 0 },
+        myGame: { learned: 0, tries: 0, right: 0, series: 0 },
+        savanna: { learned: 0, tries: 0, right: 0, series: 0 },
+        sprint: { learned: 0, tries: 0, right: 0, series: 0 },
+      };
+      shortData[game] = stats;
+    }
+
     this.store.dispatch(
       saveStatistics({
-        shortTerm: {
-          ...data.shortTerm,
-          [game]: this.addShortResults(data, stats),
-        },
-        longTerm: this.addLastGameResults(stats.learned, data.shortTerm.date, data.longTerm),
+        shortTerm: shortData,
+        longTerm: this.addLastGameResults(stats.learned, data.longTerm),
       }),
     );
   }

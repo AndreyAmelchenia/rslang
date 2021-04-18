@@ -17,6 +17,20 @@ export const initialState: IStats = {
 
 export const statsReducer = createReducer(
   initialState,
-  on(setStatistics, (state, { shortTerm, longTerm }) => ({ shortTerm, longTerm })),
+  on(setStatistics, (state, { shortTerm, longTerm }) => {
+    if (new Date(shortTerm.date).toDateString() !== new Date(Date.now()).toDateString()) {
+      return {
+        shortTerm: {
+          date: Date.now(),
+          audio: { learned: 0, tries: 0, right: 0, series: 0 },
+          myGame: { learned: 0, tries: 0, right: 0, series: 0 },
+          savanna: { learned: 0, tries: 0, right: 0, series: 0 },
+          sprint: { learned: 0, tries: 0, right: 0, series: 0 },
+        },
+        longTerm,
+      };
+    }
+    return { shortTerm, longTerm };
+  }),
   on(resetStatistics, () => initialState),
 );
