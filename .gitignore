@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
@@ -48,3 +49,6 @@ Thumbs.db
 # other
 tslint.json
 yarn.lock
+=======
+node_modules
+>>>>>>> 2643ee3206e16a121174e04c378d1e0090152e5b
