@@ -7,10 +7,14 @@ import { BehaviorSubject } from 'rxjs';
 export class LoadingService {
   loadingSub: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
+  loadingPostSub: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   /**
    * Contains in-progress loading requests
    */
   loadingMap: Map<string, boolean> = new Map<string, boolean>();
+
+  loadingPostMap: Map<string, boolean> = new Map<string, boolean>();
 
   /**
    * Sets the loadingSub property value based on the following:
@@ -33,6 +37,21 @@ export class LoadingService {
     }
     if (this.loadingMap.size === 0) {
       this.loadingSub.next(false);
+    }
+  }
+
+  setPutLoading(loading: boolean, url: string): void {
+    if (!url) {
+      throw new Error('The request URL must be provided to the LoadingService.setLoading function');
+    }
+    if (loading === true) {
+      this.loadingPostMap.set(url, loading);
+      this.loadingPostSub.next(true);
+    } else if (loading === false && this.loadingPostMap.has(url)) {
+      this.loadingPostMap.delete(url);
+    }
+    if (this.loadingPostMap.size === 0) {
+      this.loadingPostSub.next(false);
     }
   }
 }
