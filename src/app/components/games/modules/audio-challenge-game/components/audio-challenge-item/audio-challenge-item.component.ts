@@ -31,6 +31,17 @@ export class AudioChallengeItemComponent implements OnChanges {
     if (+event.key > 0 && +event.key < 6) {
       this.makeChoice(+event.key - 1);
     }
+    if (event.key === 'Enter') {
+      if (this.wordState.isTranslationChoosed) {
+        this.audioChallengeGameService.nextWord();
+      } else {
+        const index = undefined;
+        this.audioChallengeGameService.makeTurn(index);
+      }
+    }
+    if (event.key === ' ') {
+      this.playWordAudio();
+    }
   }
 
   makeChoice(index: number) {
@@ -38,8 +49,10 @@ export class AudioChallengeItemComponent implements OnChanges {
   }
 
   playWordAudio() {
-    const audio = new Audio();
-    audio.src = this.apiUrl + this.wordState.currentWord.audio;
-    audio.play();
+    if (!this.wordState.isGameEnded) {
+      const audio = new Audio();
+      audio.src = this.apiUrl + this.wordState.currentWord.audio;
+      audio.play();
+    }
   }
 }

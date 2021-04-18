@@ -10,6 +10,8 @@ import { AudioChallengeGameManageComponent } from './components/audio-challenge-
 import { AudioChallengeGameStartComponent } from './components/audio-challenge-game-start/audio-challenge-game-start.component';
 import { AudioChallengeGameEndComponent } from './components/audio-challenge-game-end/audio-challenge-game-end.component';
 import { GamesSharedModule } from '../games-shared.module';
+import { AudioChallengeGameClosePauseComponent } from './components/audio-challenge-game-close-pause/audio-challenge-game-close-pause.component';
+import { AudioChallengeGameClosePauseDialogueComponent } from './components/audio-challenge-game-close-pause-dialogue/audio-challenge-game-close-pause-dialogue.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { GamesSharedModule } from '../games-shared.module';
     AudioChallengeGameManageComponent,
     AudioChallengeGameStartComponent,
     AudioChallengeGameEndComponent,
+    AudioChallengeGameClosePauseComponent,
+    AudioChallengeGameClosePauseDialogueComponent,
   ],
   imports: [
     CommonModule,
