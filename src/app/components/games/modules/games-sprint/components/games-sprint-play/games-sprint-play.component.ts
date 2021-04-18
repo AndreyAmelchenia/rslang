@@ -117,17 +117,21 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    console.log('ngOnInit');
     this.store
       .select(selectGameList())
       .pipe(first())
       .subscribe((words) => {
         this.wordsAll = words;
+        console.log(this.wordsAll);
         this.words = this.wordsAll.slice();
+        console.log(this.words);
         this.setDifferentWordAndTranslation();
       });
   }
 
   ngOnDestroy() {
+    console.log('ngOnDestroy');
     this.score = 0;
     this.deltaInScore = 10;
     this.play = false;
@@ -138,6 +142,7 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   }
 
   onStart() {
+    console.log('onStart');
     this.countDown = this.gamesSprintService.getCounter(DataConstants.tick).subscribe(() => {
       this.playAudio();
       if (this.counter > 0) {
@@ -167,7 +172,9 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
       this.wordsInCard = this.setRandomWord(this.words.length, wordsQuantityPerCard).map(
         (number) => this.words[number],
       );
+      console.log(this.wordsInCard);
     } else {
+      console.log('stop!');
       this.stopGame();
     }
     this.words = this.words.filter((word) => !this.wordsInCard.includes(word));
@@ -208,7 +215,9 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
     }
     this.countTries += 1;
     this.wordsUniquePlayed.add(this.wordInCard);
+    console.log(this.mistake);
     if (!this.mistake) {
+      console.log('!this.mistake');
       this.store.dispatch(LoadStatWords({ word: this.wordInCard, error: false }));
       this.wordsCorrect.push(this.wordInCard);
 
@@ -216,6 +225,7 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
       this.countScore();
       this.elem.nativeElement.querySelector('div.score').style.color = CssConstants.colorGreen;
     } else {
+      console.log('this.mistake');
       this.store.dispatch(LoadStatWords({ word: this.wordInCard, error: true }));
       this.wordsInCorrect.push(this.wordInCard);
 
@@ -278,20 +288,24 @@ export class GamesSprintPlayComponent implements OnInit, OnDestroy {
   }
 
   keyPressAction(event: KeyboardEvent): void {
-    if (event.key === '1') {
+    if (+event.key === 1) {
       this.onAgree(true);
-    } else if (event.key === '2') {
+    } else if (+event.key === 2) {
       this.onAgree(false);
-    } else if (event.key === '3') {
+    } else if (+event.key === 3) {
       this.onHelp();
     }
   }
 
   stopGame() {
+    console.log('stopGame');
     this.pauseAudio();
     this.play = false;
     this.end = true;
-    this.countDown.unsubscribe();
+    if (this.countDown) {
+      this.countDown.unsubscribe();
+    }
+
     document.removeEventListener('keydown', this.keyPressAction.bind(this));
     this.responseEndGame = {
       learned: this.wordsUniquePlayed.size,
