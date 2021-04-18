@@ -1,6 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StoreModule } from '@ngrx/store';
+import { ISettings } from 'src/app/common/models/settings.model';
 
 import { Word } from 'src/app/common/models/word.model';
 import { CardItemComponent } from './card-item.component';
@@ -31,6 +32,20 @@ const wordMock: Word = {
 
 const colorMock = [5, 2];
 
+const setMock: ISettings = {
+  wordsPerDay: 20,
+  optional: {
+    displayTranslation: true,
+    displayHandlingButtons: true,
+    setGame: {
+      groupAmount: 2,
+      groupLevel: 1,
+      hideRequired: false,
+    },
+  },
+  id: 555,
+};
+
 describe('CardItemComponent', () => {
   let component: CardItemComponent;
   let fixture: ComponentFixture<CardItemComponent>;
@@ -48,6 +63,7 @@ describe('CardItemComponent', () => {
     component = fixture.componentInstance;
     component.word = wordMock;
     component.color = colorMock;
+    component.set = setMock;
     fixture.detectChanges();
   });
 

@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
-import { AppState } from 'src/app/redux/app.state';
-import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { GamesBannerData } from 'src/app/components/games/models/games-start-banner.model';
 
@@ -16,7 +14,7 @@ export class GamesSprintMainComponent {
     subtitle: 'Мини-игра «Спринт» - это тренировка для повторения слов.',
   };
 
-  constructor(private location: Location, private store: Store<AppState>, private router: Router) {}
+  constructor(private location: Location, private router: Router) {}
 
   goBack(): void {
     this.location.back();

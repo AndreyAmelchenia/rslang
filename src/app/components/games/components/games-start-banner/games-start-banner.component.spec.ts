@@ -1,3 +1,4 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { GamesBannerData } from '../../models/games-start-banner.model';
 
@@ -15,6 +16,7 @@ describe('GamesStartBannerComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [GamesStartBannerComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   });
 

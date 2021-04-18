@@ -7,6 +7,7 @@ import { AppState } from 'src/app/redux/app.state';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { RouterTestingModule } from '@angular/router/testing';
 import { GamesSprintPlayComponent } from './games-sprint-play.component';
 
 const wordsMock: AggregatedWordsRedux[] = [
@@ -194,7 +195,12 @@ describe('GamesSprintPlayComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [GamesSprintPlayComponent],
-      imports: [HttpClientTestingModule, BrowserAnimationsModule, StoreModule.forRoot({})],
+      imports: [
+        HttpClientTestingModule,
+        BrowserAnimationsModule,
+        RouterTestingModule,
+        StoreModule.forRoot({}),
+      ],
       providers: [provideMockStore({ initialState })],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
