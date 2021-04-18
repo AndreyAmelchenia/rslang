@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpPostInterceptor } from './common/interceptors/http-post.interceptor';
 import { AppComponent } from './components/app/app.component';
 import { TokenInterceptorService } from './common/services/token-interceptor.service';
 import { ReduxModule } from './redux/redux.module';
@@ -26,6 +27,7 @@ import { HttpRequestInterceptor } from './common/interceptors/http-request-inter
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpPostInterceptor, multi: true },
     AboutUsService,
   ],
   bootstrap: [AppComponent],

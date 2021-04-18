@@ -18,16 +18,12 @@
     </div>
     <mat-nav-list (click)="drawer.toggle()">
       <a mat-list-item [routerLink]="this.path.Empty">Стартовая страница</a>
-      <a mat-list-item [routerLink]="this.path.Cards">Учебник</a>
-      <a mat-list-item [routerLink]="this.path.Games">Список игр</a>
-      <a mat-list-item [routerLink]="this.path.Dictionary">Словарь</a>
-      <a
-        mat-list-item
-        [routerLink]="this.path.Profile"
-        href="#"
-        [disabled]="(isAuth$ | async) === false"
-        >Профиль</a
-      >
+      <ng-template [ngIf]="isAuth$ | async">
+        <a mat-list-item [routerLink]="this.path.Cards">Учебник</a>
+        <a mat-list-item [routerLink]="this.path.Games">Список игр</a>
+        <a mat-list-item [routerLink]="this.path.Dictionary">Словарь</a>
+        <a mat-list-item [routerLink]="this.path.Profile">Профиль</a>
+      </ng-template>
       <a mat-list-item [routerLink]="this.path.AboutUs">Про нас</a>
     </mat-nav-list>
   </mat-sidenav>
@@ -45,7 +41,12 @@
       </ng-template>
       <ng-template #loginBlock>
         <div class="block_user">
-          <img *ngIf="(user$|async).photo" class="avatar" [src]="apiUrl + (user$|async).photo" />
+          <img
+            *ngIf="(user$|async).photo"
+            class="avatar"
+            [src]="apiUrl + (user$|async).photo"
+            alt="users photo"
+          />
           <span class="greet">Привет, {{(user$|async).name}}</span>
           <button mat-raised-button color="accent" (click)="onLogout()">Выход</button>
         </div>
